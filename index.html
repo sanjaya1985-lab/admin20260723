@@ -170,6 +170,19 @@
           <div class="menu-item" data-icon="fas fa-users-cog" onclick="switchView('user-mgt', this)"><i class="fas fa-users-cog"></i> User Maintenance</div>
           <div class="menu-item" data-icon="fas fa-map-marked-alt" onclick="switchView('live-map', this)"><i class="fas fa-map-marked-alt"></i> Live Request Map</div>
         </div>
+        
+        <!-- CR UPLOAD OPTION -->
+        <div class="menu-category" onclick="toggleSubMenu('cr-submenu', this)">
+          <span><i class="fas fa-file-upload" style="margin-right: 8px;"></i> CR Upload Option</span> <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="sub-menu" id="cr-submenu">
+          <div class="menu-item" data-icon="fas fa-cloud-upload-alt" onclick="switchView('cr-upload-new', this)">
+            <i class="fas fa-cloud-upload-alt"></i> New CR Upload
+          </div>
+          <div class="menu-item" data-icon="fas fa-list-alt" onclick="switchView('cr-upload-history', this)">
+            <i class="fas fa-list-alt"></i> Upload History
+          </div>
+        </div>
       </nav>
 
       <main class="content-area">
@@ -260,8 +273,7 @@
             </div>
           </div>
           
-        </div> 
-        <!-- CR UPLOAD DASHBOARD SUMMARY -->
+          <!-- CR UPLOAD DASHBOARD SUMMARY -->
           <div id="dash-cr-section" style="margin-top: 30px;">
             <h3 class="section-title">Final CR Upload Overview</h3>
             <div class="admin-cards">
@@ -269,8 +281,10 @@
               <div class="a-card bg-green"><h3>Completed Uploads</h3><div class="a-val" id="dash-cru-com">0</div></div>
             </div>
           </div>
+        </div> 
+        <!-- Dashboard Section End -->
         
-        <!-- OTHER VIEWS (Unchanged layout) -->
+        <!-- OTHER VIEWS -->
         <div id="view-user-mgt" class="view-section" style="display: none;">
           <h2 style="color: var(--accent-red); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom:20px;">System Admin Overview (User Maintenance)</h2>
           <div class="admin-forms-grid">
@@ -462,7 +476,6 @@
         </div>
 
         <div id="view-live-map" class="view-section" style="display: none;">
-          
           <div style="display:flex; justify-content:space-between; background:#800000; color:white; padding:15px; border-radius:5px 5px 0 0;">
             <h2 style="margin:0; font-size: 18px;">Live GPS Tracking Map 📍</h2>
           </div>
@@ -470,6 +483,7 @@
              <div id="map" style="width: 100%; height: 65vh; border-radius: 8px; border: 2px solid #ccc; z-index: 1;"></div>
           </div>
         </div>
+        
         <!-- CR UPLOAD VIEWS -->
         <div id="view-cr-upload-new" class="view-section" style="display: none;">
           <div class="form-box" style="max-width: 800px; margin: 0 auto;">
@@ -906,6 +920,11 @@
               vTbody.innerHTML += `<tr><td>${r.date}</td><td><b>${r.vehNo}</b></td><td>${r.makeModel}</td><td>${r.marketVal}</td><td>${r.saleVal}</td><td>${badge}</td><td>${viewBtn}${pdfBtn}</td></tr>`;
             });
         }
+
+        // Updated CR Upload Summary Stats
+        if(document.getElementById('dash-cru-pen') && data.crupload) document.getElementById('dash-cru-pen').innerText = data.crupload.pending;
+        if(document.getElementById('dash-cru-com') && data.crupload) document.getElementById('dash-cru-com').innerText = data.crupload.completed;
+
       } catch(e) { console.error(e); }
     }
 
@@ -1120,6 +1139,9 @@
       if(viewId === 'val-admin') { loadPendingValuations(); }
       if(viewId === 'val-history') { loadValuationHistory(); }
       if(viewId === 'live-map') { setTimeout(() => { if(typeof initMap === 'function') initMap(); else { if(rmvMap) rmvMap.invalidateSize(); loadMapData(); } }, 300); }
+      // Added integration for CR Upload sections here
+      if(viewId === 'cr-upload-new') { loadPendingCRList(); }
+      if(viewId === 'cr-upload-history') { loadCRHistory(); }
     }
 
     var modal = document.getElementById("imgModal"), img = document.getElementById("fullImage"), container = document.getElementById("modalContainer"); 
@@ -1342,7 +1364,8 @@
         }
     }
     function clearCourierFilters() { document.getElementById("courierFromDate").value = ""; document.getElementById("courierToDate").value = ""; document.getElementById("courierSearch").value = ""; document.getElementById("courierStatusFilter").value = ""; filterCourierTable(); }
-  // ==========================================
+  
+    // ==========================================
     // CR UPLOAD MODULE FRONTEND LOGIC
     // ==========================================
     
@@ -1471,11 +1494,6 @@
         tbody.innerHTML = "<tr><td colspan='6' style='text-align:center; color:red;'>Error Loading Report</td></tr>";
       }
     }
-
-    // switchView function එක ඇතුලේ මේකත් add කරන්න
-    // ඔයාගේ දැනට තියෙන switchView function එක හොයාගෙන ඒකට මේ if conditions දෙක දාන්න
-    // if(viewId === 'cr-upload-new') { loadPendingCRList(); }
-    // if(viewId === 'cr-upload-history') { loadCRHistory(); }
   </script>
 </body>
 </html>
