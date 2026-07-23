@@ -497,17 +497,6 @@
             <label style="color: #0d6efd;">🔍 Search by Vehicle Number or Reference No</label>
             <input type="text" id="cr_search_input" list="pending_cr_list" class="admin-input" placeholder="Type Vehicle No... (e.g., WP CAB-1234)" onchange="loadCRDetails()">
             <datalist id="pending_cr_list"></datalist>
-            <div id="view-cr-upload-pending" class="view-section" style="display: none;">
-          <h2 style="color: var(--accent-red); border-bottom: 2px solid #eee; padding-bottom: 10px;">Pending CR Uploads</h2>
-          <button onclick="loadPendingCRTable()" style="padding: 8px 15px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom:15px;">Refresh List</button>
-          
-          <div class="table-container">
-            <table id="crPendingTable" class="blue-header">
-              <thead><tr><th>Valuation Date</th><th>Vehicle No</th><th>Branch</th><th>Request User</th><th>Days in Pending</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
 
             <!-- Details Section -->
             <div id="cr_details_box" style="display:none; background:#f8f9fa; border:1px solid #ddd; border-radius:8px; padding:20px; margin-bottom:20px;">
@@ -529,6 +518,18 @@
               <input type="file" id="final_cr_file" accept=".pdf, image/*" class="admin-input">
               <button class="btn-submit" id="crSubmitBtn" onclick="submitFinalCR()">Upload & Save CR</button>
             </div>
+          </div>
+        </div>
+
+        <div id="view-cr-upload-pending" class="view-section" style="display: none;">
+          <h2 style="color: var(--accent-red); border-bottom: 2px solid #eee; padding-bottom: 10px;">Pending CR Uploads</h2>
+          <button onclick="loadPendingCRTable()" style="padding: 8px 15px; background: #f39c12; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom:15px;">Refresh List</button>
+          
+          <div class="table-container">
+            <table id="crPendingTable" class="blue-header">
+              <thead><tr><th>Valuation Date</th><th>Vehicle No</th><th>Branch</th><th>Request User</th><th>Days in Pending</th></tr></thead>
+              <tbody></tbody>
+            </table>
           </div>
         </div>
 
@@ -779,7 +780,9 @@
             if(valMenu) valMenu.style.display = 'none';
             if(rmvAdminBtn) rmvAdminBtn.style.display = 'flex'; if(courierAdminBtn) courierAdminBtn.style.display = 'flex';
             if(dashVal) dashVal.style.display = 'none';
-          var crMenuCategory = document.getElementById('cr-menu-category');
+        }
+
+        var crMenuCategory = document.getElementById('cr-menu-category');
         var crNewBtn = document.getElementById('menu-cr-new');
         
         var roleLower = uRole.toLowerCase();
@@ -798,7 +801,6 @@
         else {
              if(crMenuCategory) crMenuCategory.style.display = 'flex';
              if(crNewBtn) crNewBtn.style.display = 'none'; 
-        }
         }
 
         var valForm = document.getElementById('vForm');
@@ -1409,7 +1411,7 @@
     // Pending List එක Load කරන function එක (Menu එක click කරද්දිත් run කරන්න පුළුවන්)
     async function loadPendingCRList() {
       try {
-        const res = await apiCall('getPendingCRUploads', {}, 'GET');
+        const res = await apiCall('getPendingCRUploads', { role: currentUser.role, branch: currentUser.branch, email: currentUser.email }, 'GET');
         globalPendingCR = res.data || [];
         var datalist = document.getElementById('pending_cr_list');
         datalist.innerHTML = "";
@@ -1514,7 +1516,7 @@
       tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;'>Loading data...</td></tr>";
       
       try {
-        const res = await apiCall('getCRUploadHistory', {}, 'GET');
+        const res = await apiCall('getCRUploadHistory', { role: currentUser.role, branch: currentUser.branch, email: currentUser.email }, 'GET');
         tbody.innerHTML = "";
         if (res.data.length === 0) {
           tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;'>No CR Upload History found.</td></tr>";
@@ -1553,12 +1555,6 @@
       }
     }
 
-    // පරණ functions දෙකෙත් API call වෙන තැනට මෙහෙම role, branch යවන්න වෙනස් කරගන්න:
-    async function loadPendingCRList() {
-      try {
-        const res = await apiCall('getPendingCRUploads', { role: currentUser.role, branch: currentUser.branch, email: currentUser.email }, 'GET');
-        globalPendingCR = res.data || [];
-        /* ... ඉතුරු ටික කලින් විදිහටමයි ... */
   </script>
 </body>
 </html>
