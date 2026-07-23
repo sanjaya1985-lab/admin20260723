@@ -462,11 +462,57 @@
         </div>
 
         <div id="view-live-map" class="view-section" style="display: none;">
+          
           <div style="display:flex; justify-content:space-between; background:#800000; color:white; padding:15px; border-radius:5px 5px 0 0;">
             <h2 style="margin:0; font-size: 18px;">Live GPS Tracking Map 📍</h2>
           </div>
           <div style="background:#fff; padding:20px; border:1px solid #ddd; border-top:none; border-radius:0 0 5px 5px;">
              <div id="map" style="width: 100%; height: 65vh; border-radius: 8px; border: 2px solid #ccc; z-index: 1;"></div>
+          </div>
+        </div>
+        <!-- CR UPLOAD VIEWS -->
+        <div id="view-cr-upload-new" class="view-section" style="display: none;">
+          <div class="form-box" style="max-width: 800px; margin: 0 auto;">
+            <h2 style="color: var(--accent-red); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">
+              <i class="fas fa-cloud-upload-alt"></i> Upload Final CR (Approved Valuations)
+            </h2>
+            
+            <label style="color: #0d6efd;">🔍 Search by Vehicle Number or Reference No</label>
+            <input type="text" id="cr_search_input" list="pending_cr_list" class="admin-input" placeholder="Type Vehicle No... (e.g., WP CAB-1234)" onchange="loadCRDetails()">
+            <datalist id="pending_cr_list"></datalist>
+
+            <!-- Details Section -->
+            <div id="cr_details_box" style="display:none; background:#f8f9fa; border:1px solid #ddd; border-radius:8px; padding:20px; margin-bottom:20px;">
+              <h4 style="margin-top:0; color:#333; margin-bottom:15px; border-bottom:1px solid #ccc; padding-bottom:5px;">Valuation Details</h4>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div><label>Reference No:</label> <strong id="lbl_cr_ref" style="color:#c62828;"></strong></div>
+                <div><label>Vehicle No:</label> <strong id="lbl_cr_veh"></strong></div>
+                <div><label>Make & Model:</label> <strong id="lbl_cr_make"></strong></div>
+                <div><label>Approved Date:</label> <strong id="lbl_cr_appdate"></strong></div>
+                <div><label>Request Branch:</label> <strong id="lbl_cr_branch"></strong></div>
+                <div><label>Request User:</label> <strong id="lbl_cr_user"></strong></div>
+              </div>
+              <input type="hidden" id="cr_row_index">
+            </div>
+
+            <!-- Upload Section -->
+            <div id="cr_upload_section" style="display:none;">
+              <label>Upload Final CR Document (PDF or Image) *</label>
+              <input type="file" id="final_cr_file" accept=".pdf, image/*" class="admin-input">
+              <button class="btn-submit" id="crSubmitBtn" onclick="submitFinalCR()">Upload & Save CR</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-cr-upload-history" class="view-section" style="display: none;">
+          <h2 style="color: var(--accent-red); border-bottom: 2px solid #eee; padding-bottom: 10px;">CR Upload History & Summary</h2>
+          <button onclick="loadCRHistory()" style="padding: 8px 15px; background: #0d6efd; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom:15px;">Refresh Report</button>
+          
+          <div class="table-container">
+            <table id="crHistoryTable" class="blue-header">
+              <thead><tr><th>Uploaded Date</th><th>Ref No</th><th>Vehicle No</th><th>Make & Model</th><th>Uploaded By</th><th>CR Document</th></tr></thead>
+              <tbody></tbody>
+            </table>
           </div>
         </div>
       </main>
@@ -1296,6 +1342,140 @@
         }
     }
     function clearCourierFilters() { document.getElementById("courierFromDate").value = ""; document.getElementById("courierToDate").value = ""; document.getElementById("courierSearch").value = ""; document.getElementById("courierStatusFilter").value = ""; filterCourierTable(); }
+  // ==========================================
+    // CR UPLOAD MODULE FRONTEND LOGIC
+    // ==========================================
+    
+    var globalPendingCR = [];
+
+    // Pending List එක Load කරන function එක (Menu එක click කරද්දිත් run කරන්න පුළුවන්)
+    async function loadPendingCRList() {
+      try {
+        const res = await apiCall('getPendingCRUploads', {}, 'GET');
+        globalPendingCR = res.data || [];
+        var datalist = document.getElementById('pending_cr_list');
+        datalist.innerHTML = "";
+        
+        globalPendingCR.forEach(item => {
+          // Datalist එකට දානවා (එතකොට Vehicle No එකෙන් හරි Ref No එකෙන් හරි Search කරන්න පුළුවන්)
+          var option = document.createElement('option');
+          option.value = item.vehNo;
+          option.text = `Ref: ${item.refNo} | Branch: ${item.branch}`;
+          datalist.appendChild(option);
+        });
+      } catch (error) { console.error("Error loading pending CRs", error); }
+    }
+
+    // Vehicle එක Select කරාම Details ටික පෙන්නනවා
+    function loadCRDetails() {
+      var searchVal = document.getElementById('cr_search_input').value;
+      var selected = globalPendingCR.find(x => x.vehNo === searchVal || x.refNo === searchVal);
+      
+      var detailsBox = document.getElementById('cr_details_box');
+      var uploadSec = document.getElementById('cr_upload_section');
+      
+      if (selected) {
+        document.getElementById('lbl_cr_ref').innerText = selected.refNo;
+        document.getElementById('lbl_cr_veh').innerText = selected.vehNo;
+        document.getElementById('lbl_cr_make').innerText = selected.makeModel;
+        document.getElementById('lbl_cr_appdate').innerText = selected.appDate;
+        document.getElementById('lbl_cr_branch').innerText = selected.branch;
+        document.getElementById('lbl_cr_user').innerText = selected.reqUser;
+        document.getElementById('cr_row_index').value = selected.row;
+        
+        detailsBox.style.display = 'block';
+        uploadSec.style.display = 'block';
+      } else {
+        detailsBox.style.display = 'none';
+        uploadSec.style.display = 'none';
+      }
+    }
+
+    // CR එක Upload කරන Function එක
+    async function submitFinalCR() {
+      var fileInput = document.getElementById('final_cr_file');
+      var rowIndex = document.getElementById('cr_row_index').value;
+      var vehNo = document.getElementById('lbl_cr_veh').innerText;
+      var refNo = document.getElementById('lbl_cr_ref').innerText;
+
+      if (fileInput.files.length === 0) {
+        return Swal.fire("Required", "Please select a CR document to upload!", "warning");
+      }
+
+      var btn = document.getElementById('crSubmitBtn');
+      btn.disabled = true;
+      btn.innerText = "Processing File... ⏳";
+
+      try {
+        let f = fileInput.files[0];
+        let base64Str, typeStr, nameStr;
+
+        if (f.type === "application/pdf") { 
+          let b64 = await new Promise((res2, rej) => { let fr = new FileReader(); fr.onload = ev => res2(ev.target.result); fr.onerror = err => rej(err); fr.readAsDataURL(f); }); 
+          base64Str = b64.split(',')[1]; typeStr = 'application/pdf'; nameStr = f.name; 
+        } else { 
+          let compressed = await compressImage(f, 1000, 0.7); 
+          base64Str = compressed.data; typeStr = compressed.type; nameStr = compressed.name; 
+        }
+
+        btn.innerText = "Uploading to Drive & Saving to Sheet... 🚀";
+        
+        var payload = {
+          row: rowIndex,
+          vehNo: vehNo,
+          refNo: refNo,
+          uploadedBy: currentUser.user,
+          fileData: { base64: base64Str, type: typeStr, name: nameStr }
+        };
+
+        const serverRes = await apiCall('uploadFinalCR', payload);
+        
+        if (serverRes.success) {
+          Swal.fire("Success", "Final CR Uploaded Successfully!", "success");
+          document.getElementById('cr_search_input').value = "";
+          document.getElementById('final_cr_file').value = "";
+          document.getElementById('cr_details_box').style.display = 'none';
+          document.getElementById('cr_upload_section').style.display = 'none';
+          loadPendingCRList(); // List එකෙන් Hide කරන්න අලුත් list එක ගන්නවා
+          loadDashboardStats(); // Dashboard Summary Update කරනවා
+        } else {
+          Swal.fire("Error", serverRes.error, "error");
+        }
+      } catch (error) {
+        Swal.fire("Error", error.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Upload & Save CR";
+      }
+    }
+
+    // Summary Report එක ලෝඩ් කරන function එක
+    async function loadCRHistory() {
+      var tbody = document.querySelector("#crHistoryTable tbody");
+      if(!tbody) return;
+      tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;'>Loading data...</td></tr>";
+      
+      try {
+        const res = await apiCall('getCRUploadHistory', {}, 'GET');
+        tbody.innerHTML = "";
+        if (res.data.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;'>No CR Upload History found.</td></tr>";
+          return;
+        }
+        
+        res.data.forEach(r => {
+          var fileLink = `<a href="${r.crUrl}" target="_blank" style="background:#28a745; color:white; padding:5px 10px; border-radius:4px; text-decoration:none; font-size:12px; font-weight:bold;">View Document</a>`;
+          tbody.innerHTML += `<tr><td>${r.uploadDate}</td><td><b>${r.refNo}</b></td><td><span style="color:#0d6efd;font-weight:bold;">${r.vehNo}</span></td><td>${r.makeModel}</td><td>${r.uploadedBy}</td><td>${fileLink}</td></tr>`;
+        });
+      } catch(e) {
+        tbody.innerHTML = "<tr><td colspan='6' style='text-align:center; color:red;'>Error Loading Report</td></tr>";
+      }
+    }
+
+    // switchView function එක ඇතුලේ මේකත් add කරන්න
+    // ඔයාගේ දැනට තියෙන switchView function එක හොයාගෙන ඒකට මේ if conditions දෙක දාන්න
+    // if(viewId === 'cr-upload-new') { loadPendingCRList(); }
+    // if(viewId === 'cr-upload-history') { loadCRHistory(); }
   </script>
 </body>
 </html>
