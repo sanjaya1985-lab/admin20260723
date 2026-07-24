@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
   <style>
     :root { --bg-dark:#121212; --sidebar-dark:#1a1a1a; --accent-red:#c62828; --accent-red-light:#e53935; --text-light:#ffffff; --text-muted:#9e9e9e; --bg-light:#f5f6fa; --card-bg:#ffffff; --border-color:#e0e0e0; }
@@ -1289,7 +1290,103 @@
         reader.onerror = error => reject(error);
       });
     }
+// 1. සිංහල Seal එක පින්තූරයක් (PNG) විදිහට හදන Function එක
+    async function getSealImageBase64() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 800;
+      canvas.height = 300;
+      const ctx = canvas.getContext('2d');
+      
+      // පසුබිම Transparent කරනවා
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      ctx.fillStyle = "rgba(220, 53, 69, 0.4)"; // ලා රතු පාට
+      ctx.font = "bold 32px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      
+      // Seal එක හරහට (Diagonal) හිටින්න කරකවනවා
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.rotate(-Math.PI / 8); 
+      
+      // කොටුවක් (Border) ගහනවා 
+      ctx.strokeStyle = "rgba(220, 53, 69, 0.4)";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(-360, -80, 720, 170);
+      
+      // අකුරු ටික ලියනවා (දුම් වාර්තාව කියලා හැදුවා)
+      ctx.fillText("මෙය වාහනය ලියාපදිංචි සහතිකයේ සත්‍ය පිටපතකි.", 0, -35);
+      ctx.fillText("අදායම් බලපත්‍රය ලබාගැනීමට /", 0, 10);
+      ctx.fillText("දුම් වාර්තාව ලබාගැනීමට පමණි", 0, 50);
+      
+      return canvas.toDataURL('image/png');
+    }
 
+    // 2. PDF එකට Seal එක ගහන Function එක
+    async function watermarkPDF(file) {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+      
+      // අර හැදුව Seal පින්තූරය ගන්නවා
+      const sealDataUrl = await getSealImageBase64();
+      const sealImage = await pdfDoc.embedPng(sealDataUrl);
+      const { width: sealWidth, height: sealHeight } = sealImage.scale(0.8); 
+      
+      const pages = pdfDoc.getPages();
+      // PDF එකේ තියෙන හැම පිටුවකටම Seal එක ගහනවා
+      for(let i = 0; i < pages.length; i++) {
+         const page = pages[i];
+         const { width, height } = page.getSize();
+         page.drawImage(sealImage, {
+            x: (width / 2) - (sealWidth / 2),
+            y: (height / 2) - (sealHeight / 2),
+            width: sealWidth,
+            height: sealHeight
+         });
+      }
+      
+      const pdfBytes = await pdfDoc.save();
+      
+      // ආපහු Base64 වලට හරවනවා Backend එකට යවන්න
+      let binary = '';
+      const bytes = new Uint8Array(pdfBytes);
+      for (let i = 0; i < bytes.byteLength; i++) { binary += String.fromCharCode(bytes[i]); }
+      return window.btoa(binary);
+    }
+
+    // 3. සාමාන්‍ය Image එකට Seal එක ගහන Function එක
+    function compressAndWatermarkImage(file, maxWidth, quality) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader(); reader.readAsDataURL(file);
+        reader.onload = event => {
+          const img = new Image(); img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas'); let width = img.width; let height = img.height;
+            if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
+            canvas.width = width; canvas.height = height; const ctx = canvas.getContext('2d'); 
+            
+            ctx.drawImage(img, 0, 0, width, height); // ඔරිජිනල් ෆොටෝ එක
+
+            // Watermark (Seal) එක එකතු කිරීම
+            ctx.save();
+            ctx.fillStyle = "rgba(220, 53, 69, 0.4)"; 
+            let fontSize = Math.floor(width / 28); 
+            ctx.font = "bold " + fontSize + "px sans-serif";
+            ctx.textAlign = "center"; ctx.textBaseline = "middle";
+            ctx.translate(width / 2, height / 2); ctx.rotate(-Math.PI / 6); 
+            
+            ctx.fillText("මෙය වාහනය ලියාපදිංචි සහතිකයේ සත්‍ය පිටපතකි.", 0, -fontSize * 1.5);
+            ctx.fillText("අදායම් බලපත්‍රය ලබාගැනීමට /", 0, 0);
+            ctx.fillText("දුම් වාර්තාව ලබාගැනීමට පමණි", 0, fontSize * 1.5);
+            ctx.restore();
+
+            const dataUrl = canvas.toDataURL('image/jpeg', quality); 
+            resolve({ data: dataUrl.split(',')[1], type: 'image/jpeg', name: file.name });
+          };
+        };
+        reader.onerror = error => reject(error);
+      });
+    }
     async function loadPendingValuations() {
       var container = document.getElementById("admin-req-list"); if(!container) return;
       container.innerHTML = "<div style='text-align:center; padding:20px;'>Loading pending requests...</div>";
@@ -1470,13 +1567,20 @@
         let f = fileInput.files[0];
         let base64Str, typeStr, nameStr;
 
+        // --- අලුත් Watermark (Seal) කෑල්ල මෙතනට තමයි එන්නේ ---
         if (f.type === "application/pdf") { 
-          let b64 = await new Promise((res2, rej) => { let fr = new FileReader(); fr.onload = ev => res2(ev.target.result); fr.onerror = err => rej(err); fr.readAsDataURL(f); }); 
-          base64Str = b64.split(',')[1]; typeStr = 'application/pdf'; nameStr = f.name; 
+          btn.innerText = "Applying Seal to PDF... ⏳";
+          base64Str = await watermarkPDF(f);
+          typeStr = 'application/pdf'; 
+          nameStr = f.name; 
         } else { 
-          let compressed = await compressImage(f, 1000, 0.7); 
-          base64Str = compressed.data; typeStr = compressed.type; nameStr = compressed.name; 
+          btn.innerText = "Applying Seal to Image... ⏳";
+          let compressed = await compressAndWatermarkImage(f, 1000, 0.7); 
+          base64Str = compressed.data; 
+          typeStr = compressed.type; 
+          nameStr = compressed.name; 
         }
+        // --------------------------------------------------------
 
         btn.innerText = "Uploading to Drive & Saving to Sheet... 🚀";
         
@@ -1508,7 +1612,6 @@
         btn.innerText = "Upload & Save CR";
       }
     }
-
     // Summary Report එක ලෝඩ් කරන function එක
     async function loadCRHistory() {
       var tbody = document.querySelector("#crHistoryTable tbody");
