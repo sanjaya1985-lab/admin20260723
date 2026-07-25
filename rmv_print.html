@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>RMV Print Portal - A4 Forms</title>
+  <title>RMV Print Portal - Auto Fill Forms</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     /* System UI Styles */
-    body { font-family: 'Inter', sans-serif; background: #f5f6fa; margin: 0; padding: 0; color: #333; }
+    body { font-family: 'Inter', sans-serif; background: #525659; margin: 0; padding: 0; color: #333; }
     .header { background: #121212; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #c62828; }
     .tabs { display: flex; background: #fff; border-bottom: 1px solid #ddd; padding: 0 20px; }
     .tab { padding: 15px 20px; cursor: pointer; font-weight: bold; color: #666; border-bottom: 3px solid transparent; }
@@ -16,56 +16,57 @@
     .content-section { padding: 30px; display: none; }
     .content-section.active { display: block; }
     
-    .form-box { background: #fff; padding: 25px; border-radius: 8px; border: 1px solid #ddd; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .form-box { background: #fff; padding: 25px; border-radius: 8px; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; color: #444; }
-    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; box-sizing: border-box; }
+    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 15px;}
     .btn { padding: 12px 20px; background: #0d6efd; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; }
-    .btn-print { background: #198754; width: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; }
+    .btn-print { background: #198754; width: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; font-size: 16px; padding: 15px 30px; }
     
-    /* A4 PRINT PAGE STYLES */
-    .a4-preview-container { background: #525659; padding: 20px; display: flex; flex-direction: column; gap: 20px; align-items: center; overflow-y: auto; }
+    /* A4 PRINT PAGE STYLES - ORIGINAL FORMS AS BACKGROUND */
+    .a4-preview-container { display: flex; flex-direction: column; gap: 30px; align-items: center; overflow-y: auto; padding-bottom: 50px; }
     
     .a4-page { 
-      background: white; 
+      background-color: white; 
       width: 210mm; 
-      min-height: 297mm; 
-      padding: 15mm; 
-      box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+      height: 297mm; /* Exact A4 Height */
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
       box-sizing: border-box; 
-      font-family: 'Times New Roman', serif;
-      position: relative;
+      position: relative; /* අකුරු place කරන්න position relative දෙනවා */
+      background-size: 100% 100%; /* රූපය A4 කොලේටම fit වෙනවා */
+      background-repeat: no-repeat;
+      page-break-after: always; /* ප්‍රින්ට් වෙද්දී එක කොළයකට එක ෆෝම් එකයි */
     }
 
-    .form-title { text-align: center; font-weight: bold; font-size: 18px; text-transform: uppercase; margin-bottom: 5px; }
-    .form-subtitle { text-align: center; font-size: 14px; margin-bottom: 25px; }
-    .form-top-right { position: absolute; top: 15mm; right: 15mm; font-weight: bold; font-size: 16px; border: 1px solid #000; padding: 5px 10px; }
-    
-    .form-row { display: flex; margin-bottom: 12px; align-items: flex-end; }
-    .form-label { font-weight: bold; font-size: 14px; white-space: nowrap; margin-right: 10px; }
-    .form-value { flex: 1; border-bottom: 1px dotted #000; font-size: 15px; padding-bottom: 2px; font-family: 'Courier New', Courier, monospace; font-weight: bold; }
-    
-    .sig-section { display: flex; justify-content: space-between; margin-top: 40px; }
-    .sig-box { width: 45%; text-align: center; border-top: 1px dotted #000; padding-top: 5px; font-size: 14px; }
+    /* Typed Text Style (Print වෙන අකුරු වල හැඩය) */
+    .p-text {
+      position: absolute;
+      font-size: 15px;
+      font-family: 'Courier New', Courier, monospace; /* ටයිප් රයිටර් එකකින් ගැහුවා වගේ පේන්න */
+      font-weight: bold;
+      color: #000;
+      white-space: nowrap;
+    }
 
     /* Print CSS (ප්‍රින්ට් කරද්දී වැඩ කරන කොටස) */
-    @page { size: A4; margin: 10mm; }
+    @page { size: A4; margin: 0; } /* කොළේ වටේ හිස් ඉඩ නැති කරනවා */
     @media print {
       body * { visibility: hidden; }
       #sec-print, #sec-print * { visibility: visible; }
       #sec-print { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white; }
-      .a4-preview-container { background: white; padding: 0; gap: 0; display: block; }
-      .btn-print, .tabs, .header { display: none !important; }
+      .a4-preview-container { padding: 0; gap: 0; display: block; }
+      .btn-print, .tabs, .header, .no-print { display: none !important; }
       
       .a4-page { 
-        width: 100%; 
-        height: auto; 
+        width: 210mm; 
+        height: 297mm; 
         box-shadow: none; 
         margin: 0; 
         padding: 0; 
-        page-break-after: always; /* හැම Form එකක්ම අලුත් පිටුවකින් පටන් ගනී */
+        /* මේක තමා මැජික් එක - Print වෙද්දී Background Image එක මකන්නේ නැතිව තියාගන්නවා */
+        -webkit-print-color-adjust: exact !important; 
+        print-color-adjust: exact !important;
       }
-      .a4-page:last-child { page-break-after: auto; }
     }
   </style>
 </head>
@@ -73,155 +74,86 @@
 
   <div class="header no-print">
     <h2><i class="fas fa-file-invoice"></i> RMV Documents Print Portal</h2>
-    <button style="background: transparent; border: 1px solid white; color: white; padding: 5px 15px; border-radius: 4px; cursor: pointer;" onclick="window.close()">Close Panel</button>
+    <button style="background: transparent; border: 1px solid white; color: white; padding: 5px 15px; border-radius: 4px; cursor: pointer;" onclick="window.close()">Close</button>
   </div>
 
   <div class="tabs no-print">
-    <div class="tab active" id="tab-add" onclick="switchTab('add')"><i class="fas fa-plus-square"></i> Search & Add Data</div>
-    <div class="tab" id="tab-print" onclick="switchTab('print')"><i class="fas fa-print"></i> Print MTA Forms</div>
+    <div class="tab active" id="tab-add" onclick="switchTab('add')"><i class="fas fa-edit"></i> Type Details</div>
+    <div class="tab" id="tab-print" onclick="switchTab('print')"><i class="fas fa-print"></i> Print Original Forms</div>
   </div>
 
   <!-- ADD DATA SECTION -->
   <div id="sec-add" class="content-section active no-print">
     <div class="form-box">
-      <h3 style="color: #c62828; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Transfer Details Setup</h3>
+      <h3 style="color: #c62828; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Type Transfer Details Here</h3>
       
-      <div style="display: flex; gap: 10px; margin-bottom: 20px; background: #e9ecef; padding: 15px; border-radius: 5px;">
-        <input type="text" id="searchVeh" class="form-control" placeholder="Search Vehicle No (e.g. WP CAB-1234)">
-        <button class="btn" style="width: auto; background: #343a40;" onclick="alert('API Integration pending. Please type details manually for now.')">Search</button>
-      </div>
-
-      <div class="form-group"><label>Vehicle Number</label><input type="text" id="i_vehNo" class="form-control"></div>
+      <div class="form-group"><label>Vehicle Number</label><input type="text" id="i_vehNo" class="form-control" placeholder="WP CAB-1234"></div>
       
-      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferor (Previous Owner) Details</h4>
-      <div class="form-group"><label>Name of Transferor</label><input type="text" id="i_oldName" class="form-control"></div>
-      <div class="form-group"><label>Address of Transferor</label><input type="text" id="i_oldAddress" class="form-control"></div>
+      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferor (Previous Owner)</h4>
+      <div class="form-group"><label>Name</label><input type="text" id="i_oldName" class="form-control"></div>
+      <div class="form-group"><label>Address</label><input type="text" id="i_oldAddress" class="form-control"></div>
       
-      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferee (New Owner) Details</h4>
-      <div class="form-group"><label>Name of Transferee</label><input type="text" id="i_newName" class="form-control"></div>
-      <div class="form-group"><label>Address of Transferee</label><input type="text" id="i_newAddress" class="form-control"></div>
-      <div class="form-group"><label>Identity Card Number</label><input type="text" id="i_newId" class="form-control"></div>
-      <div class="form-group"><label>Mobile Number</label><input type="text" id="i_newMobile" class="form-control"></div>
+      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferee (New Owner)</h4>
+      <div class="form-group"><label>Name</label><input type="text" id="i_newName" class="form-control"></div>
+      <div class="form-group"><label>Address</label><input type="text" id="i_newAddress" class="form-control"></div>
+      <div class="form-group"><label>ID Number</label><input type="text" id="i_newId" class="form-control"></div>
 
-      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Hire-Purchase / Absolute Ownership (MTA 3)</h4>
-      <div class="form-group"><label>Name of Finance/Leasing Company</label><input type="text" id="i_financeName" class="form-control" placeholder="Leave blank if not applicable"></div>
+      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Hire-Purchase (Finance)</h4>
+      <div class="form-group"><label>Finance Company Name (Optional)</label><input type="text" id="i_financeName" class="form-control" placeholder="Leave blank if not applicable"></div>
 
-      <button class="btn" onclick="saveDataAndPreparePrint()" style="margin-top: 15px;">Generate MTA Documents</button>
+      <button class="btn" onclick="saveDataAndPreparePrint()" style="margin-top: 15px; font-size: 16px;">Set Data to Forms & Proceed to Print <i class="fas fa-arrow-right"></i></button>
     </div>
   </div>
 
   <!-- PRINT PAPERS SECTION -->
-  <div id="sec-print" class="content-section" style="background: #525659; padding: 20px 0;">
-    <button class="btn btn-print no-print" onclick="window.print()"><i class="fas fa-print"></i> Print All Documents (A4)</button>
+  <div id="sec-print" class="content-section" style="padding: 20px 0;">
+    <button class="btn btn-print no-print" onclick="window.print()"><i class="fas fa-print"></i> Print Forms Now</button>
     
     <div class="a4-preview-container">
       
-      <!-- PAGE 1: MTA 6 -->
-      <div class="a4-page">
-        <div class="form-top-right">M.T.A. 6</div>
-        <div class="form-title">Statement of Change of Possession of a Motor Vehicle</div>
-        <div class="form-subtitle">Sections 12 (2) (a) and 12 (3) (a)</div>
-        <br>
-        <p><strong>To: THE COMMISSIONER GENERAL OF MOTOR TRAFFIC</strong></p>
+      <!-- PAGE 1: MTA 6 (Background: MTA_06_JPG.jpg) -->
+      <div class="a4-page" style="background-image: url('MTA_06_JPG.jpg');">
+        <!-- Date (Top Rightish) -->
+        <span class="p-text" id="p1_date" style="top: 290px; left: 395px;"></span>
         
-        <div class="form-row">
-          <div class="form-label">Date of Transfer:</div><div class="form-value"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Name of Transferor:</div><div class="form-value" id="p1_oldName"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Address of Transferor:</div><div class="form-value" id="p1_oldAddress"></div>
-        </div>
+        <!-- Transferor -->
+        <span class="p-text" id="p1_oldName" style="top: 345px; left: 65px;"></span>
+        <span class="p-text" id="p1_oldAddress" style="top: 388px; left: 65px;"></span>
         
-        <p style="margin: 20px 0;">I have transferred the possession of Motor Vehicle No <strong id="p1_vehNo" style="border-bottom: 1px dotted #000; padding: 0 20px;"></strong> to:</p>
+        <!-- Vehicle No -->
+        <span class="p-text" id="p1_vehNo" style="top: 420px; left: 390px; letter-spacing: 5px;"></span>
         
-        <div class="form-row">
-          <div class="form-label">Name of Transferee:</div><div class="form-value" id="p1_newName"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Address of Transferee:</div><div class="form-value" id="p1_newAddress"></div>
-        </div>
-
-        <p style="margin-top: 30px; font-size: 13px; text-align: justify;">
-          I do hereby acknowledge the transfer to me of the motor vehicle and hereby give my consent to certify authenticity of the National Identity Card to the CGMT.
-        </p>
-
-        <div class="sig-section">
-          <div class="sig-box">Signature of Transferor<br><br>Date: ........................</div>
-          <div class="sig-box">Signature of Transferee<br><br>Date: ........................</div>
-        </div>
+        <!-- Transferee -->
+        <span class="p-text" id="p1_newName" style="top: 468px; left: 65px;"></span>
+        <span class="p-text" id="p1_newAddress" style="top: 512px; left: 65px;"></span>
       </div>
 
-      <!-- PAGE 2: MTA 8 -->
-      <div class="a4-page">
-        <div class="form-top-right">M.T.A. 8</div>
-        <div class="form-title">Application for Registration of a Motor Vehicle on Transfer</div>
-        <div class="form-subtitle">Section 13 (1)</div>
-        <br>
-        <p><strong>To: THE COMMISSIONER GENERAL OF MOTOR TRAFFIC</strong></p>
-        <p>I hereby apply to be registered as the new owner of the Vehicle Number <strong id="p2_vehNo" style="border-bottom: 1px dotted #000; padding: 0 20px;"></strong></p>
+      <!-- PAGE 2: MTA 8 (Background: MAT_8_JPG.jpg) -->
+      <div class="a4-page" style="background-image: url('MAT_8_JPG.jpg');">
+        <!-- Vehicle No -->
+        <span class="p-text" id="p2_vehNo" style="top: 350px; left: 565px; letter-spacing: 7px;"></span>
         
-        <div class="form-row">
-          <div class="form-label">Previously registered to:</div><div class="form-value" id="p2_oldName"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Name of Transferee:</div><div class="form-value" id="p2_newName"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Address of Transferee:</div><div class="form-value" id="p2_newAddress"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Identity Card Number of transferee:</div><div class="form-value" id="p2_newId"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Mobile Number:</div><div class="form-value" id="p2_newMobile"></div>
-        </div>
-
-        <div style="margin-top: 30px; border: 1px solid #000; padding: 15px; font-size: 13px;">
-          <strong>The following documents are attached herewith:</strong><br><br>
-          (a) Certificate of Registration of vehicle.<br>
-          (b) Copy of Transferee's National Identity card / Valid driving Licence / Valid Passport.<br>
-          (c) Revenue Licence / Cash receipt for the payment of licence duty / Copy of Non User Certificate.<br>
-          (e) Mortgage / absolute ownership / lease cancellation letter (If available).
-        </div>
-
-        <p style="margin-top: 40px; font-size: 13px; text-align: justify;">
-          I do hereby place my signature confirming that all the facts mentioned here and attached documents are true and correct and acknowledging and accepting that submitting false document is a punishable offence...
-        </p>
-
-        <div class="sig-section" style="justify-content: flex-end;">
-          <div class="sig-box" style="width: 50%;">Signature of the Transferee<br><br>Date: ........................</div>
-        </div>
+        <!-- Previous Owner -->
+        <span class="p-text" id="p2_oldName" style="top: 405px; left: 205px;"></span>
+        
+        <!-- Transferee -->
+        <span class="p-text" id="p2_newName" style="top: 450px; left: 95px;"></span>
+        <span class="p-text" id="p2_newAddress" style="top: 495px; left: 125px;"></span>
+        
+        <!-- ID Number -->
+        <span class="p-text" id="p2_newId" style="top: 550px; left: 545px; letter-spacing: 5px;"></span>
       </div>
 
-      <!-- PAGE 3: MTA 3 -->
-      <div class="a4-page" id="page_mta3">
-        <div class="form-top-right">M.T.A. 3</div>
-        <div class="form-title">Statement of Hire-Purchase Agreement Relating to a Motor Vehicle</div>
-        <div class="form-subtitle">Section 7 (4) and 13 (2)</div>
-        <br>
-        <p><strong>To: The Registrar of Motor Vehicles</strong></p>
-        <p>I hereby give notice that I have let the motor vehicle in respect of which the attached application for registration is made to:</p>
-        
-        <div class="form-row">
-          <div class="form-label">Name of person whom vehicle is let:</div><div class="form-value" id="p3_newName"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-label">Address:</div><div class="form-value" id="p3_newAddress"></div>
-        </div>
-        
-        <p style="margin-top: 20px;">Under the hire-purchase agreement.</p>
-        <p>The aforesaid person has signed below in acknowledgement of the fact that the vehicle has been so let to him.</p>
+      <!-- PAGE 3: MTA 3 FRONT (Background: MTA_03_JPG_ Front.jpg) -->
+      <div class="a4-page" id="page_mta3_front" style="background-image: url('MTA_03_JPG_ Front.jpg');">
+        <span class="p-text" id="p3f_financeName" style="top: 535px; left: 145px;"></span>
+        <span class="p-text" id="p3f_newName" style="top: 575px; left: 515px;"></span>
+        <span class="p-text" id="p3f_newAddress" style="top: 600px; left: 75px;"></span>
+      </div>
 
-        <div class="form-row" style="margin-top: 30px;">
-          <div class="form-label">Name of person who let the vehicle (Finance):</div><div class="form-value" id="p3_financeName"></div>
-        </div>
-
-        <div class="sig-section" style="margin-top: 60px;">
-          <div class="sig-box">Signature of person who let the vehicle<br><br>Date: ........................</div>
-          <div class="sig-box">Signature of person to whom the vehicle is let<br><br>Date: ........................</div>
-        </div>
+      <!-- PAGE 4: MTA 3 BACK (Background: MTA_03_JPG_Back.jpg) -->
+      <div class="a4-page" id="page_mta3_back" style="background-image: url('MTA_03_JPG_Back.jpg');">
+        <!-- Back page mostly signatures, but we link it so it prints correctly -->
       </div>
 
     </div>
@@ -235,10 +167,6 @@
       document.getElementById('sec-' + tabId).classList.add('active');
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
-    if(tabParam) { switchTab(tabParam); }
-
     function saveDataAndPreparePrint() {
       // Get Values
       const vehNo = document.getElementById('i_vehNo').value;
@@ -247,12 +175,18 @@
       const newName = document.getElementById('i_newName').value;
       const newAddress = document.getElementById('i_newAddress').value;
       const newId = document.getElementById('i_newId').value;
-      const newMobile = document.getElementById('i_newMobile').value;
       const financeName = document.getElementById('i_financeName').value;
 
       if(!vehNo || !newName) return alert("Vehicle Number and New Owner Name are required!");
 
+      // Get Current Date
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      const yyyy = today.getFullYear();
+
       // Fill MTA 6
+      document.getElementById('p1_date').innerText = dd + "     " + mm + "     " + yyyy;
       document.getElementById('p1_vehNo').innerText = vehNo.toUpperCase();
       document.getElementById('p1_oldName').innerText = oldName.toUpperCase();
       document.getElementById('p1_oldAddress').innerText = oldAddress.toUpperCase();
@@ -260,22 +194,24 @@
       document.getElementById('p1_newAddress').innerText = newAddress.toUpperCase();
 
       // Fill MTA 8
-      document.getElementById('p2_vehNo').innerText = vehNo.toUpperCase();
+      document.getElementById('p2_vehNo').innerText = vehNo.toUpperCase().replace(/\s/g, ''); // spaces removed for boxes
       document.getElementById('p2_oldName').innerText = oldName.toUpperCase();
       document.getElementById('p2_newName').innerText = newName.toUpperCase();
       document.getElementById('p2_newAddress').innerText = newAddress.toUpperCase();
-      document.getElementById('p2_newId').innerText = newId.toUpperCase();
-      document.getElementById('p2_newMobile').innerText = newMobile;
+      document.getElementById('p2_newId').innerText = newId.toUpperCase().replace(/\s/g, ''); // spaces removed for boxes
 
       // Fill MTA 3 (Only if Finance company is provided)
       if(financeName.trim() !== "") {
-        document.getElementById('page_mta3').style.display = "block";
-        document.getElementById('p3_newName').innerText = newName.toUpperCase();
-        document.getElementById('p3_newAddress').innerText = newAddress.toUpperCase();
-        document.getElementById('p3_financeName').innerText = financeName.toUpperCase();
+        document.getElementById('page_mta3_front').style.display = "block";
+        document.getElementById('page_mta3_back').style.display = "block";
+        
+        document.getElementById('p3f_financeName').innerText = financeName.toUpperCase();
+        document.getElementById('p3f_newName').innerText = newName.toUpperCase();
+        document.getElementById('p3f_newAddress').innerText = newAddress.toUpperCase();
       } else {
-        // Hide MTA 3 page if no finance details
-        document.getElementById('page_mta3').style.display = "none";
+        // Hide MTA 3 pages if no finance details
+        document.getElementById('page_mta3_front').style.display = "none";
+        document.getElementById('page_mta3_back').style.display = "none";
       }
 
       switchTab('print');
