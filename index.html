@@ -187,6 +187,18 @@
             <i class="fas fa-list-alt"></i> Upload History
           </div>
         </div>
+        <!-- RMV PRINT OPTION -->
+        <div class="menu-category" id="rmv-print-category" onclick="toggleSubMenu('rmv-print-submenu', this)">
+          <span><i class="fas fa-file-invoice" style="margin-right: 8px;"></i> RMV_Print</span> <i class="fas fa-chevron-down arrow"></i>
+        </div>
+        <div class="sub-menu" id="rmv-print-submenu">
+          <div class="menu-item" data-icon="fas fa-plus-square" onclick="window.open('rmv_print.html?tab=add', '_blank')">
+            <i class="fas fa-plus-square"></i> Add Data
+          </div>
+          <div class="menu-item" data-icon="fas fa-print" onclick="window.open('rmv_print.html?tab=print', '_blank')">
+            <i class="fas fa-print"></i> Print Papers
+          </div>
+        </div>
       </nav>
 
       <main class="content-area">
@@ -802,6 +814,13 @@
         else {
              if(crMenuCategory) crMenuCategory.style.display = 'flex';
              if(crNewBtn) crNewBtn.style.display = 'none'; 
+        }
+        var rmvPrintCat = document.getElementById('rmv-print-category');
+        if (rmvPrintCat) rmvPrintCat.style.display = 'none'; // මුලින් හංගනවා
+
+        // Print මෙනු එක පේන්න ඕනේ කාටද කියලා මෙතනින් තීරණය වෙනවා
+        if (roleLower === 'super admin' || roleLower === 'admin' || roleLower.includes('rmv') || roleLower === 'head office' || branchLower === 'head office') {
+             if (rmvPrintCat) rmvPrintCat.style.display = 'flex';
         }
 
         var valForm = document.getElementById('vForm');
