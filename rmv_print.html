@@ -78,17 +78,17 @@
     <div class="form-box">
       <h3 style="color: #c62828; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Type Transfer Details Here</h3>
       
-      <!-- Date: Validation (Numbers Only) -->
+      <!-- Date: Validation Limits Added -->
       <div class="form-group">
         <label>Transfer Date</label>
         <div style="display:flex; gap:10px;">
-          <input type="text" id="i_dateDD" class="form-control" placeholder="DD" maxlength="2" style="width: 70px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-          <input type="text" id="i_dateMM" class="form-control" placeholder="MM" maxlength="2" style="width: 70px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" id="i_dateDD" class="form-control" placeholder="DD" maxlength="2" style="width: 70px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value !== '' && parseInt(this.value) > 31) this.value = '31';">
+          <input type="text" id="i_dateMM" class="form-control" placeholder="MM" maxlength="2" style="width: 70px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, ''); if(this.value !== '' && parseInt(this.value) > 12) this.value = '12';">
           <input type="text" id="i_dateYYYY" class="form-control" placeholder="YYYY" maxlength="4" style="width: 90px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
         </div>
       </div>
 
-      <!-- Vehicle Number: Validation & Auto Uppercase -->
+      <!-- Vehicle Number -->
       <div class="form-group">
         <label>Vehicle Number</label>
         <div style="display:flex; gap:10px;">
@@ -101,7 +101,6 @@
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferor (Previous Owner)</h4>
       <div class="form-group"><label>Name</label><input type="text" id="i_oldName" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
       <div class="form-group"><label>Address</label><input type="text" id="i_oldAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
-      <!-- Old Owner NIC (Added) -->
       <div class="form-group"><label>Transferor ID Number</label><input type="text" id="i_oldId" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
       
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferee (New Owner)</h4>
@@ -130,11 +129,11 @@
         <span class="p-text" id="p1_date_yyyy" style="top: 326px; left: 659px; letter-spacing: 11px;"></span>
         
         <!-- Transferor Line 1 & Line 2 -->
-        <span class="p-text" id="p1_oldName" style="top: 350px; left: 69px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_oldName2" style="top: 377px; left: 69px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_oldName" style="top: 350px; left: 69px;"></span>
+        <span class="p-text" id="p1_oldName2" style="top: 374px; left: 69px;"></span>
         
-        <span class="p-text" id="p1_oldAddress" style="top: 405px; left: 69px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_oldAddress2" style="top: 432px; left: 69px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_oldAddress" style="top: 405px; left: 69px;"></span>
+        <span class="p-text" id="p1_oldAddress2" style="top: 429px; left: 69px;"></span>
         
         <!-- Vehicle No -->
         <span class="p-text" id="p1_veh_prov" style="top: 466px; left: 508px; letter-spacing: 10px;"></span>
@@ -142,15 +141,15 @@
         <span class="p-text" id="p1_veh_nums" style="top: 466px; left: 640px; letter-spacing: 10px;"></span>
         
         <!-- Transferee Line 1 & Line 2 -->
-        <span class="p-text" id="p1_newName" style="top: 490px; left: 68px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_newName2" style="top: 517px; left: 68px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_newName" style="top: 490px; left: 68px;"></span>
+        <span class="p-text" id="p1_newName2" style="top: 515px; left: 70px;"></span>
 
-        <span class="p-text" id="p1_newAddress" style="top: 548px; left: 68px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_newAddress2" style="top: 575px; left: 68px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_newAddress" style="top: 548px; left: 68px;"></span>
+        <span class="p-text" id="p1_newAddress2" style="top: 571px; left: 69px;"></span>
 
-        <!-- MTA 6 Bottom NIC Numbers (Please inspect and adjust top/left as needed) -->
-        <span class="p-text" id="p1_oldId" style="top: 750px; left: 100px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_newId" style="top: 850px; left: 100px; letter-spacing: 10px;"></span>
+        <!-- Bottom NICs -->
+        <span class="p-text" id="p1_oldId" style="top: 739px; left: 68px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_newId" style="top: 908px; left: 68px; letter-spacing: 10px;"></span>
       </div>
 
       <!-- PAGE 2: MTA 8 -->
@@ -161,15 +160,15 @@
         <span class="p-text" id="p2_veh_nums" style="top: 401px; left: 697px; letter-spacing: 10px;"></span>
         
         <!-- Transferor Line 1 & Line 2 -->
-        <span class="p-text" id="p2_oldName" style="top: 442px; left: 213px; letter-spacing: 12px;"></span>
-        <span class="p-text" id="p2_oldName2" style="top: 470px; left: 100px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_oldName" style="top: 442px; left: 213px;"></span>
+        <span class="p-text" id="p2_oldName2" style="top: 470px; left: 100px;"></span>
 
         <!-- Transferee Line 1 & Line 2 -->
-        <span class="p-text" id="p2_newName" style="top: 511px; left: 87px; letter-spacing: 12px;"></span>
-        <span class="p-text" id="p2_newName2" style="top: 540px; left: 100px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newName" style="top: 511px; left: 87px;"></span>
+        <span class="p-text" id="p2_newName2" style="top: 540px; left: 100px;"></span>
 
-        <span class="p-text" id="p2_newAddress" style="top: 608px; left: 130px; letter-spacing: 12px;"></span>
-        <span class="p-text" id="p2_newAddress2" style="top: 636px; left: 100px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newAddress" style="top: 608px; left: 130px;"></span>
+        <span class="p-text" id="p2_newAddress2" style="top: 636px; left: 100px;"></span>
         
         <!-- Transferee ID -->
         <span class="p-text" id="p2_newId" style="top: 716px; left: 549px; letter-spacing: 11.5px;"></span>
@@ -197,15 +196,33 @@
       document.getElementById('sec-' + tabId).classList.add('active');
     }
 
-    // Function to split text if it exceeds 35 characters
-    function splitText(text, limit) {
-      if(text.length <= limit) {
-        return { line1: text, line2: "" };
+    // Advanced Text Fitter: Auto reduces font size and spacing if length > 70
+    function applyTextToLines(el1Id, el2Id, text, defaultSpacing) {
+      let el1 = document.getElementById(el1Id);
+      let el2 = document.getElementById(el2Id);
+      
+      if (!el1 || !el2) return;
+
+      if(text.length <= 70) {
+        // Normal split
+        el1.innerText = text.substring(0, 35);
+        el2.innerText = text.substring(35, 70);
+        
+        el1.style.letterSpacing = defaultSpacing;
+        el2.style.letterSpacing = defaultSpacing;
+        el1.style.fontSize = "15px";
+        el2.style.fontSize = "15px";
       } else {
-        return { 
-          line1: text.substring(0, limit), 
-          line2: text.substring(limit, limit * 2) 
-        };
+        // Exceeds 70, split in half and compress
+        let half = Math.ceil(text.length / 2);
+        el1.innerText = text.substring(0, half);
+        el2.innerText = text.substring(half, text.length);
+        
+        // Reduce spacing and font size to fit long texts
+        el1.style.letterSpacing = "3px";
+        el2.style.letterSpacing = "3px";
+        el1.style.fontSize = "13px";
+        el2.style.fontSize = "13px";
       }
     }
 
@@ -229,12 +246,6 @@
       
       const financeName = document.getElementById('i_financeName').value;
 
-      // Split Texts over 35 characters
-      const sOldName = splitText(oldName, 35);
-      const sOldAddress = splitText(oldAddress, 35);
-      const sNewName = splitText(newName, 35);
-      const sNewAddress = splitText(newAddress, 35);
-
       // --- Fill MTA 6 ---
       document.getElementById('p1_date_dd').innerText = dDD;
       document.getElementById('p1_date_mm').innerText = dMM;
@@ -244,17 +255,12 @@
       document.getElementById('p1_veh_letters').innerText = vLetters;
       document.getElementById('p1_veh_nums').innerText = vNums;
 
-      document.getElementById('p1_oldName').innerText = sOldName.line1;
-      document.getElementById('p1_oldName2').innerText = sOldName.line2;
-      document.getElementById('p1_oldAddress').innerText = sOldAddress.line1;
-      document.getElementById('p1_oldAddress2').innerText = sOldAddress.line2;
-
-      document.getElementById('p1_newName').innerText = sNewName.line1;
-      document.getElementById('p1_newName2').innerText = sNewName.line2;
-      document.getElementById('p1_newAddress').innerText = sNewAddress.line1;
-      document.getElementById('p1_newAddress2').innerText = sNewAddress.line2;
+      // Use Smart Text Fitter
+      applyTextToLines('p1_oldName', 'p1_oldName2', oldName, '10px');
+      applyTextToLines('p1_oldAddress', 'p1_oldAddress2', oldAddress, '10px');
+      applyTextToLines('p1_newName', 'p1_newName2', newName, '10px');
+      applyTextToLines('p1_newAddress', 'p1_newAddress2', newAddress, '10px');
       
-      // Bottom NICs
       document.getElementById('p1_oldId').innerText = oldId.replace(/\s/g, ''); 
       document.getElementById('p1_newId').innerText = newId.replace(/\s/g, ''); 
 
@@ -263,12 +269,9 @@
       document.getElementById('p2_veh_letters').innerText = vLetters;
       document.getElementById('p2_veh_nums').innerText = vNums;
 
-      document.getElementById('p2_oldName').innerText = sOldName.line1;
-      document.getElementById('p2_oldName2').innerText = sOldName.line2;
-      document.getElementById('p2_newName').innerText = sNewName.line1;
-      document.getElementById('p2_newName2').innerText = sNewName.line2;
-      document.getElementById('p2_newAddress').innerText = sNewAddress.line1;
-      document.getElementById('p2_newAddress2').innerText = sNewAddress.line2;
+      applyTextToLines('p2_oldName', 'p2_oldName2', oldName, '12px');
+      applyTextToLines('p2_newName', 'p2_newName2', newName, '12px');
+      applyTextToLines('p2_newAddress', 'p2_newAddress2', newAddress, '12px');
 
       document.getElementById('p2_newId').innerText = newId.replace(/\s/g, ''); 
 
