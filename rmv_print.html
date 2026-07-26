@@ -154,6 +154,9 @@
         <!-- Bottom NICs -->
         <span class="p-text" id="p1_oldId" style="top: 739px; left: 68px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p1_newId" style="top: 908px; left: 68px; letter-spacing: 10px;"></span>
+        
+        <!-- One Day Transfer Vehicle Number (Bottom) -->
+        <span class="p-text" id="p1_bottom_vehNo" style="top: 810px; left: 510px; font-size: 13px; letter-spacing: 1px; font-family: Arial, sans-serif;"></span>
       </div>
 
       <!-- PAGE 2: MTA 8 -->
@@ -273,10 +276,11 @@
       
       document.getElementById('p1_oldId').innerText = oldId.replace(/\s/g, ''); 
       document.getElementById('p1_newId').innerText = newId.replace(/\s/g, ''); 
+      
+      // Bottom One Day Transfer Vehicle Number (Format: PROV-LETTERS-NUMS)
+      document.getElementById('p1_bottom_vehNo').innerText = vProv + "-" + vLetters + "-" + vNums;
 
-      <!-- One Day Transfer Vehicle Number (Bottom) -->
-        <span class="p-text" id="p1_bottom_vehNo" style="top: 810px; left: 510px; font-size: 12px; letter-spacing: 1px; font-family: Arial, sans-serif;"></span>
-
+      
       // --- Fill MTA 8 ---
       document.getElementById('p2_veh_prov').innerText = vProv;
       document.getElementById('p2_veh_letters').innerText = vLetters;
