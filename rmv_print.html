@@ -78,7 +78,6 @@
     <div class="form-box">
       <h3 style="color: #c62828; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Type Transfer Details Here</h3>
       
-      <!-- වෙන වෙනම Date එක ගහන තැන -->
       <div class="form-group">
         <label>Transfer Date</label>
         <div style="display:flex; gap:10px;">
@@ -88,7 +87,6 @@
         </div>
       </div>
 
-      <!-- වෙන වෙනම Vehicle Number එක ගහන තැන -->
       <div class="form-group">
         <label>Vehicle Number</label>
         <div style="display:flex; gap:10px;">
@@ -122,37 +120,34 @@
       
       <!-- PAGE 1: MTA 6 -->
       <div class="a4-page" style="background-image: url('MTA_06_JPG.jpg');">
+        <!-- ඔයා එවපු MTA 6 Alignment ටික මෙතන තියෙනවා -->
+        <span class="p-text" id="p1_date_dd" style="top: 326px; left: 411px; letter-spacing: 11px;"></span>
+        <span class="p-text" id="p1_date_mm" style="top: 326px; left: 545px; letter-spacing: 11px;"></span>
+        <span class="p-text" id="p1_date_yyyy" style="top: 326px; left: 659px; letter-spacing: 11px;"></span>
         
-        <!-- Date Split -->
-        <span class="p-text" id="p1_date_dd" style="top: 290px; left: 470px; letter-spacing: 12px;"></span>
-        <span class="p-text" id="p1_date_mm" style="top: 290px; left: 580px; letter-spacing: 12px;"></span>
-        <span class="p-text" id="p1_date_yyyy" style="top: 290px; left: 700px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p1_oldName" style="top: 350px; left: 69px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_oldAddress" style="top: 405px; left: 69px; letter-spacing: 10px;"></span>
         
-        <span class="p-text" id="p1_oldName" style="top: 345px; left: 65px;"></span>
-        <span class="p-text" id="p1_oldAddress" style="top: 388px; left: 65px;"></span>
+        <span class="p-text" id="p1_veh_prov" style="top: 466px; left: 508px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_veh_letters" style="top: 466px; left: 566px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_veh_nums" style="top: 466px; left: 640px; letter-spacing: 10px;"></span>
         
-        <!-- Vehicle No Split -->
-        <span class="p-text" id="p1_veh_prov" style="top: 420px; left: 390px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_veh_letters" style="top: 420px; left: 520px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_veh_nums" style="top: 420px; left: 650px; letter-spacing: 10px;"></span>
-        
-        <span class="p-text" id="p1_newName" style="top: 468px; left: 65px;"></span>
-        <span class="p-text" id="p1_newAddress" style="top: 512px; left: 65px;"></span>
+        <span class="p-text" id="p1_newName" style="top: 490px; left: 68px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_newAddress" style="top: 548px; left: 68px; letter-spacing: 10px;"></span>
       </div>
 
       <!-- PAGE 2: MTA 8 -->
       <div class="a4-page" style="background-image: url('MAT_8_JPG.jpg');">
-        <!-- Vehicle No Split (Adjust left positions accordingly) -->
-        <span class="p-text" id="p2_veh_prov" style="top: 350px; left: 565px; letter-spacing: 7px;"></span>
-        <span class="p-text" id="p2_veh_letters" style="top: 350px; left: 620px; letter-spacing: 7px;"></span>
-        <span class="p-text" id="p2_veh_nums" style="top: 350px; left: 700px; letter-spacing: 7px;"></span>
+        <!-- ඔයා එවපු MTA 8 Alignment ටික මෙතන තියෙනවා -->
+        <span class="p-text" id="p2_veh_prov" style="top: 401px; left: 569px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p2_veh_letters" style="top: 401px; left: 633px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p2_veh_nums" style="top: 401px; left: 697px; letter-spacing: 10px;"></span>
         
-        <span class="p-text" id="p2_oldName" style="top: 405px; left: 205px;"></span>
-        <span class="p-text" id="p2_newName" style="top: 450px; left: 95px;"></span>
-        <span class="p-text" id="p2_newAddress" style="top: 495px; left: 125px;"></span>
+        <span class="p-text" id="p2_oldName" style="top: 442px; left: 213px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newName" style="top: 511px; left: 87px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newAddress" style="top: 608px; left: 130px; letter-spacing: 12px;"></span>
         
-        <!-- ID Number (Usually fits well with standard letter spacing) -->
-        <span class="p-text" id="p2_newId" style="top: 550px; left: 545px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p2_newId" style="top: 716px; left: 549px; letter-spacing: 11.5px;"></span>
       </div>
 
       <!-- PAGE 3: MTA 3 FRONT -->
