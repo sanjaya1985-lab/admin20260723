@@ -78,7 +78,7 @@
     <div class="form-box">
       <h3 style="color: #c62828; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Type Transfer Details Here</h3>
       
-      <!-- Date: Validation Limits Added -->
+      <!-- Date -->
       <div class="form-group">
         <label>Transfer Date</label>
         <div style="display:flex; gap:10px;">
@@ -108,6 +108,20 @@
       <div class="form-group"><label>Address</label><input type="text" id="i_newAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
       <div class="form-group"><label>Transferee ID Number</label><input type="text" id="i_newId" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
 
+      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #007bff;">MTA 8 Specific Details</h4>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="width: 50%;"><label>Postal Code</label><input type="text" id="i_postalCode" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+        <div class="form-group" style="width: 50%;"><label>Mobile Number</label><input type="text" id="i_mobileNo" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="width: 50%;"><label>Divisional Secretariat</label><input type="text" id="i_divSec" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+        <div class="form-group" style="width: 50%;"><label>District</label><input type="text" id="i_district" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="width: 50%;"><label>Province</label><input type="text" id="i_provinceLoc" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+        <div class="form-group" style="width: 50%;"><label>Collect Office (Number Plate)</label><input type="text" id="i_collectOffice" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      </div>
+
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Hire-Purchase (Finance)</h4>
       <div class="form-group"><label>Finance Company Name (Optional)</label><input type="text" id="i_financeName" class="form-control" placeholder="Leave blank if not applicable" oninput="this.value = this.value.toUpperCase()"></div>
 
@@ -128,7 +142,6 @@
         <span class="p-text" id="p1_date_mm" style="top: 326px; left: 545px; letter-spacing: 11px;"></span>
         <span class="p-text" id="p1_date_yyyy" style="top: 326px; left: 659px; letter-spacing: 11px;"></span>
         
-        <!-- Transferor Line 1, 2 & Overflow 3 -->
         <span class="p-text" id="p1_oldName" style="top: 350px; left: 69px;"></span>
         <span class="p-text" id="p1_oldName2" style="top: 374px; left: 69px;"></span>
         <span class="p-text" id="p1_oldName3" style="top: 393px; left: 69px; font-size: 11px; letter-spacing: 2px;"></span>
@@ -137,12 +150,10 @@
         <span class="p-text" id="p1_oldAddress2" style="top: 429px; left: 69px;"></span>
         <span class="p-text" id="p1_oldAddress3" style="top: 449px; left: 69px; font-size: 11px; letter-spacing: 2px;"></span>
         
-        <!-- Vehicle No -->
         <span class="p-text" id="p1_veh_prov" style="top: 466px; left: 508px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p1_veh_letters" style="top: 466px; left: 566px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p1_veh_nums" style="top: 466px; left: 640px; letter-spacing: 10px;"></span>
         
-        <!-- Transferee Line 1, 2 & Overflow 3 -->
         <span class="p-text" id="p1_newName" style="top: 490px; left: 68px;"></span>
         <span class="p-text" id="p1_newName2" style="top: 515px; left: 70px;"></span>
         <span class="p-text" id="p1_newName3" style="top: 533px; left: 70px; font-size: 11px; letter-spacing: 2px;"></span>
@@ -151,12 +162,11 @@
         <span class="p-text" id="p1_newAddress2" style="top: 571px; left: 69px;"></span>
         <span class="p-text" id="p1_newAddress3" style="top: 589px; left: 69px; font-size: 11px; letter-spacing: 2px;"></span>
 
-        <!-- Bottom NICs -->
         <span class="p-text" id="p1_oldId" style="top: 739px; left: 68px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p1_newId" style="top: 908px; left: 68px; letter-spacing: 10px;"></span>
         
-        <!-- One Day Transfer Vehicle Number (Bottom) -->
-        <span class="p-text" id="p1_bottom_vehNo" style="top: 1020px; left: 490px; font-size: 10px; letter-spacing: 1px; font-family: Arial, sans-serif;"></span>
+        <!-- One Day Transfer Vehicle Number -->
+        <span class="p-text" id="p1_bottom_vehNo" style="top: 810px; left: 510px; font-size: 13px; letter-spacing: 1px; font-family: Arial, sans-serif;"></span>
       </div>
 
       <!-- PAGE 2: MTA 8 -->
@@ -166,22 +176,39 @@
         <span class="p-text" id="p2_veh_letters" style="top: 401px; left: 633px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p2_veh_nums" style="top: 401px; left: 697px; letter-spacing: 10px;"></span>
         
-        <!-- Transferor Line 1, 2 & Overflow 3 -->
+        <!-- Transferor Line 1 (27 chars), 2 (35 chars) & Overflow 3 -->
         <span class="p-text" id="p2_oldName" style="top: 442px; left: 213px;"></span>
         <span class="p-text" id="p2_oldName2" style="top: 470px; left: 100px;"></span>
         <span class="p-text" id="p2_oldName3" style="top: 489px; left: 100px; font-size: 11px; letter-spacing: 2px;"></span>
 
-        <!-- Transferee Line 1, 2 & Overflow 3 -->
+        <!-- Transferee Line 1 (33 chars), 2 (35 chars) & Overflow 3 -->
         <span class="p-text" id="p2_newName" style="top: 511px; left: 87px;"></span>
         <span class="p-text" id="p2_newName2" style="top: 540px; left: 100px;"></span>
         <span class="p-text" id="p2_newName3" style="top: 559px; left: 100px; font-size: 11px; letter-spacing: 2px;"></span>
 
+        <!-- Transferee Address Line 1 (31 chars), 2 (35 chars) & Overflow 3 -->
         <span class="p-text" id="p2_newAddress" style="top: 608px; left: 130px;"></span>
         <span class="p-text" id="p2_newAddress2" style="top: 636px; left: 100px;"></span>
         <span class="p-text" id="p2_newAddress3" style="top: 655px; left: 100px; font-size: 11px; letter-spacing: 2px;"></span>
         
-        <!-- Transferee ID -->
+        <!-- ID & New Fields for MTA 8 -->
         <span class="p-text" id="p2_newId" style="top: 716px; left: 549px; letter-spacing: 11.5px;"></span>
+        
+        <!-- NEW: Position these using Inspect Element! -->
+        <span class="p-text" id="p2_postalCode" style="top: 755px; left: 320px; letter-spacing: 11px;"></span>
+        <span class="p-text" id="p2_mobileNo" style="top: 755px; left: 570px; letter-spacing: 11px;"></span>
+        
+        <span class="p-text" id="p2_divSec" style="top: 795px; left: 280px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p2_district" style="top: 795px; left: 560px; letter-spacing: 10px;"></span>
+        
+        <span class="p-text" id="p2_provinceLoc" style="top: 835px; left: 150px; letter-spacing: 10px;"></span>
+        
+        <!-- Date of transfer (D M Y) on MTA 8 -->
+        <span class="p-text" id="p2_date_d" style="top: 835px; left: 550px; letter-spacing: 11px;"></span>
+        <span class="p-text" id="p2_date_m" style="top: 835px; left: 630px; letter-spacing: 11px;"></span>
+        <span class="p-text" id="p2_date_y" style="top: 835px; left: 710px; letter-spacing: 11px;"></span>
+
+        <span class="p-text" id="p2_collectOffice" style="top: 875px; left: 450px; letter-spacing: 10px;"></span>
       </div>
 
       <!-- PAGE 3: MTA 3 FRONT -->
@@ -206,36 +233,45 @@
       document.getElementById('sec-' + tabId).classList.add('active');
     }
 
-    // Advanced Text Fitter: Spills over to a 3rd line if length > 70
+    // Standard 35/35 Split for MTA 6
     function applyTextToLines(el1Id, el2Id, el3Id, text, defaultSpacing) {
       let el1 = document.getElementById(el1Id);
       let el2 = document.getElementById(el2Id);
       let el3 = document.getElementById(el3Id);
-      
       if (!el1 || !el2 || !el3) return;
 
       if(text.length <= 35) {
-        el1.innerText = text;
-        el2.innerText = "";
-        el3.innerText = "";
-        
+        el1.innerText = text; el2.innerText = ""; el3.innerText = "";
         el1.style.letterSpacing = defaultSpacing;
       } else if(text.length <= 70) {
-        el1.innerText = text.substring(0, 35);
-        el2.innerText = text.substring(35, 70);
-        el3.innerText = "";
-        
-        el1.style.letterSpacing = defaultSpacing;
-        el2.style.letterSpacing = defaultSpacing;
+        el1.innerText = text.substring(0, 35); el2.innerText = text.substring(35, 70); el3.innerText = "";
+        el1.style.letterSpacing = defaultSpacing; el2.style.letterSpacing = defaultSpacing;
       } else {
-        // Exceeds 70 characters
-        el1.innerText = text.substring(0, 35);
-        el2.innerText = text.substring(35, 70);
-        el3.innerText = text.substring(70, text.length); // All remaining text
-        
+        el1.innerText = text.substring(0, 35); el2.innerText = text.substring(35, 70); el3.innerText = text.substring(70, text.length);
+        el1.style.letterSpacing = defaultSpacing; el2.style.letterSpacing = defaultSpacing;
+      }
+    }
+
+    // Custom Split for MTA 8 (Varying line limits)
+    function applyCustomTextToLines(el1Id, el2Id, el3Id, text, limit1, limit2, defaultSpacing) {
+      let el1 = document.getElementById(el1Id);
+      let el2 = document.getElementById(el2Id);
+      let el3 = document.getElementById(el3Id);
+      if (!el1 || !el2 || !el3) return;
+
+      if(text.length <= limit1) {
+        el1.innerText = text; el2.innerText = ""; el3.innerText = "";
         el1.style.letterSpacing = defaultSpacing;
-        el2.style.letterSpacing = defaultSpacing;
-        // Line 3 styling is already handled in HTML inline styles (small font)
+      } else if(text.length <= (limit1 + limit2)) {
+        el1.innerText = text.substring(0, limit1);
+        el2.innerText = text.substring(limit1, text.length);
+        el3.innerText = "";
+        el1.style.letterSpacing = defaultSpacing; el2.style.letterSpacing = defaultSpacing;
+      } else {
+        el1.innerText = text.substring(0, limit1);
+        el2.innerText = text.substring(limit1, limit1 + limit2);
+        el3.innerText = text.substring(limit1 + limit2, text.length); // Spills remaining to line 3
+        el1.style.letterSpacing = defaultSpacing; el2.style.letterSpacing = defaultSpacing;
       }
     }
 
@@ -244,31 +280,33 @@
       const dDD = document.getElementById('i_dateDD').value;
       const dMM = document.getElementById('i_dateMM').value;
       const dYYYY = document.getElementById('i_dateYYYY').value;
-
       const vProv = document.getElementById('i_vehProv').value;
       const vLetters = document.getElementById('i_vehLetters').value;
       const vNums = document.getElementById('i_vehNum').value;
-
       const oldName = document.getElementById('i_oldName').value;
       const oldAddress = document.getElementById('i_oldAddress').value;
       const oldId = document.getElementById('i_oldId').value;
-
       const newName = document.getElementById('i_newName').value;
       const newAddress = document.getElementById('i_newAddress').value;
       const newId = document.getElementById('i_newId').value;
-      
       const financeName = document.getElementById('i_financeName').value;
+
+      // MTA 8 Specific Values
+      const postalCode = document.getElementById('i_postalCode').value;
+      const mobileNo = document.getElementById('i_mobileNo').value;
+      const divSec = document.getElementById('i_divSec').value;
+      const district = document.getElementById('i_district').value;
+      const provinceLoc = document.getElementById('i_provinceLoc').value;
+      const collectOffice = document.getElementById('i_collectOffice').value;
 
       // --- Fill MTA 6 ---
       document.getElementById('p1_date_dd').innerText = dDD;
       document.getElementById('p1_date_mm').innerText = dMM;
       document.getElementById('p1_date_yyyy').innerText = dYYYY;
-      
       document.getElementById('p1_veh_prov').innerText = vProv;
       document.getElementById('p1_veh_letters').innerText = vLetters;
       document.getElementById('p1_veh_nums').innerText = vNums;
 
-      // Apply texts with overflow (Line 1, 2, and 3)
       applyTextToLines('p1_oldName', 'p1_oldName2', 'p1_oldName3', oldName, '10px');
       applyTextToLines('p1_oldAddress', 'p1_oldAddress2', 'p1_oldAddress3', oldAddress, '10px');
       applyTextToLines('p1_newName', 'p1_newName2', 'p1_newName3', newName, '10px');
@@ -276,21 +314,33 @@
       
       document.getElementById('p1_oldId').innerText = oldId.replace(/\s/g, ''); 
       document.getElementById('p1_newId').innerText = newId.replace(/\s/g, ''); 
-      
-      // Bottom One Day Transfer Vehicle Number (Format: PROV-LETTERS-NUMS)
       document.getElementById('p1_bottom_vehNo').innerText = vProv + "-" + vLetters + "-" + vNums;
 
-      
       // --- Fill MTA 8 ---
       document.getElementById('p2_veh_prov').innerText = vProv;
       document.getElementById('p2_veh_letters').innerText = vLetters;
       document.getElementById('p2_veh_nums').innerText = vNums;
 
-      applyTextToLines('p2_oldName', 'p2_oldName2', 'p2_oldName3', oldName, '12px');
-      applyTextToLines('p2_newName', 'p2_newName2', 'p2_newName3', newName, '12px');
-      applyTextToLines('p2_newAddress', 'p2_newAddress2', 'p2_newAddress3', newAddress, '12px');
+      // Custom splitting specifically for MTA 8 based on your character limits
+      applyCustomTextToLines('p2_oldName', 'p2_oldName2', 'p2_oldName3', oldName, 27, 35, '12px');
+      applyCustomTextToLines('p2_newName', 'p2_newName2', 'p2_newName3', newName, 33, 35, '12px');
+      applyCustomTextToLines('p2_newAddress', 'p2_newAddress2', 'p2_newAddress3', newAddress, 31, 35, '12px');
 
       document.getElementById('p2_newId').innerText = newId.replace(/\s/g, ''); 
+      
+      // Fill New MTA 8 Fields
+      document.getElementById('p2_postalCode').innerText = postalCode;
+      document.getElementById('p2_mobileNo').innerText = mobileNo;
+      document.getElementById('p2_divSec').innerText = divSec;
+      document.getElementById('p2_district').innerText = district;
+      document.getElementById('p2_provinceLoc').innerText = provinceLoc;
+      
+      // Use the existing date values for MTA 8 Date of Transfer
+      document.getElementById('p2_date_d').innerText = dDD;
+      document.getElementById('p2_date_m').innerText = dMM;
+      document.getElementById('p2_date_y').innerText = dYYYY;
+
+      document.getElementById('p2_collectOffice').innerText = collectOffice;
 
       // --- Fill MTA 3 ---
       if(financeName.trim() !== "") {
