@@ -18,7 +18,7 @@
     .form-box { background: #fff; padding: 25px; border-radius: 8px; max-width: 800px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
     .form-group { margin-bottom: 15px; }
     .form-group label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; color: #444; }
-    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 15px;}
+    .form-control { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; outline: none; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; font-weight: bold; font-size: 15px; text-transform: uppercase;}
     .btn { padding: 12px 20px; background: #0d6efd; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; width: 100%; }
     .btn-print { background: #198754; width: auto; margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; font-size: 16px; padding: 15px 30px; }
     
@@ -46,7 +46,7 @@
       white-space: nowrap;
     }
 
-    @page { size: A4; margin: 0; } 
+    @page { size: A4 portrait; margin: 0; } 
     @media print {
       body * { visibility: hidden; }
       #sec-print, #sec-print * { visibility: visible; }
@@ -78,35 +78,39 @@
     <div class="form-box">
       <h3 style="color: #c62828; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Type Transfer Details Here</h3>
       
+      <!-- Date: Validation (Numbers Only) -->
       <div class="form-group">
         <label>Transfer Date</label>
         <div style="display:flex; gap:10px;">
-          <input type="text" id="i_dateDD" class="form-control" placeholder="DD" maxlength="2" style="width: 70px; text-align: center;">
-          <input type="text" id="i_dateMM" class="form-control" placeholder="MM" maxlength="2" style="width: 70px; text-align: center;">
-          <input type="text" id="i_dateYYYY" class="form-control" placeholder="YYYY" maxlength="4" style="width: 90px; text-align: center;">
+          <input type="text" id="i_dateDD" class="form-control" placeholder="DD" maxlength="2" style="width: 70px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" id="i_dateMM" class="form-control" placeholder="MM" maxlength="2" style="width: 70px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" id="i_dateYYYY" class="form-control" placeholder="YYYY" maxlength="4" style="width: 90px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
         </div>
       </div>
 
+      <!-- Vehicle Number: Validation & Auto Uppercase -->
       <div class="form-group">
         <label>Vehicle Number</label>
         <div style="display:flex; gap:10px;">
-          <input type="text" id="i_vehProv" class="form-control" placeholder="WP" maxlength="2" style="width: 70px; text-align: center;">
-          <input type="text" id="i_vehLetters" class="form-control" placeholder="CAB" maxlength="3" style="width: 80px; text-align: center;">
-          <input type="text" id="i_vehNum" class="form-control" placeholder="1234" maxlength="4" style="width: 100px; text-align: center;">
+          <input type="text" id="i_vehProv" class="form-control" placeholder="WP" maxlength="2" style="width: 70px; text-align: center;" oninput="this.value = this.value.replace(/[^A-Za-z]/g, '').toUpperCase()">
+          <input type="text" id="i_vehLetters" class="form-control" placeholder="CAB" maxlength="3" style="width: 80px; text-align: center;" oninput="this.value = this.value.toUpperCase()">
+          <input type="text" id="i_vehNum" class="form-control" placeholder="1234" maxlength="4" style="width: 100px; text-align: center;" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
         </div>
       </div>
       
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferor (Previous Owner)</h4>
-      <div class="form-group"><label>Name</label><input type="text" id="i_oldName" class="form-control"></div>
-      <div class="form-group"><label>Address</label><input type="text" id="i_oldAddress" class="form-control"></div>
+      <div class="form-group"><label>Name</label><input type="text" id="i_oldName" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      <div class="form-group"><label>Address</label><input type="text" id="i_oldAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      <!-- Old Owner NIC (Added) -->
+      <div class="form-group"><label>Transferor ID Number</label><input type="text" id="i_oldId" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
       
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferee (New Owner)</h4>
-      <div class="form-group"><label>Name</label><input type="text" id="i_newName" class="form-control"></div>
-      <div class="form-group"><label>Address</label><input type="text" id="i_newAddress" class="form-control"></div>
-      <div class="form-group"><label>ID Number</label><input type="text" id="i_newId" class="form-control"></div>
+      <div class="form-group"><label>Name</label><input type="text" id="i_newName" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      <div class="form-group"><label>Address</label><input type="text" id="i_newAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      <div class="form-group"><label>Transferee ID Number</label><input type="text" id="i_newId" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
 
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Hire-Purchase (Finance)</h4>
-      <div class="form-group"><label>Finance Company Name (Optional)</label><input type="text" id="i_financeName" class="form-control" placeholder="Leave blank if not applicable"></div>
+      <div class="form-group"><label>Finance Company Name (Optional)</label><input type="text" id="i_financeName" class="form-control" placeholder="Leave blank if not applicable" oninput="this.value = this.value.toUpperCase()"></div>
 
       <button class="btn" onclick="saveDataAndPreparePrint()" style="margin-top: 15px; font-size: 16px;">Set Data to Forms & Proceed to Print <i class="fas fa-arrow-right"></i></button>
     </div>
@@ -120,45 +124,66 @@
       
       <!-- PAGE 1: MTA 6 -->
       <div class="a4-page" style="background-image: url('MTA_06_JPG.jpg');">
-        <!-- ඔයා එවපු MTA 6 Alignment ටික මෙතන තියෙනවා -->
+        
         <span class="p-text" id="p1_date_dd" style="top: 326px; left: 411px; letter-spacing: 11px;"></span>
         <span class="p-text" id="p1_date_mm" style="top: 326px; left: 545px; letter-spacing: 11px;"></span>
         <span class="p-text" id="p1_date_yyyy" style="top: 326px; left: 659px; letter-spacing: 11px;"></span>
         
+        <!-- Transferor Line 1 & Line 2 -->
         <span class="p-text" id="p1_oldName" style="top: 350px; left: 69px; letter-spacing: 10px;"></span>
-        <span class="p-text" id="p1_oldAddress" style="top: 405px; left: 69px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_oldName2" style="top: 377px; left: 69px; letter-spacing: 10px;"></span>
         
+        <span class="p-text" id="p1_oldAddress" style="top: 405px; left: 69px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_oldAddress2" style="top: 432px; left: 69px; letter-spacing: 10px;"></span>
+        
+        <!-- Vehicle No -->
         <span class="p-text" id="p1_veh_prov" style="top: 466px; left: 508px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p1_veh_letters" style="top: 466px; left: 566px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p1_veh_nums" style="top: 466px; left: 640px; letter-spacing: 10px;"></span>
         
+        <!-- Transferee Line 1 & Line 2 -->
         <span class="p-text" id="p1_newName" style="top: 490px; left: 68px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_newName2" style="top: 517px; left: 68px; letter-spacing: 10px;"></span>
+
         <span class="p-text" id="p1_newAddress" style="top: 548px; left: 68px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_newAddress2" style="top: 575px; left: 68px; letter-spacing: 10px;"></span>
+
+        <!-- MTA 6 Bottom NIC Numbers (Please inspect and adjust top/left as needed) -->
+        <span class="p-text" id="p1_oldId" style="top: 750px; left: 100px; letter-spacing: 10px;"></span>
+        <span class="p-text" id="p1_newId" style="top: 850px; left: 100px; letter-spacing: 10px;"></span>
       </div>
 
       <!-- PAGE 2: MTA 8 -->
       <div class="a4-page" style="background-image: url('MAT_8_JPG.jpg');">
-        <!-- ඔයා එවපු MTA 8 Alignment ටික මෙතන තියෙනවා -->
+        
         <span class="p-text" id="p2_veh_prov" style="top: 401px; left: 569px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p2_veh_letters" style="top: 401px; left: 633px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p2_veh_nums" style="top: 401px; left: 697px; letter-spacing: 10px;"></span>
         
+        <!-- Transferor Line 1 & Line 2 -->
         <span class="p-text" id="p2_oldName" style="top: 442px; left: 213px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_oldName2" style="top: 470px; left: 100px; letter-spacing: 12px;"></span>
+
+        <!-- Transferee Line 1 & Line 2 -->
         <span class="p-text" id="p2_newName" style="top: 511px; left: 87px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newName2" style="top: 540px; left: 100px; letter-spacing: 12px;"></span>
+
         <span class="p-text" id="p2_newAddress" style="top: 608px; left: 130px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newAddress2" style="top: 636px; left: 100px; letter-spacing: 12px;"></span>
         
+        <!-- Transferee ID -->
         <span class="p-text" id="p2_newId" style="top: 716px; left: 549px; letter-spacing: 11.5px;"></span>
       </div>
 
       <!-- PAGE 3: MTA 3 FRONT -->
-      <div class="a4-page" id="page_mta3_front" style="background-image: url('MTA_03_JPG_ Front.jpg');">
+      <div class="a4-page" id="page_mta3_front" style="background-image: url('MTA_03_JPG_ Front.jpg'); display: none;">
         <span class="p-text" id="p3f_financeName" style="top: 535px; left: 145px;"></span>
         <span class="p-text" id="p3f_newName" style="top: 575px; left: 515px;"></span>
         <span class="p-text" id="p3f_newAddress" style="top: 600px; left: 75px;"></span>
       </div>
 
       <!-- PAGE 4: MTA 3 BACK -->
-      <div class="a4-page" id="page_mta3_back" style="background-image: url('MTA_03_JPG_Back.jpg');">
+      <div class="a4-page" id="page_mta3_back" style="background-image: url('MTA_03_JPG_Back.jpg'); display: none;">
       </div>
 
     </div>
@@ -170,6 +195,18 @@
       document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
       document.getElementById('tab-' + tabId).classList.add('active');
       document.getElementById('sec-' + tabId).classList.add('active');
+    }
+
+    // Function to split text if it exceeds 35 characters
+    function splitText(text, limit) {
+      if(text.length <= limit) {
+        return { line1: text, line2: "" };
+      } else {
+        return { 
+          line1: text.substring(0, limit), 
+          line2: text.substring(limit, limit * 2) 
+        };
+      }
     }
 
     function saveDataAndPreparePrint() {
@@ -184,42 +221,64 @@
 
       const oldName = document.getElementById('i_oldName').value;
       const oldAddress = document.getElementById('i_oldAddress').value;
+      const oldId = document.getElementById('i_oldId').value;
+
       const newName = document.getElementById('i_newName').value;
       const newAddress = document.getElementById('i_newAddress').value;
       const newId = document.getElementById('i_newId').value;
+      
       const financeName = document.getElementById('i_financeName').value;
 
-      // Fill MTA 6
+      // Split Texts over 35 characters
+      const sOldName = splitText(oldName, 35);
+      const sOldAddress = splitText(oldAddress, 35);
+      const sNewName = splitText(newName, 35);
+      const sNewAddress = splitText(newAddress, 35);
+
+      // --- Fill MTA 6 ---
       document.getElementById('p1_date_dd').innerText = dDD;
       document.getElementById('p1_date_mm').innerText = dMM;
       document.getElementById('p1_date_yyyy').innerText = dYYYY;
       
-      document.getElementById('p1_veh_prov').innerText = vProv.toUpperCase();
-      document.getElementById('p1_veh_letters').innerText = vLetters.toUpperCase();
+      document.getElementById('p1_veh_prov').innerText = vProv;
+      document.getElementById('p1_veh_letters').innerText = vLetters;
       document.getElementById('p1_veh_nums').innerText = vNums;
 
-      document.getElementById('p1_oldName').innerText = oldName.toUpperCase();
-      document.getElementById('p1_oldAddress').innerText = oldAddress.toUpperCase();
-      document.getElementById('p1_newName').innerText = newName.toUpperCase();
-      document.getElementById('p1_newAddress').innerText = newAddress.toUpperCase();
+      document.getElementById('p1_oldName').innerText = sOldName.line1;
+      document.getElementById('p1_oldName2').innerText = sOldName.line2;
+      document.getElementById('p1_oldAddress').innerText = sOldAddress.line1;
+      document.getElementById('p1_oldAddress2').innerText = sOldAddress.line2;
 
-      // Fill MTA 8
-      document.getElementById('p2_veh_prov').innerText = vProv.toUpperCase();
-      document.getElementById('p2_veh_letters').innerText = vLetters.toUpperCase();
+      document.getElementById('p1_newName').innerText = sNewName.line1;
+      document.getElementById('p1_newName2').innerText = sNewName.line2;
+      document.getElementById('p1_newAddress').innerText = sNewAddress.line1;
+      document.getElementById('p1_newAddress2').innerText = sNewAddress.line2;
+      
+      // Bottom NICs
+      document.getElementById('p1_oldId').innerText = oldId.replace(/\s/g, ''); 
+      document.getElementById('p1_newId').innerText = newId.replace(/\s/g, ''); 
+
+      // --- Fill MTA 8 ---
+      document.getElementById('p2_veh_prov').innerText = vProv;
+      document.getElementById('p2_veh_letters').innerText = vLetters;
       document.getElementById('p2_veh_nums').innerText = vNums;
 
-      document.getElementById('p2_oldName').innerText = oldName.toUpperCase();
-      document.getElementById('p2_newName').innerText = newName.toUpperCase();
-      document.getElementById('p2_newAddress').innerText = newAddress.toUpperCase();
-      document.getElementById('p2_newId').innerText = newId.toUpperCase().replace(/\s/g, ''); 
+      document.getElementById('p2_oldName').innerText = sOldName.line1;
+      document.getElementById('p2_oldName2').innerText = sOldName.line2;
+      document.getElementById('p2_newName').innerText = sNewName.line1;
+      document.getElementById('p2_newName2').innerText = sNewName.line2;
+      document.getElementById('p2_newAddress').innerText = sNewAddress.line1;
+      document.getElementById('p2_newAddress2').innerText = sNewAddress.line2;
 
-      // Fill MTA 3 
+      document.getElementById('p2_newId').innerText = newId.replace(/\s/g, ''); 
+
+      // --- Fill MTA 3 ---
       if(financeName.trim() !== "") {
         document.getElementById('page_mta3_front').style.display = "block";
         document.getElementById('page_mta3_back').style.display = "block";
-        document.getElementById('p3f_financeName').innerText = financeName.toUpperCase();
-        document.getElementById('p3f_newName').innerText = newName.toUpperCase();
-        document.getElementById('p3f_newAddress').innerText = newAddress.toUpperCase();
+        document.getElementById('p3f_financeName').innerText = financeName;
+        document.getElementById('p3f_newName').innerText = newName;
+        document.getElementById('p3f_newAddress').innerText = newAddress;
       } else {
         document.getElementById('page_mta3_front').style.display = "none";
         document.getElementById('page_mta3_back').style.display = "none";
