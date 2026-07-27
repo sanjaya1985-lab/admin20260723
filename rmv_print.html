@@ -123,7 +123,10 @@
       </div>
 
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Hire-Purchase (Finance)</h4>
-      <div class="form-group"><label>Finance Company Name (Optional)</label><input type="text" id="i_financeName" class="form-control" placeholder="Leave blank if not applicable" oninput="this.value = this.value.toUpperCase()"></div>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="width: 50%;"><label>Finance Company Name (Optional)</label><input type="text" id="i_financeName" class="form-control" placeholder="Leave blank if not applicable" oninput="this.value = this.value.toUpperCase()"></div>
+        <div class="form-group" style="width: 50%;"><label>Finance Company Address</label><input type="text" id="i_financeAddress" class="form-control" placeholder="Required if Name is filled" oninput="this.value = this.value.toUpperCase()"></div>
+      </div>
 
       <button class="btn" onclick="saveDataAndPreparePrint()" style="margin-top: 15px; font-size: 16px;">Set Data to Forms & Proceed to Print <i class="fas fa-arrow-right"></i></button>
     </div>
@@ -165,7 +168,6 @@
         <span class="p-text" id="p1_oldId" style="top: 739px; left: 68px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p1_newId" style="top: 908px; left: 68px; letter-spacing: 10px;"></span>
         
-        <!-- One Day Transfer Vehicle Number (Bottom - Updated styling based on your image) -->
         <span class="p-text" id="p1_bottom_vehNo" style="top: 1020px; left: 490px; font-size: 10px; letter-spacing: 1px; font-family: Arial, sans-serif;"></span>
       </div>
 
@@ -176,27 +178,21 @@
         <span class="p-text" id="p2_veh_letters" style="top: 401px; left: 633px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p2_veh_nums" style="top: 401px; left: 697px; letter-spacing: 10px;"></span>
         
-        <!-- Transferor Name -->
-        <span class="p-text" id="p2_oldName" style="top: 442px; left: 215px; letter-spacing: 11.8px;"></span>
-        <span class="p-text" id="p2_oldName2" style="top: 475px; left: 43px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_oldName" style="top: 442px; left: 213px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_oldName2" style="top: 473px; left: 43px; letter-spacing: 12px;"></span>
         <span class="p-text" id="p2_oldName3" style="top: 495px; left: 41px; font-size: 11px; letter-spacing: 2px;"></span>
 
-        <!-- Transferee Name (3 Box Lines + Overflow) -->
-        <span class="p-text" id="p2_newName" style="top: 511px; left: 87px; letter-spacing: 11.9px;"></span>
-        <span class="p-text" id="p2_newName2" style="top: 540px; left: 43px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newName" style="top: 511px; left: 87px; letter-spacing: 12px;"></span>
+        <span class="p-text" id="p2_newName2" style="top: 540px; left: 41px; letter-spacing: 12px;"></span>
         <span class="p-text" id="p2_newName3" style="top: 570px; left: 42px; font-size: 15px; letter-spacing: 12px;"></span>
         <span class="p-text" id="p2_newName4" style="top: 590px; left: 42px; font-size: 11px; letter-spacing: 2px;"></span>
 
-        <!-- Transferee Address (3 Box Lines + Overflow) -->
         <span class="p-text" id="p2_newAddress" style="top: 608px; left: 130px; letter-spacing: 12px;"></span>
         <span class="p-text" id="p2_newAddress2" style="top: 636px; left: 43px; letter-spacing: 12px;"></span>
         <span class="p-text" id="p2_newAddress3" style="top: 667px; left: 43px; font-size: 15px; letter-spacing: 12px;"></span>
         <span class="p-text" id="p2_newAddress4" style="top: 687px; left: 43px; font-size: 11px; letter-spacing: 2px;"></span>
         
-        <!-- ID & New Fields for MTA 8 -->
         <span class="p-text" id="p2_newId" style="top: 716px; left: 549px; letter-spacing: 11.5px;"></span>
-        
-        <!-- Extracted exact values from the provided images -->
         <span class="p-text" id="p2_postalCode" style="top: 750px; left: 238px; letter-spacing: 11px;"></span>
         <span class="p-text" id="p2_mobileNo" style="top: 751px; left: 567px; letter-spacing: 12px;"></span>
         <span class="p-text" id="p2_divSec" style="top: 808px; left: 213px; letter-spacing: 12px;"></span>
@@ -212,13 +208,23 @@
 
       <!-- PAGE 3: MTA 3 FRONT -->
       <div class="a4-page" id="page_mta3_front" style="background-image: url('MTA_03_JPG_ Front.jpg'); display: none;">
-        <span class="p-text" id="p3f_financeName" style="top: 535px; left: 145px;"></span>
-        <span class="p-text" id="p3f_newName" style="top: 575px; left: 515px;"></span>
-        <span class="p-text" id="p3f_newAddress" style="top: 600px; left: 75px;"></span>
+        <!-- NEW: Position these using Inspect Element! -->
+        <!-- Top section -->
+        <span class="p-text" id="p3f_financeName1" style="top: 250px; left: 120px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_financeAddress1" style="top: 280px; left: 80px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1" style="top: 310px; left: 400px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newAddress1" style="top: 340px; left: 80px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Bottom section (The aforesaid...) -->
+        <span class="p-text" id="p3f_newName2" style="top: 550px; left: 200px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newAddress2" style="top: 580px; left: 80px; font-size: 13px; font-family: Arial, sans-serif;"></span>
       </div>
 
       <!-- PAGE 4: MTA 3 BACK -->
       <div class="a4-page" id="page_mta3_back" style="background-image: url('MTA_03_JPG_Back.jpg'); display: none;">
+        <!-- NEW: Position these using Inspect Element! -->
+        <span class="p-text" id="p3b_financeName1" style="top: 350px; left: 450px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3b_financeAddress1" style="top: 380px; left: 350px; font-size: 13px; font-family: Arial, sans-serif;"></span>
       </div>
 
     </div>
@@ -275,7 +281,6 @@
         el3.innerText = text.substring(l2, text.length);
         el4.innerText = "";
       } else {
-        // Exceeds all 3 box lines -> goes to line 4 (overflow)
         el1.innerText = text.substring(0, l1);
         el2.innerText = text.substring(l1, l2);
         el3.innerText = text.substring(l2, l3);
@@ -285,7 +290,6 @@
       el1.style.letterSpacing = defaultSpacing;
       el2.style.letterSpacing = defaultSpacing;
       el3.style.letterSpacing = defaultSpacing;
-      // el4 spacing is handled via HTML inline styles (small font)
     }
 
     function saveDataAndPreparePrint() {
@@ -302,7 +306,9 @@
       const newName = document.getElementById('i_newName').value;
       const newAddress = document.getElementById('i_newAddress').value;
       const newId = document.getElementById('i_newId').value;
+      
       const financeName = document.getElementById('i_financeName').value;
+      const financeAddress = document.getElementById('i_financeAddress').value;
 
       // MTA 8 Specific Values
       const postalCode = document.getElementById('i_postalCode').value;
@@ -327,8 +333,6 @@
       
       document.getElementById('p1_oldId').innerText = oldId.replace(/\s/g, ''); 
       document.getElementById('p1_newId').innerText = newId.replace(/\s/g, ''); 
-      
-      // MTA 6 Bottom One Day Transfer Vehicle Number (Format updated)
       document.getElementById('p1_bottom_vehNo').innerText = vProv + "-" + vLetters + "-" + vNums;
 
       // --- Fill MTA 8 ---
@@ -336,9 +340,7 @@
       document.getElementById('p2_veh_letters').innerText = vLetters;
       document.getElementById('p2_veh_nums').innerText = vNums;
 
-      // Old Name remains 3 lines (27, 35 and Overflow)
       applyTextToLines('p2_oldName', 'p2_oldName2', 'p2_oldName3', oldName, '12px'); 
-      // Re-adjust oldName first line to 27
       if(oldName.length > 27) {
         document.getElementById('p2_oldName').innerText = oldName.substring(0, 27);
         if (oldName.length > 62) {
@@ -350,14 +352,11 @@
         }
       }
 
-      // New Name: 4-line logic -> 33, 35, 35, Overflow
       applyCustomTextTo4Lines('p2_newName', 'p2_newName2', 'p2_newName3', 'p2_newName4', newName, 33, 35, 35, '12px');
-      // New Address: 4-line logic -> 31, 35, 35, Overflow
       applyCustomTextTo4Lines('p2_newAddress', 'p2_newAddress2', 'p2_newAddress3', 'p2_newAddress4', newAddress, 31, 35, 35, '12px');
 
       document.getElementById('p2_newId').innerText = newId.replace(/\s/g, ''); 
       
-      // Fill New MTA 8 Fields
       document.getElementById('p2_postalCode').innerText = postalCode;
       document.getElementById('p2_mobileNo').innerText = mobileNo;
       document.getElementById('p2_divSec').innerText = divSec;
@@ -373,9 +372,20 @@
       if(financeName.trim() !== "") {
         document.getElementById('page_mta3_front').style.display = "block";
         document.getElementById('page_mta3_back').style.display = "block";
-        document.getElementById('p3f_financeName').innerText = financeName;
-        document.getElementById('p3f_newName').innerText = newName;
-        document.getElementById('p3f_newAddress').innerText = newAddress;
+        
+        // MTA 3 Front
+        document.getElementById('p3f_financeName1').innerText = financeName;
+        document.getElementById('p3f_financeAddress1').innerText = financeAddress;
+        document.getElementById('p3f_newName1').innerText = newName;
+        document.getElementById('p3f_newAddress1').innerText = newAddress;
+        
+        document.getElementById('p3f_newName2').innerText = newName;
+        document.getElementById('p3f_newAddress2').innerText = newAddress;
+
+        // MTA 3 Back
+        document.getElementById('p3b_financeName1').innerText = financeName;
+        document.getElementById('p3b_financeAddress1').innerText = financeAddress;
+
       } else {
         document.getElementById('page_mta3_front').style.display = "none";
         document.getElementById('page_mta3_back').style.display = "none";
