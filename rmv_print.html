@@ -59,31 +59,19 @@
     @page { size: A4 portrait; margin: 0; } 
     @media print {
       body * { visibility: hidden; }
-      .sticky-wrapper { position: static; box-shadow: none; display: none !important; }
+      .sticky-wrapper { position: static; box-shadow: none; }
       #sec-print, #sec-print * { visibility: visible; }
       #sec-print { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white; }
-      .a4-preview-container { padding: 0; gap: 0; display: block; margin: 0; }
-      
+      .a4-preview-container { padding: 0; gap: 0; display: block; }
+      .btn-print, .tabs, .header, .no-print { display: none !important; }
       .a4-page { 
-        width: 210mm; 
-        height: 296.5mm; /* Slightly less than 297mm to prevent blank page overflow */
-        box-shadow: none; 
-        margin: 0; 
-        padding: 0; 
+        width: 210mm; height: 297mm; box-shadow: none; margin: 0; padding: 0; 
         -webkit-print-color-adjust: exact !important; 
         print-color-adjust: exact !important;
-        page-break-inside: avoid;
       }
-      
-      /* Target the hidden pages and explicitly hide them in print */
-      .a4-page[style*="display: none"] {
-        display: none !important;
-        page-break-after: avoid !important;
-      }
-
-      /* Stop the page break after the exact last visible page */
+      /* Prevent blank pages by stopping page-break on the last visible element */
       .a4-page.no-break {
-        page-break-after: avoid !important;
+        page-break-after: auto !important;
       }
     }
   </style>
@@ -248,10 +236,10 @@
         <span class="p-text" id="p3f_newAddress1" style="top: 600px; left: 52px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_newAddress1_ov" style="top: 614px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
-        <!-- p3f_newName1 divided into spans for 25, 50, and remaining characters -->
+        <!-- p3f_newName1 divided into 3 spans for 25, 50, and remaining characters -->
         <span class="p-text" id="p3f_newName1" style="top: 603px; left: 567px; font-size: 11px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newName1_ov" style="top: 615px; left: 567px; font-size: 9px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newName1_ov2" style="top: 627px; left: 567px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1_ov" style="top: 626px; left: 52px; font-size: 10px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1_ov2" style="top: 639px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
         <span class="p-text" id="p3f_newAddress2" style="top: 786px; left: 135px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_newAddress2_ov" style="top: 798px; left: 48px; font-size: 9px; font-family: Arial, sans-serif;"></span>
@@ -439,14 +427,12 @@
       document.getElementById('p2_collectOffice').innerText = collectOffice;
 
       // --- Manage Page Breaks & Display for MTA 3 ---
-      document.getElementById('page_mta8').classList.remove('no-break');
-      document.getElementById('page_mta3_back').classList.remove('no-break');
-
       if(financeName.trim() !== "") {
         document.getElementById('page_mta3_front').style.display = "block";
         document.getElementById('page_mta3_back').style.display = "block";
         
         // Remove page break from MTA 3 Back (last visible page)
+        document.getElementById('page_mta8').classList.remove('no-break');
         document.getElementById('page_mta3_back').classList.add('no-break');
         
         // Front Page Splitting based on Excel Limits
@@ -454,13 +440,13 @@
         applyMta3Text('p3f_financeName1', financeName, 100);
         applyMta3Text('p3f_newAddress1', newAddress, 70);
         
-        // --- p3f_newName1 splits at 25 and 50 characters, remaining to 3rd line ---
+        // --- UPDATED: p3f_newName1 splits at 25 and 50 characters, remaining to 3rd line ---
         applyMta3Text('p3f_newName1', newName, 25, 50);
         
         applyMta3Text('p3f_newAddress2', newAddress, 90);
         applyMta3Text('p3f_newName2', newName, 105);
 
-        // Back Page Splitting based on Excel Limits 
+        // Back Page Splitting based on Excel Limits
         applyMta3Text('p3b_financeAddress1', financeAddress, 55, 27);
         applyMta3Text('p3b_financeName1', financeName, 23);
 
