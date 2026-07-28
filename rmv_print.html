@@ -8,6 +8,16 @@
   
   <style>
     body { font-family: 'Inter', sans-serif; background: #525659; margin: 0; padding: 0; color: #333; }
+    
+    /* Sticky Top Wrapper for Freeze Panel */
+    .sticky-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #525659;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    
     .header { background: #121212; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #c62828; }
     .tabs { display: flex; background: #fff; border-bottom: 1px solid #ddd; padding: 0 20px; }
     .tab { padding: 15px 20px; cursor: pointer; font-weight: bold; color: #666; border-bottom: 3px solid transparent; }
@@ -49,6 +59,7 @@
     @page { size: A4 portrait; margin: 0; } 
     @media print {
       body * { visibility: hidden; }
+      .sticky-wrapper { position: static; box-shadow: none; }
       #sec-print, #sec-print * { visibility: visible; }
       #sec-print { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white; }
       .a4-preview-container { padding: 0; gap: 0; display: block; }
@@ -63,14 +74,17 @@
 </head>
 <body>
 
-  <div class="header no-print">
-    <h2><i class="fas fa-file-invoice"></i> RMV Documents Print Portal</h2>
-    <button style="background: transparent; border: 1px solid white; color: white; padding: 5px 15px; border-radius: 4px; cursor: pointer;" onclick="window.close()">Close</button>
-  </div>
+  <!-- Freeze Panel (Header + Tabs) -->
+  <div class="sticky-wrapper no-print">
+    <div class="header">
+      <h2><i class="fas fa-file-invoice"></i> RMV Documents Print Portal</h2>
+      <button style="background: transparent; border: 1px solid white; color: white; padding: 5px 15px; border-radius: 4px; cursor: pointer;" onclick="window.close()">Close</button>
+    </div>
 
-  <div class="tabs no-print">
-    <div class="tab active" id="tab-add" onclick="switchTab('add')"><i class="fas fa-edit"></i> Type Details</div>
-    <div class="tab" id="tab-print" onclick="switchTab('print')"><i class="fas fa-print"></i> Print Original Forms</div>
+    <div class="tabs">
+      <div class="tab active" id="tab-add" onclick="switchTab('add')"><i class="fas fa-edit"></i> Type Details</div>
+      <div class="tab" id="tab-print" onclick="switchTab('print')"><i class="fas fa-print"></i> Print Original Forms</div>
+    </div>
   </div>
 
   <!-- ADD DATA SECTION -->
@@ -208,23 +222,44 @@
 
       <!-- PAGE 3: MTA 3 FRONT -->
       <div class="a4-page" id="page_mta3_front" style="background-image: url('MTA_03_JPG_ Front.jpg'); display: none;">
-        <!-- NEW: Position these using Inspect Element! -->
-        <!-- Top section -->
-        <span class="p-text" id="p3f_financeName1" style="top: 250px; left: 120px; font-size: 13px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_financeAddress1" style="top: 280px; left: 80px; font-size: 13px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newName1" style="top: 310px; left: 400px; font-size: 13px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newAddress1" style="top: 340px; left: 80px; font-size: 13px; font-family: Arial, sans-serif;"></span>
         
-        <!-- Bottom section (The aforesaid...) -->
-        <span class="p-text" id="p3f_newName2" style="top: 550px; left: 200px; font-size: 13px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newAddress2" style="top: 580px; left: 80px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        <!-- Finance Address (Top 532) -->
+        <span class="p-text" id="p3f_financeAddress1" style="top: 532px; left: 110px; font-size: 11px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_financeAddress1_ov" style="top: 544px; left: 110px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Finance Name (Top 555) -->
+        <span class="p-text" id="p3f_financeName1" style="top: 555px; left: 75px; font-size: 11px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_financeName1_ov" style="top: 567px; left: 75px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Transferee Address 1 (Top 600) -->
+        <span class="p-text" id="p3f_newAddress1" style="top: 600px; left: 52px; font-size: 11px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newAddress1_ov" style="top: 612px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Transferee Name 1 (Top 622) -->
+        <span class="p-text" id="p3f_newName1" style="top: 622px; left: 52px; font-size: 11px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1_ov" style="top: 634px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Transferee Address 2 (Top 786) -->
+        <span class="p-text" id="p3f_newAddress2" style="top: 786px; left: 135px; font-size: 11px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newAddress2_ov" style="top: 798px; left: 135px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Transferee Name 2 (Top 809) -->
+        <span class="p-text" id="p3f_newName2" style="top: 809px; left: 49px; font-size: 11px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName2_ov" style="top: 821px; left: 49px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+
       </div>
 
       <!-- PAGE 4: MTA 3 BACK -->
       <div class="a4-page" id="page_mta3_back" style="background-image: url('MTA_03_JPG_Back.jpg'); display: none;">
-        <!-- NEW: Position these using Inspect Element! -->
-        <span class="p-text" id="p3b_financeName1" style="top: 350px; left: 450px; font-size: 13px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3b_financeAddress1" style="top: 380px; left: 350px; font-size: 13px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Finance Address (Top 142) -->
+        <span class="p-text" id="p3b_financeAddress1" style="top: 142px; left: 433px; font-size: 10px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3b_financeAddress1_ov" style="top: 153px; left: 433px; font-size: 8px; font-family: Arial, sans-serif;"></span>
+        
+        <!-- Finance Name (Top 159) -->
+        <span class="p-text" id="p3b_financeName1" style="top: 159px; left: 367px; font-size: 10px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3b_financeName1_ov" style="top: 170px; left: 367px; font-size: 8px; font-family: Arial, sans-serif;"></span>
+
       </div>
 
     </div>
@@ -238,7 +273,7 @@
       document.getElementById('sec-' + tabId).classList.add('active');
     }
 
-    // Standard 35/35 Split for MTA 6 (3 lines)
+    // Standard 35/35 Split for MTA 6
     function applyTextToLines(el1Id, el2Id, el3Id, text, defaultSpacing) {
       let el1 = document.getElementById(el1Id);
       let el2 = document.getElementById(el2Id);
@@ -257,7 +292,7 @@
       }
     }
 
-    // Custom Split for MTA 8 (3 lines inside boxes, 4th line as small overflow)
+    // Custom Split for MTA 8 
     function applyCustomTextTo4Lines(el1Id, el2Id, el3Id, el4Id, text, limit1, limit2, limit3, defaultSpacing) {
       let el1 = document.getElementById(el1Id);
       let el2 = document.getElementById(el2Id);
@@ -292,6 +327,21 @@
       el3.style.letterSpacing = defaultSpacing;
     }
 
+    // MTA 3 Text Overflow Handler
+    function applyMta3Text(baseId, text, limit) {
+      let mainEl = document.getElementById(baseId);
+      let ovEl = document.getElementById(baseId + "_ov");
+      if(!mainEl || !ovEl) return;
+      
+      if(text.length <= limit) {
+        mainEl.innerText = text;
+        ovEl.innerText = "";
+      } else {
+        mainEl.innerText = text.substring(0, limit);
+        ovEl.innerText = text.substring(limit, text.length);
+      }
+    }
+
     function saveDataAndPreparePrint() {
       // Get Values
       const dDD = document.getElementById('i_dateDD').value;
@@ -310,7 +360,6 @@
       const financeName = document.getElementById('i_financeName').value;
       const financeAddress = document.getElementById('i_financeAddress').value;
 
-      // MTA 8 Specific Values
       const postalCode = document.getElementById('i_postalCode').value;
       const mobileNo = document.getElementById('i_mobileNo').value;
       const divSec = document.getElementById('i_divSec').value;
@@ -356,13 +405,11 @@
       applyCustomTextTo4Lines('p2_newAddress', 'p2_newAddress2', 'p2_newAddress3', 'p2_newAddress4', newAddress, 31, 35, 35, '12px');
 
       document.getElementById('p2_newId').innerText = newId.replace(/\s/g, ''); 
-      
       document.getElementById('p2_postalCode').innerText = postalCode;
       document.getElementById('p2_mobileNo').innerText = mobileNo;
       document.getElementById('p2_divSec').innerText = divSec;
       document.getElementById('p2_district').innerText = district;
       document.getElementById('p2_provinceLoc').innerText = provinceLoc;
-      
       document.getElementById('p2_date_d').innerText = dDD;
       document.getElementById('p2_date_m').innerText = dMM;
       document.getElementById('p2_date_y').innerText = dYYYY;
@@ -373,18 +420,17 @@
         document.getElementById('page_mta3_front').style.display = "block";
         document.getElementById('page_mta3_back').style.display = "block";
         
-        // MTA 3 Front
-        document.getElementById('p3f_financeName1').innerText = financeName;
-        document.getElementById('p3f_financeAddress1').innerText = financeAddress;
-        document.getElementById('p3f_newName1').innerText = newName;
-        document.getElementById('p3f_newAddress1').innerText = newAddress;
-        
-        document.getElementById('p3f_newName2').innerText = newName;
-        document.getElementById('p3f_newAddress2').innerText = newAddress;
+        // Front Page Splitting based on Excel Limits
+        applyMta3Text('p3f_financeAddress1', financeAddress, 98);
+        applyMta3Text('p3f_financeName1', financeName, 100);
+        applyMta3Text('p3f_newAddress1', newAddress, 70);
+        applyMta3Text('p3f_newName1', newName, 23);
+        applyMta3Text('p3f_newAddress2', newAddress, 90);
+        applyMta3Text('p3f_newName2', newName, 105);
 
-        // MTA 3 Back
-        document.getElementById('p3b_financeName1').innerText = financeName;
-        document.getElementById('p3b_financeAddress1').innerText = financeAddress;
+        // Back Page Splitting based on Excel Limits
+        applyMta3Text('p3b_financeAddress1', financeAddress, 55);
+        applyMta3Text('p3b_financeName1', financeName, 75);
 
       } else {
         document.getElementById('page_mta3_front').style.display = "none";
