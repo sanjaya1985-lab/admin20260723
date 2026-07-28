@@ -223,27 +223,21 @@
       <!-- PAGE 3: MTA 3 FRONT -->
       <div class="a4-page" id="page_mta3_front" style="background-image: url('MTA_03_JPG_ Front.jpg'); display: none;">
         
-        <!-- Finance Address (Top 532) -->
         <span class="p-text" id="p3f_financeAddress1" style="top: 532px; left: 110px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_financeAddress1_ov" style="top: 544px; left: 110px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
-        <!-- Finance Name (Top 555) -->
         <span class="p-text" id="p3f_financeName1" style="top: 555px; left: 75px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_financeName1_ov" style="top: 567px; left: 75px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
-        <!-- Transferee Address 1 (Top 600) -->
         <span class="p-text" id="p3f_newAddress1" style="top: 600px; left: 52px; font-size: 11px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newAddress1_ov" style="top: 612px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newAddress1_ov" style="top: 614px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
-        <!-- Transferee Name 1 (Top 622) -->
-        <span class="p-text" id="p3f_newName1" style="top: 622px; left: 52px; font-size: 11px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newName1_ov" style="top: 634px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1" style="top: 603px; left: 567px; font-size: 11px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1_ov" style="top: 615px; left: 567px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
-        <!-- Transferee Address 2 (Top 786) -->
         <span class="p-text" id="p3f_newAddress2" style="top: 786px; left: 135px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_newAddress2_ov" style="top: 798px; left: 135px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
-        <!-- Transferee Name 2 (Top 809) -->
         <span class="p-text" id="p3f_newName2" style="top: 809px; left: 49px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_newName2_ov" style="top: 821px; left: 49px; font-size: 9px; font-family: Arial, sans-serif;"></span>
 
@@ -252,13 +246,11 @@
       <!-- PAGE 4: MTA 3 BACK -->
       <div class="a4-page" id="page_mta3_back" style="background-image: url('MTA_03_JPG_Back.jpg'); display: none;">
         
-        <!-- Finance Address (Top 142) -->
         <span class="p-text" id="p3b_financeAddress1" style="top: 142px; left: 433px; font-size: 10px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3b_financeAddress1_ov" style="top: 153px; left: 433px; font-size: 8px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3b_financeAddress1_ov" style="top: 161px; left: 47px; font-size: 10px; font-family: Arial, sans-serif;"></span>
         
-        <!-- Finance Name (Top 159) -->
         <span class="p-text" id="p3b_financeName1" style="top: 159px; left: 367px; font-size: 10px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3b_financeName1_ov" style="top: 170px; left: 367px; font-size: 8px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3b_financeName1_ov" style="top: 171px; left: 367px; font-size: 8px; font-family: Arial, sans-serif;"></span>
 
       </div>
 
@@ -424,13 +416,13 @@
         applyMta3Text('p3f_financeAddress1', financeAddress, 98);
         applyMta3Text('p3f_financeName1', financeName, 100);
         applyMta3Text('p3f_newAddress1', newAddress, 70);
-        applyMta3Text('p3f_newName1', newName, 23);
+        applyMta3Text('p3f_newName1', newName, 25);
         applyMta3Text('p3f_newAddress2', newAddress, 90);
         applyMta3Text('p3f_newName2', newName, 105);
 
         // Back Page Splitting based on Excel Limits
-        applyMta3Text('p3b_financeAddress1', financeAddress, 55);
-        applyMta3Text('p3b_financeName1', financeName, 75);
+        applyMta3Text('p3b_financeAddress1', financeAddress, 50);
+        applyMta3Text('p3b_financeName1', financeName, 23);
 
       } else {
         document.getElementById('page_mta3_front').style.display = "none";
