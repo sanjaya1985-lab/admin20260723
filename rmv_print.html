@@ -62,7 +62,7 @@
       .sticky-wrapper { display: none !important; }
       #sec-print, #sec-print * { visibility: visible; }
       #sec-print { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0; background: white; }
-      .a4-preview-container { padding: 0; gap: 0; display: block; margin: 0; border: none; }
+      .a4-preview-container { padding: 0; gap: 0; display: block; margin: 0; }
       .btn-print, .tabs, .header, .no-print { display: none !important; }
       
       .a4-page { 
@@ -83,12 +83,14 @@
       .a4-page[style*="display: none"] {
         display: none !important;
         height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
         page-break-after: avoid !important;
         page-break-before: avoid !important;
       }
 
-      /* Stop the page break after the last visible page */
-      .a4-page.no-break {
+      /* Stop the page break after the EXACT last visible page */
+      .a4-page.last-page {
         page-break-after: avoid !important;
       }
     }
@@ -343,7 +345,7 @@
       el3.style.letterSpacing = defaultSpacing;
     }
 
-    // Modified MTA 3 Text Overflow Handler supporting up to 3 lines
+    // Modified MTA 3 Text Overflow Handler with optional second line limit
     function applyMta3Text(baseId, text, limit1, limit2) {
       let mainEl = document.getElementById(baseId);
       let ovEl = document.getElementById(baseId + "_ov");
@@ -445,15 +447,15 @@
       document.getElementById('p2_collectOffice').innerText = collectOffice;
 
       // --- Manage Page Breaks & Display for MTA 3 ---
-      document.getElementById('page_mta8').classList.remove('no-break');
-      document.getElementById('page_mta3_back').classList.remove('no-break');
+      // Reset last-page classes
+      document.querySelectorAll('.a4-page').forEach(el => el.classList.remove('last-page'));
 
       if(financeName.trim() !== "") {
         document.getElementById('page_mta3_front').style.display = "block";
         document.getElementById('page_mta3_back').style.display = "block";
         
-        // Remove page break from MTA 3 Back (last visible page)
-        document.getElementById('page_mta3_back').classList.add('no-break');
+        // Add last-page class to MTA 3 Back
+        document.getElementById('page_mta3_back').classList.add('last-page');
         
         // Front Page Splitting based on Excel Limits
         applyMta3Text('p3f_financeAddress1', financeAddress, 98);
@@ -465,7 +467,7 @@
         applyMta3Text('p3f_newAddress2', newAddress, 90);
         applyMta3Text('p3f_newName2', newName, 105);
 
-        // Back Page Splitting based on Excel Limits
+        // Back Page Splitting based on Excel Limits 
         applyMta3Text('p3b_financeAddress1', financeAddress, 55, 27);
         applyMta3Text('p3b_financeName1', financeName, 23);
 
@@ -473,8 +475,8 @@
         document.getElementById('page_mta3_front').style.display = "none";
         document.getElementById('page_mta3_back').style.display = "none";
         
-        // Remove page break from MTA 8 (since it's now the last visible page)
-        document.getElementById('page_mta8').classList.add('no-break');
+        // Add last-page class to MTA 8
+        document.getElementById('page_mta8').classList.add('last-page');
       }
 
       switchTab('print');
