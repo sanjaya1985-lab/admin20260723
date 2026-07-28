@@ -681,6 +681,10 @@
           var parsedUser = JSON.parse(savedUser); 
           if(parsedUser && parsedUser.user) {
             currentUser = parsedUser;
+            
+            // Set the session flag to allow access to RMV Print page
+            sessionStorage.setItem("isLoggedIntoAdmin", "true");
+            
             document.getElementById('login-container').style.display = 'none';
             document.getElementById('app-container').style.display = 'flex'; 
             setupDashboardPostLogin(currentUser); 
@@ -707,7 +711,11 @@
           if(res.isNew === "Yes") {
             document.getElementById('loginBox').style.display = 'none';
             document.getElementById('changePassBox').style.display = 'block';
-          } else { proceedToDashboard(res); }
+          } else { 
+              // Set the session flag on successful login
+              sessionStorage.setItem("isLoggedIntoAdmin", "true");
+              proceedToDashboard(res); 
+          }
         } else {
           Swal.fire("Access Denied", res.msg, "error");
           btn.innerText = "Sign In"; btn.disabled = false;
@@ -727,6 +735,8 @@
         const res = await apiCall('updateFirstPassword', { username: tempUserData.username, newPass: p1 });
         if(res.success || res.data === "success") {
           tempUserData.isNew = "No"; 
+          // Set the session flag on successful password update and login
+          sessionStorage.setItem("isLoggedIntoAdmin", "true");
           Swal.fire({title: "Success!", text: "Password Updated. Redirecting...", icon: "success", timer: 1500, showConfirmButton: false});
           setTimeout(() => proceedToDashboard(tempUserData), 1500);
         } else { Swal.fire("Error", res.error || "Update failed", "error"); btn.innerText = "Update & Login"; btn.disabled = false; }
@@ -1176,7 +1186,7 @@
     }
 
     function logout() { 
-      try { localStorage.removeItem('TestAppUser'); } catch(e){}
+      try { localStorage.removeItem('TestAppUser'); sessionStorage.removeItem("isLoggedIntoAdmin"); } catch(e){}
       currentUser = {}; document.getElementById('app-container').style.display = 'none'; document.getElementById('login-container').style.display = 'flex'; document.getElementById('username').value = ""; document.getElementById('password').value = "";
     }
 
