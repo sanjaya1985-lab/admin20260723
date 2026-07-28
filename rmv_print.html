@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+  <script>
+    // කවුරු හරි කෙලින්ම ලින්ක් එකෙන් ආවොත් එළියට දානවා
+    if (sessionStorage.getItem("isLoggedIntoAdmin") !== "true") {
+      // මෙතනට ඔයාගේ ඇත්තම Login Page එකේ URL එක දාන්න
+      window.location.href = "login.html"; 
+    }
+  </script>
+  
+  <meta charset="UTF-8">
+  <title>RMV Print Portal - Auto Fill Forms</title>
+  <!-- ඔයාගේ අනිත් CSS සහ links ටික... -->
 <head>
   <meta charset="UTF-8">
   <title>RMV Print Portal - Auto Fill Forms</title>
