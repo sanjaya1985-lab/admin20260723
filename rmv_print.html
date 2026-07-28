@@ -236,8 +236,10 @@
         <span class="p-text" id="p3f_newAddress1" style="top: 600px; left: 52px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_newAddress1_ov" style="top: 614px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
+        <!-- NEW: p3f_newName1 divided into 3 spans for 25, 50, and remaining characters -->
         <span class="p-text" id="p3f_newName1" style="top: 603px; left: 567px; font-size: 11px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newName1_ov" style="top: 627px; left: 50px; font-size: 10px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1_ov" style="top: 615px; left: 567px; font-size: 9px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1_ov2" style="top: 627px; left: 567px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
         <span class="p-text" id="p3f_newAddress2" style="top: 786px; left: 135px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_newAddress2_ov" style="top: 798px; left: 48px; font-size: 9px; font-family: Arial, sans-serif;"></span>
@@ -254,7 +256,7 @@
         <span class="p-text" id="p3b_financeAddress1_ov" style="top: 161px; left: 47px; font-size: 10px; font-family: Arial, sans-serif;"></span>
         
         <span class="p-text" id="p3b_financeName1" style="top: 159px; left: 367px; font-size: 10px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3b_financeName1_ov" style="top: 173px; left: 367px; font-size: 8px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3b_financeName1_ov" style="top: 171px; left: 367px; font-size: 8px; font-family: Arial, sans-serif;"></span>
 
       </div>
 
@@ -323,22 +325,30 @@
       el3.style.letterSpacing = defaultSpacing;
     }
 
-    // Modified MTA 3 Text Overflow Handler with optional second line limit
+    // Modified MTA 3 Text Overflow Handler supporting up to 3 lines
     function applyMta3Text(baseId, text, limit1, limit2) {
       let mainEl = document.getElementById(baseId);
       let ovEl = document.getElementById(baseId + "_ov");
+      let ov2El = document.getElementById(baseId + "_ov2");
+      
       if(!mainEl || !ovEl) return;
       
       if(text.length <= limit1) {
         mainEl.innerText = text;
         ovEl.innerText = "";
+        if(ov2El) ov2El.innerText = "";
       } else {
         mainEl.innerText = text.substring(0, limit1);
         let remaining = text.substring(limit1, text.length);
+        
         if(limit2 && remaining.length > limit2) {
           ovEl.innerText = remaining.substring(0, limit2);
+          if(ov2El) {
+            ov2El.innerText = remaining.substring(limit2, remaining.length);
+          }
         } else {
           ovEl.innerText = remaining;
+          if(ov2El) ov2El.innerText = "";
         }
       }
     }
@@ -429,11 +439,14 @@
         applyMta3Text('p3f_financeAddress1', financeAddress, 98);
         applyMta3Text('p3f_financeName1', financeName, 100);
         applyMta3Text('p3f_newAddress1', newAddress, 70);
-        applyMta3Text('p3f_newName1', newName, 25, 75);
+        
+        // --- UPDATED: p3f_newName1 splits at 25 and 50 characters, remaining to 3rd line ---
+        applyMta3Text('p3f_newName1', newName, 25, 50);
+        
         applyMta3Text('p3f_newAddress2', newAddress, 90);
         applyMta3Text('p3f_newName2', newName, 105);
 
-        // Back Page Splitting based on Excel Limits (new 55 & 27 limits applied)
+        // Back Page Splitting based on Excel Limits
         applyMta3Text('p3b_financeAddress1', financeAddress, 55, 27);
         applyMta3Text('p3b_financeName1', financeName, 23);
 
