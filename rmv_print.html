@@ -69,6 +69,10 @@
         -webkit-print-color-adjust: exact !important; 
         print-color-adjust: exact !important;
       }
+      /* Prevent blank pages by stopping page-break on the last visible element */
+      .a4-page.no-break {
+        page-break-after: auto !important;
+      }
     }
   </style>
 </head>
@@ -186,7 +190,7 @@
       </div>
 
       <!-- PAGE 2: MTA 8 -->
-      <div class="a4-page" style="background-image: url('MAT_8_JPG.jpg');">
+      <div class="a4-page" id="page_mta8" style="background-image: url('MAT_8_JPG.jpg');">
         
         <span class="p-text" id="p2_veh_prov" style="top: 401px; left: 569px; letter-spacing: 10px;"></span>
         <span class="p-text" id="p2_veh_letters" style="top: 401px; left: 633px; letter-spacing: 10px;"></span>
@@ -233,7 +237,7 @@
         <span class="p-text" id="p3f_newAddress1_ov" style="top: 614px; left: 52px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
         <span class="p-text" id="p3f_newName1" style="top: 603px; left: 567px; font-size: 11px; font-family: Arial, sans-serif;"></span>
-        <span class="p-text" id="p3f_newName1_ov" style="top: 627px; left: 51px; font-size: 10px; font-family: Arial, sans-serif;"></span>
+        <span class="p-text" id="p3f_newName1_ov" style="top: 615px; left: 567px; font-size: 9px; font-family: Arial, sans-serif;"></span>
         
         <span class="p-text" id="p3f_newAddress2" style="top: 786px; left: 135px; font-size: 11px; font-family: Arial, sans-serif;"></span>
         <span class="p-text" id="p3f_newAddress2_ov" style="top: 798px; left: 48px; font-size: 9px; font-family: Arial, sans-serif;"></span>
@@ -319,18 +323,23 @@
       el3.style.letterSpacing = defaultSpacing;
     }
 
-    // MTA 3 Text Overflow Handler
-    function applyMta3Text(baseId, text, limit) {
+    // Modified MTA 3 Text Overflow Handler with optional second line limit
+    function applyMta3Text(baseId, text, limit1, limit2) {
       let mainEl = document.getElementById(baseId);
       let ovEl = document.getElementById(baseId + "_ov");
       if(!mainEl || !ovEl) return;
       
-      if(text.length <= limit) {
+      if(text.length <= limit1) {
         mainEl.innerText = text;
         ovEl.innerText = "";
       } else {
-        mainEl.innerText = text.substring(0, limit);
-        ovEl.innerText = text.substring(limit, text.length);
+        mainEl.innerText = text.substring(0, limit1);
+        let remaining = text.substring(limit1, text.length);
+        if(limit2 && remaining.length > limit2) {
+          ovEl.innerText = remaining.substring(0, limit2);
+        } else {
+          ovEl.innerText = remaining;
+        }
       }
     }
 
@@ -407,26 +416,33 @@
       document.getElementById('p2_date_y').innerText = dYYYY;
       document.getElementById('p2_collectOffice').innerText = collectOffice;
 
-      // --- Fill MTA 3 ---
+      // --- Manage Page Breaks & Display for MTA 3 ---
       if(financeName.trim() !== "") {
         document.getElementById('page_mta3_front').style.display = "block";
         document.getElementById('page_mta3_back').style.display = "block";
+        
+        // Remove page break from MTA 3 Back (last visible page)
+        document.getElementById('page_mta8').classList.remove('no-break');
+        document.getElementById('page_mta3_back').classList.add('no-break');
         
         // Front Page Splitting based on Excel Limits
         applyMta3Text('p3f_financeAddress1', financeAddress, 98);
         applyMta3Text('p3f_financeName1', financeName, 100);
         applyMta3Text('p3f_newAddress1', newAddress, 70);
-        applyMta3Text('p3f_newName1', newName, 25);
+        applyMta3Text('p3f_newName1', newName, 25, 75);
         applyMta3Text('p3f_newAddress2', newAddress, 90);
         applyMta3Text('p3f_newName2', newName, 105);
 
-        // Back Page Splitting based on Excel Limits
-        applyMta3Text('p3b_financeAddress1', financeAddress, 50);
+        // Back Page Splitting based on Excel Limits (new 55 & 27 limits applied)
+        applyMta3Text('p3b_financeAddress1', financeAddress, 55, 27);
         applyMta3Text('p3b_financeName1', financeName, 23);
 
       } else {
         document.getElementById('page_mta3_front').style.display = "none";
         document.getElementById('page_mta3_back').style.display = "none";
+        
+        // Remove page break from MTA 8 (since it's now the last visible page)
+        document.getElementById('page_mta8').classList.add('no-break');
       }
 
       switchTab('print');
