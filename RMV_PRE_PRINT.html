@@ -33,13 +33,11 @@
     
     .a4-preview-container { display: flex; flex-direction: column; gap: 30px; align-items: center; overflow-y: auto; padding-bottom: 50px; }
     
-    /* Pure White A4 Page for precise overlay printing */
     .a4-page { 
       background-color: white; width: 210mm; height: 297mm; box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
       box-sizing: border-box; position: relative; page-break-after: always;
     }
 
-    /* Absolute Positioning Block (White background covers pre-printed dots/lines) */
     .print-absolute-block {
       position: absolute;
       background-color: #ffffff;
@@ -47,7 +45,6 @@
       box-sizing: border-box;
     }
 
-    /* Print Specific Styles */
     @page { size: A4 portrait; margin: 0; } 
     
     @media print {
@@ -64,11 +61,10 @@
       .a4-page.last-page { page-break-after: avoid !important; }
     }
 
-    /* Box Generating CSS */
     .flex-row { display: flex; align-items: center; }
-    .box-container { display: flex; gap: 2px; } /* Reduced gap from 3px to 2px to prevent overflow */
+    .box-container { display: flex; gap: 2px; } 
     .char-box {
-      width: 16px; /* Reduced width from 17px to 16px to prevent overflow */
+      width: 16px; 
       height: 22px;
       border: 1px solid #000;
       display: flex;
@@ -76,13 +72,13 @@
       justify-content: center;
       font-family: 'Courier New', Courier, monospace;
       font-weight: bold;
-      font-size: 13px; /* Slightly reduced font size to fit new box width */
+      font-size: 13px;
       text-transform: uppercase;
       color: #000;
     }
     .field-label { font-size: 13px; font-family: Arial, sans-serif; color: #000; font-weight: bold; }
+    .sub-label { font-size: 9px; color: #333; text-align: center; margin-top: 3px; margin-bottom: 15px; font-family: Arial, sans-serif; }
     
-    /* Dotted Line style for MTA 3 Overlay */
     .dotted-line {
       border-bottom: 2px dotted #000;
       display: inline-block;
@@ -187,7 +183,14 @@
       <!-- PAGE 1: MTA 6 OVERLAY -->
       <div class="a4-page">
         <!-- Main MTA 6 Block -->
-        <div class="print-absolute-block" style="top: 220px; left: 40px; right: 40px;">
+        <!-- මෙතන top, left, right අගයන් වෙනස් කරලා සම්පූර්ණ කොටුව උඩට/පහළට, දකුණට/වමට ගන්න පුළුවන් -->
+        <div class="print-absolute-block" style="top: 150px; left: 40px; right: 20px;">
+          
+          <!-- Top Text -->
+          <div style="font-size: 12px; font-weight: bold; margin-bottom: 20px; font-family: Arial, sans-serif;">
+            To: THE COMMISSIONER GENERAL OF MOTOR TRAFFIC
+          </div>
+
           <!-- Date -->
           <div style="display: flex; justify-content: flex-end; gap: 20px; margin-bottom: 30px;">
             <div class="flex-row"><span class="field-label" style="margin-right: 15px;">Date of Transfer</span><span class="field-label" style="margin-right: 5px;">Date</span><div id="p1_box_dd" class="box-container"></div></div>
@@ -197,26 +200,43 @@
 
           <!-- Transferor Name -->
           <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 25px;">I</div>
-            <div id="p1_box_oldName_line1" class="box-container"></div>
+            <div class="field-label" style="width: 30px;">I</div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_oldName_line1" class="box-container"></div>
+            </div>
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 25px;">
-            <div style="width: 25px;"></div>
-            <div id="p1_box_oldName_line2" class="box-container"></div>
+          <div style="display: flex; align-items: center; margin-bottom: 2px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_oldName_line2" class="box-container"></div>
+            </div>
+          </div>
+          <div style="display: flex;">
+            <div style="width: 30px;"></div>
+            <div class="sub-label" style="flex-grow: 1;">පැවරුම්කරුගේ නම/ ஫ாம்றிக்பகாடுப்பல஭ின் பப஬஭்/Name of Transferor</div>
           </div>
 
           <!-- Transferor Address -->
           <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 25px;">of</div>
-            <div id="p1_box_oldAddress_line1" class="box-container"></div>
+            <div class="field-label" style="width: 30px;">of</div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_oldAddress_line1" class="box-container"></div>
+            </div>
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 25px;">
-            <div style="width: 25px;"></div>
-            <div id="p1_box_oldAddress_line2" class="box-container"></div>
+          <div style="display: flex; align-items: center; margin-bottom: 2px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_oldAddress_line2" class="box-container"></div>
+            </div>
+          </div>
+          <div style="display: flex;">
+            <div style="width: 30px;"></div>
+            <div class="sub-label" style="flex-grow: 1;">පැවරුම්කරුගේ ලිපිනය /஫ாம்றிக்பகாடுப்பல஭ின் முகல஭ி / Address of Transferor</div>
           </div>
 
           <!-- Vehicle No -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+          <!-- මෙතන margin-top අගය වෙනස් කරලා Vehicle Number පේළිය විතරක් පල්ලෙහාට ගන්න පුළුවන් -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px; margin-bottom: 15px;">
             <div class="field-label">transferred the possession of Motor Vehicle No.</div>
             <div style="display: flex; gap: 10px;">
               <div id="p1_box_vehProv" class="box-container"></div>
@@ -227,26 +247,43 @@
 
           <!-- Transferee Name -->
           <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 25px;">to</div>
-            <div id="p1_box_newName_line1" class="box-container"></div>
+            <div class="field-label" style="width: 30px;">to</div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_newName_line1" class="box-container"></div>
+            </div>
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 25px;">
-            <div style="width: 25px;"></div>
-            <div id="p1_box_newName_line2" class="box-container"></div>
+          <div style="display: flex; align-items: center; margin-bottom: 2px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_newName_line2" class="box-container"></div>
+            </div>
+          </div>
+          <div style="display: flex;">
+            <div style="width: 30px;"></div>
+            <div class="sub-label" style="flex-grow: 1;">පැවරුම්භියාගේ නම/ ஫ாம்றிப்பபறுபல஭ின் பப஬஭/ ் Name of Transferee</div>
           </div>
 
           <!-- Transferee Address -->
           <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 25px;">of</div>
-            <div id="p1_box_newAddress_line1" class="box-container"></div>
+            <div class="field-label" style="width: 30px;">of</div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_newAddress_line1" class="box-container"></div>
+            </div>
           </div>
-          <div style="display: flex; align-items: center;">
-            <div style="width: 25px;"></div>
-            <div id="p1_box_newAddress_line2" class="box-container"></div>
+          <div style="display: flex; align-items: center; margin-bottom: 2px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_newAddress_line2" class="box-container"></div>
+            </div>
+          </div>
+          <div style="display: flex;">
+            <div style="width: 30px;"></div>
+            <div class="sub-label" style="flex-grow: 1;">පැවරුම්භියාගේ ලිපිනය/ ஫ாம்றிப்பபறுபல஭ின் முகல஭ி / Address of Transferee</div>
           </div>
         </div>
 
-        <!-- Transferor ID Block (Fixed: Label Above Boxes) -->
+        <!-- Transferor ID Block -->
+        <!-- මෙතන top අගය වෙනස් කරලා Old ID කොටස උඩට/පහළට ගන්න පුළුවන් -->
         <div class="print-absolute-block" style="top: 660px; left: 40px;">
           <div style="margin-bottom: 8px;">
             <span class="field-label">පැවරුම්කරුගේ ජා.හැ.අංකය / Identity Card No.:</span>
@@ -254,7 +291,8 @@
           <div id="p1_box_oldId" class="box-container" style="margin-left: 5px;"></div>
         </div>
 
-        <!-- Transferee ID Block (Fixed: Label Above Boxes) -->
+        <!-- Transferee ID Block -->
+        <!-- මෙතන top අගය වෙනස් කරලා New ID කොටස උඩට/පහළට ගන්න පුළුවන් -->
         <div class="print-absolute-block" style="top: 830px; left: 40px;">
           <div style="margin-bottom: 8px;">
             <span class="field-label">පැවරුම්ලාභියාගේ ජා.හැ.අංකය / Identity Card No.:</span>
@@ -418,7 +456,6 @@
       document.getElementById('sec-' + tabId).classList.add('active');
     }
 
-    // Generator function for precise boxes
     function generateBoxesHtml(text, boxCount) {
       let html = '';
       text = text ? text.toUpperCase() : '';
@@ -430,7 +467,6 @@
     }
 
     function saveDataAndPreparePrint() {
-      // Collect Field Data
       const dDD = document.getElementById('i_dateDD').value;
       const dMM = document.getElementById('i_dateMM').value;
       const dYYYY = document.getElementById('i_dateYYYY').value;
@@ -452,9 +488,6 @@
       const financeName = document.getElementById('i_financeName').value;
       const financeAddress = document.getElementById('i_financeAddress').value;
 
-      // ==========================================
-      // PAGE 1: MTA 6 - Box Formatter
-      // ==========================================
       document.getElementById('p1_box_dd').innerHTML = generateBoxesHtml(dDD, 2);
       document.getElementById('p1_box_mm').innerHTML = generateBoxesHtml(dMM, 2);
       document.getElementById('p1_box_yyyy').innerHTML = generateBoxesHtml(dYYYY, 4);
@@ -480,9 +513,6 @@
       document.getElementById('p1_box_newId').innerHTML = generateBoxesHtml(newId, 12); 
 
 
-      // ==========================================
-      // PAGE 2: MTA 8 - Box Formatter
-      // ==========================================
       document.getElementById('p2_box_vehProv').innerHTML = generateBoxesHtml(vProv, 2);
       document.getElementById('p2_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
       document.getElementById('p2_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
@@ -513,9 +543,6 @@
       
       document.getElementById('p2_box_collect').innerHTML = generateBoxesHtml(collectOffice, 15);
 
-      // ==========================================
-      // PAGE 3 & 4: MTA 3 - Dotted Lines
-      // ==========================================
       document.getElementById('p3f_newName').innerText = newName;
       document.getElementById('p3f_newName_bottom').innerText = newName;
       document.getElementById('p3f_newAddress1').innerText = newAddress.substring(0, 60);
