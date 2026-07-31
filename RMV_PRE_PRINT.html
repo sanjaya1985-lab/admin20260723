@@ -27,7 +27,7 @@
     .a4-preview-container { display: flex; flex-direction: column; gap: 30px; align-items: center; overflow-y: auto; padding-bottom: 50px; }
     
     .a4-page { 
-      background-color: white; width: 210mm; height: 297mm; box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
+      background-color: white; width: 210mm; min-height: 297mm; box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
       box-sizing: border-box; position: relative; padding: 40px 30px; page-break-after: always;
     }
 
@@ -62,10 +62,26 @@
       font-weight: bold;
       font-size: 14px;
       text-transform: uppercase;
-      color: #000;
+      color: #000; /* Set to black as requested */
     }
-    .field-label { font-size: 11px; font-family: Arial, sans-serif; color: #000; }
-    .sub-label { font-size: 9px; color: #555; text-align: center; margin-top: 3px; font-family: Arial, sans-serif; }
+    .field-label { font-size: 12px; font-family: Arial, sans-serif; color: #000; font-weight: bold; }
+    .sub-label { font-size: 9px; color: #333; text-align: center; margin-top: 3px; font-family: Arial, sans-serif; }
+    
+    /* Dotted Line style for MTA 3 */
+    .dotted-line {
+      border-bottom: 2px dotted #333;
+      display: inline-block;
+      min-width: 150px;
+      text-transform: uppercase;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      font-size: 14px;
+      color: #000;
+      text-align: left;
+      padding: 0 5px;
+      line-height: 1.2;
+    }
+    .mta3-text { font-size: 14px; line-height: 2.5; font-family: 'Times New Roman', Times, serif; }
   </style>
 </head>
 <body>
@@ -85,6 +101,7 @@
     <div class="form-box">
       <h3 style="color: #c62828; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px;">Type Transfer Details Here</h3>
       
+      <!-- Date: Validation & Auto Tab Added -->
       <div class="form-group">
         <label>Transfer Date</label>
         <div style="display:flex; gap:10px;">
@@ -94,6 +111,7 @@
         </div>
       </div>
 
+      <!-- Vehicle Number -->
       <div class="form-group">
         <label>Vehicle Number</label>
         <div style="display:flex; gap:10px;">
@@ -111,10 +129,33 @@
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferor (Previous Owner)</h4>
       <div class="form-group"><label>Name</label><input type="text" id="i_oldName" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
       <div class="form-group"><label>Address</label><input type="text" id="i_oldAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      <div class="form-group"><label>Transferor ID Number</label><input type="text" id="i_oldId" class="form-control" maxlength="12" oninput="this.value = this.value.toUpperCase()"></div>
       
       <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Transferee (New Owner)</h4>
       <div class="form-group"><label>Name</label><input type="text" id="i_newName" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
       <div class="form-group"><label>Address</label><input type="text" id="i_newAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      <div class="form-group"><label>Transferee ID Number</label><input type="text" id="i_newId" class="form-control" maxlength="12" oninput="this.value = this.value.toUpperCase()"></div>
+
+      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #007bff;">MTA 8 Specific Details</h4>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="width: 50%;"><label>Divisional Secretariat</label><input type="text" id="i_divSec" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+        <div class="form-group" style="width: 50%;"><label>District</label><input type="text" id="i_district" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="width: 33%;"><label>Province</label><input type="text" id="i_provinceLoc" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+        <div class="form-group" style="width: 33%;"><label>Postal Code</label><input type="text" id="i_postalCode" class="form-control" maxlength="5" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+        <div class="form-group" style="width: 34%;"><label>Mobile Number</label><input type="text" id="i_mobileNo" class="form-control" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')"></div>
+      </div>
+      <div class="form-group" style="width: 100%;">
+          <label>Collect Office (Preferred District)</label>
+          <input type="text" id="i_collectOffice" class="form-control" oninput="this.value = this.value.toUpperCase()">
+      </div>
+
+      <h4 style="margin-top: 20px; margin-bottom: 10px; color: #555;">Hire-Purchase (Finance)</h4>
+      <div style="display:flex; gap:10px;">
+        <div class="form-group" style="width: 50%;"><label>Finance Company Name</label><input type="text" id="i_financeName" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+        <div class="form-group" style="width: 50%;"><label>Finance Company Address</label><input type="text" id="i_financeAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
+      </div>
 
       <button class="btn" onclick="saveDataAndPreparePrint()" style="margin-top: 15px; font-size: 16px;">Generate Boxes & Print <i class="fas fa-arrow-right"></i></button>
     </div>
@@ -125,80 +166,215 @@
     <button class="btn btn-print no-print" onclick="window.print()"><i class="fas fa-print"></i> Print Form</button>
     
     <div class="a4-preview-container">
-      <div class="a4-page last-page">
+      
+      <!-- PAGE 1: MTA 6 Style -->
+      <div class="a4-page">
+        <div style="font-size: 16px; font-weight: bold; text-align: center; margin-bottom: 20px; text-decoration: underline;">MTA 6 : STATEMENT OF CHANGE OF POSSESSION</div>
         
-        <div style="font-size: 12px; font-weight: bold; margin-bottom: 30px; font-family: Arial, sans-serif;">
-          To: THE COMMISSIONER GENERAL OF MOTOR TRAFFIC
-        </div>
-
-        <!-- Date Row -->
         <div style="display: flex; justify-content: flex-end; gap: 20px; margin-bottom: 30px;">
           <div class="flex-row">
             <span class="field-label" style="margin-right: 10px;">Date of Transfer</span>
-            <span class="field-label" style="margin-right: 5px;">Date</span>
-            <div id="box_dd" class="box-container"></div>
+            <span class="field-label" style="margin-right: 5px;">Date</span><div id="p1_box_dd" class="box-container"></div>
           </div>
-          <div class="flex-row">
-            <span class="field-label" style="margin-right: 5px;">Month</span>
-            <div id="box_mm" class="box-container"></div>
-          </div>
-          <div class="flex-row">
-            <span class="field-label" style="margin-right: 5px;">Year</span>
-            <div id="box_yyyy" class="box-container"></div>
-          </div>
+          <div class="flex-row"><span class="field-label" style="margin-right: 5px;">Month</span><div id="p1_box_mm" class="box-container"></div></div>
+          <div class="flex-row"><span class="field-label" style="margin-right: 5px;">Year</span><div id="p1_box_yyyy" class="box-container"></div></div>
         </div>
 
-        <!-- Old Name -->
         <div style="display: flex; align-items: flex-start; margin-bottom: 10px;">
           <div class="field-label" style="width: 25px; margin-top: 5px;">I</div>
           <div style="flex: 1;">
-            <div id="box_oldName_line1" class="box-container" style="margin-bottom: 5px;"></div>
-            <div id="box_oldName_line2" class="box-container"></div>
+            <div id="p1_box_oldName_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p1_box_oldName_line2" class="box-container"></div>
             <div class="sub-label">පැවරුම්කරුගේ නම/ மாற்றிக் கொடுப்பவரின் பெயர் / Name of Transferor</div>
           </div>
         </div>
 
-        <!-- Old Address -->
-        <div style="display: flex; align-items: flex-start; margin-bottom: 25px;">
+        <div style="display: flex; align-items: flex-start; margin-bottom: 10px;">
           <div class="field-label" style="width: 25px; margin-top: 5px;">of</div>
           <div style="flex: 1;">
-            <div id="box_oldAddress_line1" class="box-container" style="margin-bottom: 5px;"></div>
-            <div id="box_oldAddress_line2" class="box-container"></div>
+            <div id="p1_box_oldAddress_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p1_box_oldAddress_line2" class="box-container"></div>
             <div class="sub-label">පැවරුම්කරුගේ ලිපිනය/ மாற்றிக் கொடுப்பவரின் முகவரி / Address of Transferor</div>
           </div>
         </div>
 
-        <!-- Vehicle Number -->
+        <!-- NEW: Transferor ID Box (As requested in image 1) -->
+        <div style="display: flex; align-items: center; margin-bottom: 25px; margin-left: 25px;">
+          <div class="field-label" style="margin-right: 15px;">පැවරුම්කරුගේ ජා.හැ.අංකය / Identity Card No.:</div>
+          <div id="p1_box_oldId" class="box-container"></div>
+        </div>
+
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px;">
           <div class="field-label" style="margin-top: 5px;">transferred the possession of Motor Vehicle No.</div>
           <div style="display: flex; gap: 10px;">
-            <div id="box_vehProv" class="box-container"></div>
-            <div id="box_vehLetters" class="box-container"></div>
-            <div id="box_vehNums" class="box-container"></div>
+            <div id="p1_box_vehProv" class="box-container"></div>
+            <div id="p1_box_vehLetters" class="box-container"></div>
+            <div id="p1_box_vehNums" class="box-container"></div>
           </div>
         </div>
 
-        <!-- New Name -->
         <div style="display: flex; align-items: flex-start; margin-bottom: 10px;">
           <div class="field-label" style="width: 25px; margin-top: 5px;">to</div>
           <div style="flex: 1;">
-            <div id="box_newName_line1" class="box-container" style="margin-bottom: 5px;"></div>
-            <div id="box_newName_line2" class="box-container"></div>
+            <div id="p1_box_newName_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p1_box_newName_line2" class="box-container"></div>
             <div class="sub-label">පැවරුම්ලාභියාගේ නම/ மாற்றிப் பெறுபவரின் பெயர் / Name of Transferee</div>
           </div>
         </div>
 
-        <!-- New Address -->
         <div style="display: flex; align-items: flex-start; margin-bottom: 10px;">
           <div class="field-label" style="width: 25px; margin-top: 5px;">of</div>
           <div style="flex: 1;">
-            <div id="box_newAddress_line1" class="box-container" style="margin-bottom: 5px;"></div>
-            <div id="box_newAddress_line2" class="box-container"></div>
+            <div id="p1_box_newAddress_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p1_box_newAddress_line2" class="box-container"></div>
+            <div class="sub-label">පැවරුම්ලාභියාගේ ලිපිනය/ மாற்றிப் பெறுபவரின் முகவரி / Address of Transferee</div>
+          </div>
+        </div>
+        
+        <!-- NEW: Transferee ID Box (As requested in image 2) -->
+        <div style="display: flex; align-items: center; margin-bottom: 25px; margin-left: 25px;">
+          <div class="field-label" style="margin-right: 15px;">පැවරුම්ලාභියාගේ ජා.හැ.අංකය / Identity Card No.:</div>
+          <div id="p1_box_newId" class="box-container"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 2: MTA 8 Style (Image 3 layout) -->
+      <div class="a4-page">
+        <div style="font-size: 16px; font-weight: bold; text-align: center; margin-bottom: 30px;">APPLICATION FOR REGISTRATION OF A MOTOR VEHICLE ON TRANSFER</div>
+        
+        <!-- Vehicle No -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div class="field-label">I hereby apply to be registered as the new owner of the Vehicle Number</div>
+          <div style="display: flex; gap: 10px;">
+            <div id="p2_box_vehProv" class="box-container"></div>
+            <div id="p2_box_vehLetters" class="box-container"></div>
+            <div id="p2_box_vehNums" class="box-container"></div>
+          </div>
+        </div>
+
+        <!-- Previously registered to -->
+        <div style="display: flex; align-items: flex-start; margin-bottom: 10px;">
+          <div class="field-label" style="width: 140px; margin-top: 5px;">Previously registered</div>
+          <div style="flex: 1;">
+            <div id="p2_box_oldName_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p2_box_oldName_line2" class="box-container"></div>
+            <div class="sub-label">පැවරුම්කරුගේ නම/ மாற்றிக் கொடுப்பவரின் பெயர் / Name of Transferor</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; margin-bottom: 25px;">
+          <div class="field-label" style="width: 140px; margin-top: 5px;">to</div>
+          <div style="flex: 1;">
+            <div id="p2_box_oldAddress_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p2_box_oldAddress_line2" class="box-container"></div>
+          </div>
+        </div>
+
+        <!-- Residing at -->
+        <div style="display: flex; align-items: flex-start; margin-bottom: 10px;">
+          <div class="field-label" style="width: 140px; margin-top: 5px;">residing at</div>
+          <div style="flex: 1;">
+            <div id="p2_box_newName_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p2_box_newName_line2" class="box-container"></div>
+            <div class="sub-label">පැවරුම්ලාභියාගේ නම/ மாற்றிப் பெறுபவரின் பெயர் / Name of Transferee</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; margin-bottom: 25px;">
+          <div class="field-label" style="width: 140px; margin-top: 5px;">of</div>
+          <div style="flex: 1;">
+            <div id="p2_box_newAddress_line1" class="box-container" style="margin-bottom: 5px;"></div>
+            <div id="p2_box_newAddress_line2" class="box-container"></div>
             <div class="sub-label">පැවරුම්ලාභියාගේ ලිපිනය/ மாற்றிப் பெறுபவரின் முகவரி / Address of Transferee</div>
           </div>
         </div>
 
+        <!-- Identity / Postal / Mobile -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+          <div class="flex-row">
+            <span class="field-label" style="margin-right: 10px; width: 220px;">Identity Card Number of transferee</span>
+            <div id="p2_box_newId" class="box-container"></div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+          <div class="flex-row">
+            <span class="field-label" style="margin-right: 10px;">Postal Code</span>
+            <div id="p2_box_postal" class="box-container"></div>
+          </div>
+          <div class="flex-row">
+            <span class="field-label" style="margin-right: 10px;">Mobile Number</span>
+            <div id="p2_box_mobile" class="box-container"></div>
+          </div>
+        </div>
+
+        <!-- Div Sec / District / Province -->
+        <div style="margin-bottom: 20px;">
+          <div class="field-label" style="margin-bottom: 10px;">(i) Licensing Authority ............................................................................</div>
+          <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-left: 20px;">
+            <div class="flex-row">
+              <span class="field-label" style="margin-right: 10px;">Divisional Secretariat</span>
+              <div id="p2_box_divSec" class="box-container"></div>
+            </div>
+            <div class="flex-row">
+              <span class="field-label" style="margin-right: 10px;">District</span>
+              <div id="p2_box_district" class="box-container"></div>
+            </div>
+          </div>
+          <div class="flex-row" style="padding-left: 20px;">
+            <span class="field-label" style="margin-right: 10px;">Province</span>
+            <div id="p2_box_province" class="box-container"></div>
+          </div>
+        </div>
+
+        <!-- Transfer Date & Pref District -->
+        <div style="margin-bottom: 20px;">
+          <div class="flex-row" style="margin-bottom: 15px;">
+            <span class="field-label" style="margin-right: 20px;">(ii) Date of transfer:</span>
+            <div id="p2_box_dd" class="box-container" style="margin-right: 20px;"></div>
+            <div id="p2_box_mm" class="box-container" style="margin-right: 20px;"></div>
+            <div id="p2_box_yyyy" class="box-container"></div>
+          </div>
+          <div class="flex-row">
+            <span class="field-label" style="margin-right: 20px; width: 300px;">(iii) Preferred District Secretarial to receive number plates.</span>
+            <div id="p2_box_collect" class="box-container"></div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- PAGE 3: MTA 3 Front (Image 4 format - text on dotted lines) -->
+      <div class="a4-page">
+        <div class="mta3-text" style="margin-top: 50px;">
+          <div>
+            I hereby give notice that I have let the motor vehicle in respect of which the attached application for registration is made to 
+            <span id="p3f_newName" class="dotted-line"></span>
+          </div>
+          <div style="margin-top: 15px;">
+            of <span id="p3f_newAddress1" class="dotted-line"></span>
+          </div>
+          <div style="margin-top: 15px;">
+            <span id="p3f_newAddress2" class="dotted-line" style="min-width: 100%;"></span>
+          </div>
+          <div style="margin-top: 15px;">
+            under the hire-purchase agreement.
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: MTA 3 Back (Image 5 format - text on dotted lines) -->
+      <div class="a4-page last-page">
+        <div class="mta3-text" style="margin-top: 50px;">
+          <div>
+            I do hereby acknowledge that the motor vehicle has been let to me by 
+            <span id="p3b_financeName" class="dotted-line"></span>
+          </div>
+          <div style="margin-top: 15px;">
+            <span id="p3b_financeName2" class="dotted-line" style="min-width: 100%;"></span>
+          </div>
+          <div style="margin-top: 15px;">
+            of <span id="p3b_financeAddress" class="dotted-line"></span> under a hire-purchase agreement.
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -233,36 +409,94 @@
       
       const oldName = document.getElementById('i_oldName').value;
       const oldAddress = document.getElementById('i_oldAddress').value;
+      const oldId = document.getElementById('i_oldId').value.replace(/\s/g, ''); 
       
       const newName = document.getElementById('i_newName').value;
       const newAddress = document.getElementById('i_newAddress').value;
+      const newId = document.getElementById('i_newId').value.replace(/\s/g, ''); 
 
-      // 1. Generate Date Boxes
-      document.getElementById('box_dd').innerHTML = generateBoxesHtml(dDD, 2);
-      document.getElementById('box_mm').innerHTML = generateBoxesHtml(dMM, 2);
-      document.getElementById('box_yyyy').innerHTML = generateBoxesHtml(dYYYY, 4);
+      const postalCode = document.getElementById('i_postalCode').value;
+      const mobileNo = document.getElementById('i_mobileNo').value;
+      const divSec = document.getElementById('i_divSec').value;
+      const district = document.getElementById('i_district').value;
+      const provinceLoc = document.getElementById('i_provinceLoc').value;
+      const collectOffice = document.getElementById('i_collectOffice').value;
 
-      // 2. Generate Vehicle Number Boxes
-      document.getElementById('box_vehProv').innerHTML = generateBoxesHtml(vProv, 2);
-      document.getElementById('box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
-      document.getElementById('box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
+      const financeName = document.getElementById('i_financeName').value;
+      const financeAddress = document.getElementById('i_financeAddress').value;
 
-      // 3. Generate Name & Address Boxes (35 boxes per line)
-      // Old Name
-      document.getElementById('box_oldName_line1').innerHTML = generateBoxesHtml(oldName.substring(0, 35), 35);
-      document.getElementById('box_oldName_line2').innerHTML = generateBoxesHtml(oldName.substring(35, 70), 35);
+      // ==========================================
+      // PAGE 1: MTA 6 DATA POPULATION
+      // ==========================================
+      document.getElementById('p1_box_dd').innerHTML = generateBoxesHtml(dDD, 2);
+      document.getElementById('p1_box_mm').innerHTML = generateBoxesHtml(dMM, 2);
+      document.getElementById('p1_box_yyyy').innerHTML = generateBoxesHtml(dYYYY, 4);
 
-      // Old Address
-      document.getElementById('box_oldAddress_line1').innerHTML = generateBoxesHtml(oldAddress.substring(0, 35), 35);
-      document.getElementById('box_oldAddress_line2').innerHTML = generateBoxesHtml(oldAddress.substring(35, 70), 35);
+      document.getElementById('p1_box_vehProv').innerHTML = generateBoxesHtml(vProv, 2);
+      document.getElementById('p1_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
+      document.getElementById('p1_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
 
-      // New Name
-      document.getElementById('box_newName_line1').innerHTML = generateBoxesHtml(newName.substring(0, 35), 35);
-      document.getElementById('box_newName_line2').innerHTML = generateBoxesHtml(newName.substring(35, 70), 35);
+      document.getElementById('p1_box_oldName_line1').innerHTML = generateBoxesHtml(oldName.substring(0, 35), 35);
+      document.getElementById('p1_box_oldName_line2').innerHTML = generateBoxesHtml(oldName.substring(35, 70), 35);
 
-      // New Address
-      document.getElementById('box_newAddress_line1').innerHTML = generateBoxesHtml(newAddress.substring(0, 35), 35);
-      document.getElementById('box_newAddress_line2').innerHTML = generateBoxesHtml(newAddress.substring(35, 70), 35);
+      document.getElementById('p1_box_oldAddress_line1').innerHTML = generateBoxesHtml(oldAddress.substring(0, 35), 35);
+      document.getElementById('p1_box_oldAddress_line2').innerHTML = generateBoxesHtml(oldAddress.substring(35, 70), 35);
+
+      document.getElementById('p1_box_oldId').innerHTML = generateBoxesHtml(oldId, 12); // New ID box
+
+      document.getElementById('p1_box_newName_line1').innerHTML = generateBoxesHtml(newName.substring(0, 35), 35);
+      document.getElementById('p1_box_newName_line2').innerHTML = generateBoxesHtml(newName.substring(35, 70), 35);
+
+      document.getElementById('p1_box_newAddress_line1').innerHTML = generateBoxesHtml(newAddress.substring(0, 35), 35);
+      document.getElementById('p1_box_newAddress_line2').innerHTML = generateBoxesHtml(newAddress.substring(35, 70), 35);
+
+      document.getElementById('p1_box_newId').innerHTML = generateBoxesHtml(newId, 12); // New ID box
+
+
+      // ==========================================
+      // PAGE 2: MTA 8 DATA POPULATION
+      // ==========================================
+      document.getElementById('p2_box_vehProv').innerHTML = generateBoxesHtml(vProv, 2);
+      document.getElementById('p2_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
+      document.getElementById('p2_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
+
+      document.getElementById('p2_box_oldName_line1').innerHTML = generateBoxesHtml(oldName.substring(0, 32), 32);
+      document.getElementById('p2_box_oldName_line2').innerHTML = generateBoxesHtml(oldName.substring(32, 64), 32);
+
+      document.getElementById('p2_box_oldAddress_line1').innerHTML = generateBoxesHtml(oldAddress.substring(0, 32), 32);
+      document.getElementById('p2_box_oldAddress_line2').innerHTML = generateBoxesHtml(oldAddress.substring(32, 64), 32);
+
+      document.getElementById('p2_box_newName_line1').innerHTML = generateBoxesHtml(newName.substring(0, 32), 32);
+      document.getElementById('p2_box_newName_line2').innerHTML = generateBoxesHtml(newName.substring(32, 64), 32);
+
+      document.getElementById('p2_box_newAddress_line1').innerHTML = generateBoxesHtml(newAddress.substring(0, 32), 32);
+      document.getElementById('p2_box_newAddress_line2').innerHTML = generateBoxesHtml(newAddress.substring(32, 64), 32);
+
+      document.getElementById('p2_box_newId').innerHTML = generateBoxesHtml(newId, 12);
+      document.getElementById('p2_box_postal').innerHTML = generateBoxesHtml(postalCode, 5);
+      document.getElementById('p2_box_mobile').innerHTML = generateBoxesHtml(mobileNo, 10);
+      
+      document.getElementById('p2_box_divSec').innerHTML = generateBoxesHtml(divSec, 15);
+      document.getElementById('p2_box_district').innerHTML = generateBoxesHtml(district, 15);
+      document.getElementById('p2_box_province').innerHTML = generateBoxesHtml(provinceLoc, 15);
+      
+      document.getElementById('p2_box_dd').innerHTML = generateBoxesHtml(dDD, 2);
+      document.getElementById('p2_box_mm').innerHTML = generateBoxesHtml(dMM, 2);
+      document.getElementById('p2_box_yyyy').innerHTML = generateBoxesHtml(dYYYY, 4);
+      
+      document.getElementById('p2_box_collect').innerHTML = generateBoxesHtml(collectOffice, 15);
+
+      // ==========================================
+      // PAGE 3 & 4: MTA 3 DATA POPULATION (Dotted Lines)
+      // ==========================================
+      document.getElementById('p3f_newName').innerText = newName;
+      document.getElementById('p3f_newAddress1').innerText = newAddress.substring(0, 60);
+      document.getElementById('p3f_newAddress2').innerText = newAddress.substring(60, 150);
+
+      document.getElementById('p3b_financeName').innerText = financeName.substring(0, 50);
+      document.getElementById('p3b_financeName2').innerText = financeName.substring(50, 120);
+      document.getElementById('p3b_financeAddress').innerText = financeAddress;
+
 
       // Switch to Print View
       switchTab('print');
