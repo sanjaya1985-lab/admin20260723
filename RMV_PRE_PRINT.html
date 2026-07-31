@@ -77,8 +77,6 @@
       color: #000;
     }
     .field-label { font-size: 13px; font-family: Arial, sans-serif; color: #000; font-weight: bold; }
-    
-    /* Reduced margin-bottom here to compress vertical space */
     .sub-label { font-size: 9px; color: #333; text-align: center; margin-top: 2px; margin-bottom: 5px; font-family: Arial, sans-serif; }
     
     .dotted-line {
@@ -184,8 +182,8 @@
       
       <!-- PAGE 1: MTA 6 OVERLAY -->
       <div class="a4-page">
-        <!-- Main MTA 6 Block -->
-        <div class="print-absolute-block" style="top: 150px; left: 40px; right: 20px;">
+        <!-- Main MTA 6 Block (Changed top to 80mm) -->
+        <div class="print-absolute-block" style="top: 80mm; left: 40px; right: 20px;">
           
           <!-- Top Text -->
           <div style="font-size: 12px; font-weight: bold; margin-bottom: 8px; font-family: Arial, sans-serif;">
@@ -212,6 +210,13 @@
               <div id="p1_box_oldName_line2" class="box-container"></div>
             </div>
           </div>
+          <!-- Line 3 for Transferor Name (Dynamic) -->
+          <div id="p1_box_oldName_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_oldName_line3" class="box-container"></div>
+            </div>
+          </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
             <div class="sub-label" style="flex-grow: 1; margin-bottom: 8px;">පැවරුම්කරුගේ නම/ ஫ாம்றிக்பகாடுப்பல஭ின் பப஬஭்/Name of Transferor</div>
@@ -228,6 +233,13 @@
             <div style="width: 30px;"></div>
             <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
               <div id="p1_box_oldAddress_line2" class="box-container"></div>
+            </div>
+          </div>
+          <!-- Line 3 for Transferor Address (Dynamic) -->
+          <div id="p1_box_oldAddress_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_oldAddress_line3" class="box-container"></div>
             </div>
           </div>
           <div style="display: flex;">
@@ -258,6 +270,13 @@
               <div id="p1_box_newName_line2" class="box-container"></div>
             </div>
           </div>
+          <!-- Line 3 for Transferee Name (Dynamic) -->
+          <div id="p1_box_newName_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_newName_line3" class="box-container"></div>
+            </div>
+          </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
             <div class="sub-label" style="flex-grow: 1; margin-bottom: 8px;">පැවරුම්භියාගේ නම/ ஫ாம்றிப்பபறுபல஭ின் பப஬஭/ ் Name of Transferee</div>
@@ -274,6 +293,13 @@
             <div style="width: 30px;"></div>
             <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
               <div id="p1_box_newAddress_line2" class="box-container"></div>
+            </div>
+          </div>
+          <!-- Line 3 for Transferee Address (Dynamic) -->
+          <div id="p1_box_newAddress_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
+            <div style="width: 30px;"></div>
+            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
+              <div id="p1_box_newAddress_line3" class="box-container"></div>
             </div>
           </div>
           <div style="display: flex;">
@@ -312,41 +338,65 @@
             </div>
           </div>
 
+          <!-- Old Name -->
           <div style="display: flex; align-items: center; margin-bottom: 5px;">
             <div class="field-label" style="width: 155px;">Previously registered</div>
             <div id="p2_box_oldName_line1" class="box-container"></div>
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 25px;">
+          <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_oldName_line2" class="box-container"></div>
           </div>
+          <div id="p2_box_oldName_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+            <div style="width: 155px;"></div>
+            <div id="p2_box_oldName_line3" class="box-container"></div>
+          </div>
+          <div class="sub-label" style="margin-left: 155px; margin-bottom: 25px;">පැවරුම්කරුගේ නම...</div>
 
+          <!-- Old Address -->
           <div style="display: flex; align-items: center; margin-bottom: 5px;">
             <div class="field-label" style="width: 155px;">to</div>
             <div id="p2_box_oldAddress_line1" class="box-container"></div>
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 25px;">
+          <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_oldAddress_line2" class="box-container"></div>
           </div>
+          <div id="p2_box_oldAddress_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+            <div style="width: 155px;"></div>
+            <div id="p2_box_oldAddress_line3" class="box-container"></div>
+          </div>
+          <div style="margin-bottom: 25px;"></div>
 
+          <!-- New Name -->
           <div style="display: flex; align-items: center; margin-bottom: 5px;">
             <div class="field-label" style="width: 155px;">residing at</div>
             <div id="p2_box_newName_line1" class="box-container"></div>
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 25px;">
+          <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_newName_line2" class="box-container"></div>
           </div>
+          <div id="p2_box_newName_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+            <div style="width: 155px;"></div>
+            <div id="p2_box_newName_line3" class="box-container"></div>
+          </div>
+          <div class="sub-label" style="margin-left: 155px; margin-bottom: 25px;">පැවරුම්ලාභියාගේ නම...</div>
 
-          <div style="display: flex; align-items: center; margin-bottom: 25px;">
+          <!-- New Address -->
+          <div style="display: flex; align-items: center; margin-bottom: 5px;">
             <div class="field-label" style="width: 155px;">of</div>
             <div id="p2_box_newAddress_line1" class="box-container"></div>
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 35px;">
+          <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_newAddress_line2" class="box-container"></div>
           </div>
+          <div id="p2_box_newAddress_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+            <div style="width: 155px;"></div>
+            <div id="p2_box_newAddress_line3" class="box-container"></div>
+          </div>
+          <div class="sub-label" style="margin-left: 155px; margin-bottom: 35px;">පැවරුම්ලාභියාගේ ලිපිනය...</div>
 
           <div style="display: flex; justify-content: space-between; margin-bottom: 25px;">
             <div class="flex-row">
@@ -464,6 +514,23 @@
       return html;
     }
 
+    // Dynamic 3rd line generator function
+    function fill3Lines(baseId, text, lineLength) {
+      document.getElementById(baseId + '_line1').innerHTML = generateBoxesHtml(text.substring(0, lineLength), lineLength);
+      document.getElementById(baseId + '_line2').innerHTML = generateBoxesHtml(text.substring(lineLength, lineLength * 2), lineLength);
+      
+      let line3Container = document.getElementById(baseId + '_line3_container');
+      let line3Box = document.getElementById(baseId + '_line3');
+      
+      if (text.length > lineLength * 2) {
+        line3Container.style.display = 'flex';
+        line3Box.innerHTML = generateBoxesHtml(text.substring(lineLength * 2, lineLength * 3), lineLength);
+      } else {
+        line3Container.style.display = 'none';
+        line3Box.innerHTML = '';
+      }
+    }
+
     function saveDataAndPreparePrint() {
       const dDD = document.getElementById('i_dateDD').value;
       const dMM = document.getElementById('i_dateMM').value;
@@ -471,12 +538,15 @@
       const vProv = document.getElementById('i_vehProv').value;
       const vLetters = document.getElementById('i_vehLetters').value;
       const vNums = document.getElementById('i_vehNum').value;
+      
       const oldName = document.getElementById('i_oldName').value;
       const oldAddress = document.getElementById('i_oldAddress').value;
       const oldId = document.getElementById('i_oldId').value.replace(/\s/g, ''); 
+      
       const newName = document.getElementById('i_newName').value;
       const newAddress = document.getElementById('i_newAddress').value;
       const newId = document.getElementById('i_newId').value.replace(/\s/g, ''); 
+      
       const postalCode = document.getElementById('i_postalCode').value;
       const mobileNo = document.getElementById('i_mobileNo').value;
       const divSec = document.getElementById('i_divSec').value;
@@ -486,6 +556,9 @@
       const financeName = document.getElementById('i_financeName').value;
       const financeAddress = document.getElementById('i_financeAddress').value;
 
+      // ==========================================
+      // PAGE 1: MTA 6
+      // ==========================================
       document.getElementById('p1_box_dd').innerHTML = generateBoxesHtml(dDD, 2);
       document.getElementById('p1_box_mm').innerHTML = generateBoxesHtml(dMM, 2);
       document.getElementById('p1_box_yyyy').innerHTML = generateBoxesHtml(dYYYY, 4);
@@ -494,38 +567,27 @@
       document.getElementById('p1_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
       document.getElementById('p1_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
 
-      document.getElementById('p1_box_oldName_line1').innerHTML = generateBoxesHtml(oldName.substring(0, 35), 35);
-      document.getElementById('p1_box_oldName_line2').innerHTML = generateBoxesHtml(oldName.substring(35, 70), 35);
-
-      document.getElementById('p1_box_oldAddress_line1').innerHTML = generateBoxesHtml(oldAddress.substring(0, 35), 35);
-      document.getElementById('p1_box_oldAddress_line2').innerHTML = generateBoxesHtml(oldAddress.substring(35, 70), 35);
+      // Using the dynamic 3-line function (35 boxes per line)
+      fill3Lines('p1_box_oldName', oldName, 35);
+      fill3Lines('p1_box_oldAddress', oldAddress, 35);
+      fill3Lines('p1_box_newName', newName, 35);
+      fill3Lines('p1_box_newAddress', newAddress, 35);
 
       document.getElementById('p1_box_oldId').innerHTML = generateBoxesHtml(oldId, 12); 
-
-      document.getElementById('p1_box_newName_line1').innerHTML = generateBoxesHtml(newName.substring(0, 35), 35);
-      document.getElementById('p1_box_newName_line2').innerHTML = generateBoxesHtml(newName.substring(35, 70), 35);
-
-      document.getElementById('p1_box_newAddress_line1').innerHTML = generateBoxesHtml(newAddress.substring(0, 35), 35);
-      document.getElementById('p1_box_newAddress_line2').innerHTML = generateBoxesHtml(newAddress.substring(35, 70), 35);
-
       document.getElementById('p1_box_newId').innerHTML = generateBoxesHtml(newId, 12); 
 
-
+      // ==========================================
+      // PAGE 2: MTA 8
+      // ==========================================
       document.getElementById('p2_box_vehProv').innerHTML = generateBoxesHtml(vProv, 2);
       document.getElementById('p2_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
       document.getElementById('p2_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
 
-      document.getElementById('p2_box_oldName_line1').innerHTML = generateBoxesHtml(oldName.substring(0, 32), 32);
-      document.getElementById('p2_box_oldName_line2').innerHTML = generateBoxesHtml(oldName.substring(32, 64), 32);
-
-      document.getElementById('p2_box_oldAddress_line1').innerHTML = generateBoxesHtml(oldAddress.substring(0, 32), 32);
-      document.getElementById('p2_box_oldAddress_line2').innerHTML = generateBoxesHtml(oldAddress.substring(32, 64), 32);
-
-      document.getElementById('p2_box_newName_line1').innerHTML = generateBoxesHtml(newName.substring(0, 32), 32);
-      document.getElementById('p2_box_newName_line2').innerHTML = generateBoxesHtml(newName.substring(32, 64), 32);
-
-      document.getElementById('p2_box_newAddress_line1').innerHTML = generateBoxesHtml(newAddress.substring(0, 32), 32);
-      document.getElementById('p2_box_newAddress_line2').innerHTML = generateBoxesHtml(newAddress.substring(32, 64), 32);
+      // Using the dynamic 3-line function (32 boxes per line for MTA 8)
+      fill3Lines('p2_box_oldName', oldName, 32);
+      fill3Lines('p2_box_oldAddress', oldAddress, 32);
+      fill3Lines('p2_box_newName', newName, 32);
+      fill3Lines('p2_box_newAddress', newAddress, 32);
 
       document.getElementById('p2_box_newId').innerHTML = generateBoxesHtml(newId, 12);
       document.getElementById('p2_box_postal').innerHTML = generateBoxesHtml(postalCode, 5);
@@ -541,6 +603,9 @@
       
       document.getElementById('p2_box_collect').innerHTML = generateBoxesHtml(collectOffice, 15);
 
+      // ==========================================
+      // PAGE 3 & 4: MTA 3
+      // ==========================================
       document.getElementById('p3f_newName').innerText = newName;
       document.getElementById('p3f_newName_bottom').innerText = newName;
       document.getElementById('p3f_newAddress1').innerText = newAddress.substring(0, 60);
