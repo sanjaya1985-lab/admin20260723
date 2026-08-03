@@ -77,18 +77,17 @@
       color: #000;
     }
     
-    /* Styles for the new 3rd line text (No boxes) */
     .text-line-3 {
       font-family: 'Courier New', Courier, monospace;
       font-weight: bold;
-      font-size: 10px; /* Reduced font size to 10px */
+      font-size: 10px; 
       letter-spacing: 0.5px;
       text-transform: uppercase;
       color: #000;
       width: 100%;
-      text-align: left; /* Aligned to Left */
+      text-align: left; 
       padding-left: 2px;
-      word-break: break-word; /* Break long words if necessary */
+      word-break: break-word; 
     }
 
     .field-label { font-size: 13px; font-family: Arial, sans-serif; color: #000; font-weight: bold; }
@@ -197,16 +196,16 @@
       
       <!-- PAGE 1: MTA 6 OVERLAY -->
       <div class="a4-page">
-        <!-- Main MTA 6 Block (Changed top to 80mm) -->
+        <!-- Main MTA 6 Block (Top updated to user's precise value: 71mm) -->
         <div class="print-absolute-block" style="top: 71mm; left: 40px; right: 20px;">
           
           <!-- Top Text -->
-          <div style="font-size: 12px; font-weight: bold; margin-bottom: 8px; font-family: Arial, sans-serif;">
+          <div style="font-size: 11px; font-weight: bold; margin-bottom: -1px; font-family: Arial, sans-serif;">
             To: THE COMMISSIONER GENERAL OF MOTOR TRAFFIC
           </div>
 
           <!-- Date -->
-          <div style="display: flex; justify-content: flex-end; gap: 20px; margin-bottom: 10px;">
+          <div style="display: flex; justify-content: flex-end; gap: 35px; margin-bottom: 4px;">
             <div class="flex-row"><span class="field-label" style="margin-right: 15px;">Date of Transfer</span><span class="field-label" style="margin-right: 5px;">Date</span><div id="p1_box_dd" class="box-container"></div></div>
             <div class="flex-row"><span class="field-label" style="margin-right: 5px;">Month</span><div id="p1_box_mm" class="box-container"></div></div>
             <div class="flex-row"><span class="field-label" style="margin-right: 5px;">Year</span><div id="p1_box_yyyy" class="box-container"></div></div>
@@ -225,7 +224,6 @@
               <div id="p1_box_oldName_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferor Name (Text Only) -->
           <div id="p1_box_oldName_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
             <div style="flex-grow: 1; display: flex;">
@@ -234,7 +232,7 @@
           </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
-            <div class="sub-label" style="flex-grow: 1; margin-bottom: 8px;">පැවරුම්කරුගේ නම/ ஫ாம்றிக்பகாடுப்பல஭ின் பப஬஭்/Name of Transferor</div>
+            <div class="sub-label" style="flex-grow: 1; margin-bottom: 3px;">පැවරුම්කරුගේ නම/ ஫ாம்றிக்பகாடுப்பல஭ின் பப஬஭்/Name of Transferor</div>
           </div>
 
           <!-- Transferor Address -->
@@ -250,7 +248,6 @@
               <div id="p1_box_oldAddress_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferor Address (Text Only) -->
           <div id="p1_box_oldAddress_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
             <div style="flex-grow: 1; display: flex;">
@@ -259,11 +256,11 @@
           </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
-            <div class="sub-label" style="flex-grow: 1; margin-bottom: 6px;">පැවරුම්කරුගේ ලිපිනය /஫ாம்றிக்பகாடுப்பல஭ின் முகல஭ி / Address of Transferor</div>
+            <div class="sub-label" style="flex-grow: 1; margin-bottom: -3px;">පැවරුම්කරුගේ ලිපිනය /஫ாம்றிக்பகாடுப்பல஭ின் முகல஭ி / Address of Transferor</div>
           </div>
 
           <!-- Vehicle No -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; margin-bottom: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; margin-bottom: 4px;">
             <div class="field-label">transferred the possession of Motor Vehicle No.</div>
             <div style="display: flex; gap: 10px;">
               <div id="p1_box_vehProv" class="box-container"></div>
@@ -285,7 +282,6 @@
               <div id="p1_box_newName_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferee Name (Text Only) -->
           <div id="p1_box_newName_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
             <div style="flex-grow: 1; display: flex;">
@@ -294,7 +290,7 @@
           </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
-            <div class="sub-label" style="flex-grow: 1; margin-bottom: 8px;">පැවරුම්භියාගේ නම/ ஫ாம்றிப்பபறுபல஭ின் பப஬஭/ ் Name of Transferee</div>
+            <div class="sub-label" style="flex-grow: 1; margin-bottom: 3px;">පැවරුම්භියාගේ නම/ ஫ாம்றிப்பபறுபல஭ின் பப஬஭/ ் Name of Transferee</div>
           </div>
 
           <!-- Transferee Address -->
@@ -310,7 +306,6 @@
               <div id="p1_box_newAddress_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferee Address (Text Only) -->
           <div id="p1_box_newAddress_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
             <div style="flex-grow: 1; display: flex;">
@@ -323,16 +318,16 @@
           </div>
         </div>
 
-        <!-- Transferor ID Block -->
-        <div class="print-absolute-block" style="top: 660px; left: 40px;">
+        <!-- Transferor ID Block (Updated Position) -->
+        <div class="print-absolute-block" style="top: 740px; left: 40px;">
           <div style="margin-bottom: 8px;">
             <span class="field-label">පැවරුම්කරුගේ ජා.හැ.අංකය / Identity Card No.:</span>
           </div>
           <div id="p1_box_oldId" class="box-container" style="margin-left: 5px;"></div>
         </div>
 
-        <!-- Transferee ID Block -->
-        <div class="print-absolute-block" style="top: 830px; left: 40px;">
+        <!-- Transferee ID Block (Updated Position) -->
+        <div class="print-absolute-block" style="top: 887px; left: 40px;">
           <div style="margin-bottom: 8px;">
             <span class="field-label">පැවරුම්ලාභියාගේ ජා.හැ.අංකය / Identity Card No.:</span>
           </div>
