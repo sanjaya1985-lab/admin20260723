@@ -76,6 +76,20 @@
       text-transform: uppercase;
       color: #000;
     }
+    
+    /* Styles for the new 3rd line text (No boxes) */
+    .text-line-3 {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #000;
+      width: 100%;
+      text-align: right;
+      padding-right: 5px;
+    }
+
     .field-label { font-size: 13px; font-family: Arial, sans-serif; color: #000; font-weight: bold; }
     .sub-label { font-size: 9px; color: #333; text-align: center; margin-top: 2px; margin-bottom: 5px; font-family: Arial, sans-serif; }
     
@@ -210,11 +224,11 @@
               <div id="p1_box_oldName_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferor Name (Dynamic) -->
+          <!-- Line 3 for Transferor Name (Text Only) -->
           <div id="p1_box_oldName_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
-            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
-              <div id="p1_box_oldName_line3" class="box-container"></div>
+            <div style="flex-grow: 1; display: flex;">
+              <div id="p1_box_oldName_line3" class="text-line-3"></div>
             </div>
           </div>
           <div style="display: flex;">
@@ -235,11 +249,11 @@
               <div id="p1_box_oldAddress_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferor Address (Dynamic) -->
+          <!-- Line 3 for Transferor Address (Text Only) -->
           <div id="p1_box_oldAddress_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
-            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
-              <div id="p1_box_oldAddress_line3" class="box-container"></div>
+            <div style="flex-grow: 1; display: flex;">
+              <div id="p1_box_oldAddress_line3" class="text-line-3"></div>
             </div>
           </div>
           <div style="display: flex;">
@@ -270,11 +284,11 @@
               <div id="p1_box_newName_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferee Name (Dynamic) -->
+          <!-- Line 3 for Transferee Name (Text Only) -->
           <div id="p1_box_newName_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
-            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
-              <div id="p1_box_newName_line3" class="box-container"></div>
+            <div style="flex-grow: 1; display: flex;">
+              <div id="p1_box_newName_line3" class="text-line-3"></div>
             </div>
           </div>
           <div style="display: flex;">
@@ -295,11 +309,11 @@
               <div id="p1_box_newAddress_line2" class="box-container"></div>
             </div>
           </div>
-          <!-- Line 3 for Transferee Address (Dynamic) -->
+          <!-- Line 3 for Transferee Address (Text Only) -->
           <div id="p1_box_newAddress_line3_container" style="display: none; align-items: center; margin-top: 2px; margin-bottom: 0px;">
             <div style="width: 30px;"></div>
-            <div style="flex-grow: 1; display: flex; justify-content: flex-end;">
-              <div id="p1_box_newAddress_line3" class="box-container"></div>
+            <div style="flex-grow: 1; display: flex;">
+              <div id="p1_box_newAddress_line3" class="text-line-3"></div>
             </div>
           </div>
           <div style="display: flex;">
@@ -349,7 +363,7 @@
           </div>
           <div id="p2_box_oldName_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
-            <div id="p2_box_oldName_line3" class="box-container"></div>
+            <div id="p2_box_oldName_line3" class="text-line-3"></div>
           </div>
           <div class="sub-label" style="margin-left: 155px; margin-bottom: 25px;">පැවරුම්කරුගේ නම...</div>
 
@@ -364,7 +378,7 @@
           </div>
           <div id="p2_box_oldAddress_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
-            <div id="p2_box_oldAddress_line3" class="box-container"></div>
+            <div id="p2_box_oldAddress_line3" class="text-line-3"></div>
           </div>
           <div style="margin-bottom: 25px;"></div>
 
@@ -379,7 +393,7 @@
           </div>
           <div id="p2_box_newName_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
-            <div id="p2_box_newName_line3" class="box-container"></div>
+            <div id="p2_box_newName_line3" class="text-line-3"></div>
           </div>
           <div class="sub-label" style="margin-left: 155px; margin-bottom: 25px;">පැවරුම්ලාභියාගේ නම...</div>
 
@@ -394,10 +408,11 @@
           </div>
           <div id="p2_box_newAddress_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
-            <div id="p2_box_newAddress_line3" class="box-container"></div>
+            <div id="p2_box_newAddress_line3" class="text-line-3"></div>
           </div>
           <div class="sub-label" style="margin-left: 155px; margin-bottom: 35px;">පැවරුම්ලාභියාගේ ලිපිනය...</div>
 
+          <!-- Rest of MTA 8 -->
           <div style="display: flex; justify-content: space-between; margin-bottom: 25px;">
             <div class="flex-row">
               <span class="field-label" style="margin-right: 15px; width: 230px;">Identity Card Number of transferee</span>
@@ -514,7 +529,7 @@
       return html;
     }
 
-    // Dynamic 3rd line generator function
+    // Dynamic 3rd line generator function - Now renders plain text!
     function fill3Lines(baseId, text, lineLength) {
       document.getElementById(baseId + '_line1').innerHTML = generateBoxesHtml(text.substring(0, lineLength), lineLength);
       document.getElementById(baseId + '_line2').innerHTML = generateBoxesHtml(text.substring(lineLength, lineLength * 2), lineLength);
@@ -524,7 +539,7 @@
       
       if (text.length > lineLength * 2) {
         line3Container.style.display = 'flex';
-        line3Box.innerHTML = generateBoxesHtml(text.substring(lineLength * 2, lineLength * 3), lineLength);
+        line3Box.innerHTML = text.substring(lineLength * 2); // Plain text, no boxes
       } else {
         line3Container.style.display = 'none';
         line3Box.innerHTML = '';
@@ -567,7 +582,6 @@
       document.getElementById('p1_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
       document.getElementById('p1_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
 
-      // Using the dynamic 3-line function (35 boxes per line)
       fill3Lines('p1_box_oldName', oldName, 35);
       fill3Lines('p1_box_oldAddress', oldAddress, 35);
       fill3Lines('p1_box_newName', newName, 35);
@@ -583,7 +597,6 @@
       document.getElementById('p2_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
       document.getElementById('p2_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
 
-      // Using the dynamic 3-line function (32 boxes per line for MTA 8)
       fill3Lines('p2_box_oldName', oldName, 32);
       fill3Lines('p2_box_oldAddress', oldAddress, 32);
       fill3Lines('p2_box_newName', newName, 32);
