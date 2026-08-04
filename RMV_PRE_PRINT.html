@@ -9,7 +9,7 @@
   </script>
   
   <meta charset="UTF-8">
-  <title>RMV Pre-Print Portal</title>
+  <title>RMV Pre-Print Portal - Full MTA 8 + Overlays</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -35,7 +35,7 @@
     
     .a4-page { 
       background-color: white; width: 210mm; height: 297mm; box-shadow: 0 5px 15px rgba(0,0,0,0.5); 
-      box-sizing: border-box; position: relative; page-break-after: always;
+      box-sizing: border-box; position: relative; page-break-after: always; overflow: hidden;
     }
 
     .print-absolute-block {
@@ -107,6 +107,11 @@
       line-height: 1.2;
     }
     .mta3-text { font-size: 14px; line-height: 2.5; font-family: Arial, sans-serif; font-weight: bold; color: #000; }
+    
+    /* Full Page MTA 8 Styles */
+    .mta8-text-small { font-size: 10px; font-family: Arial, sans-serif; line-height: 1.4; color: #000; }
+    .mta8-text-bold { font-size: 12px; font-weight: bold; font-family: Arial, sans-serif; color: #000; }
+    .mta8-red-text { color: red; font-size: 10px; font-weight: bold; font-family: Arial, sans-serif; line-height: 1.4; }
   </style>
 </head>
 <body>
@@ -114,11 +119,11 @@
   <!-- UI Wrapper -->
   <div class="sticky-wrapper no-print">
     <div class="header">
-      <h2><i class="fas fa-file-invoice"></i> RMV PRE-PRINT (Box Format Overlay)</h2>
+      <h2><i class="fas fa-file-invoice"></i> RMV PRE-PRINT (Full MTA 8 + Overlays)</h2>
     </div>
     <div class="tabs">
       <div class="tab active" id="tab-add" onclick="switchTab('add')"><i class="fas fa-edit"></i> Type Details</div>
-      <div class="tab" id="tab-print" onclick="switchTab('print')"><i class="fas fa-print"></i> Print Overlay Form</div>
+      <div class="tab" id="tab-print" onclick="switchTab('print')"><i class="fas fa-print"></i> Print Forms</div>
     </div>
   </div>
 
@@ -184,13 +189,13 @@
         <div class="form-group" style="width: 50%;"><label>Finance Company Address</label><input type="text" id="i_financeAddress" class="form-control" oninput="this.value = this.value.toUpperCase()"></div>
       </div>
 
-      <button class="btn" onclick="saveDataAndPreparePrint()" style="margin-top: 15px; font-size: 16px;">Generate Overlay & Print <i class="fas fa-print"></i></button>
+      <button class="btn" onclick="saveDataAndPreparePrint()" style="margin-top: 15px; font-size: 16px;">Generate Print Forms <i class="fas fa-print"></i></button>
     </div>
   </div>
 
-  <!-- PRINT SECTION (ABSOLUTE BLOCKS ONLY) -->
+  <!-- PRINT SECTION -->
   <div id="sec-print" class="content-section" style="padding: 20px 0;">
-    <button class="btn btn-print no-print" onclick="window.print()"><i class="fas fa-print"></i> Print Overlay Form</button>
+    <button class="btn btn-print no-print" onclick="window.print()"><i class="fas fa-print"></i> Print Forms</button>
     
     <div class="a4-preview-container">
       
@@ -199,7 +204,6 @@
         <!-- Main MTA 6 Block -->
         <div class="print-absolute-block" style="top: 76mm; left: 40px; right: 20px;">
           
-          <!-- Top Text -->
           <div style="font-size: 11px; font-weight: bold; margin-bottom: -1px; font-family: Arial, sans-serif;">
             To: THE COMMISSIONER GENERAL OF MOTOR TRAFFIC
           </div>
@@ -232,7 +236,7 @@
           </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
-            <div class="sub-label" style="flex-grow: 1; margin-bottom: 3px;">ැවරුම්කරුග නම/ ஫ாம்றிக் பகாடுப்பல஭ின் பப஬஭் /Name of Transferor</div>
+            <div class="sub-label" style="flex-grow: 1; margin-bottom: 3px;">පැවරුම්කරුගේ නම/ ஫ாம்றிக்பகாடுப்பல஭ின் பப஬஭்/Name of Transferor</div>
           </div>
 
           <!-- Transferor Address -->
@@ -319,7 +323,7 @@
         </div>
 
         <!-- Transferor ID Block -->
-        <div class="print-absolute-block" style="top: 820px; left: 40px;">
+        <div class="print-absolute-block" style="top: 789px; left: 40px;">
           <div style="margin-bottom: 1px;">
             <span class="field-label" style="font-size: 10px;">පැවරුම්කරුගේ ජා.හැ.අංකය / Identity Card No.:</span>
           </div>
@@ -327,7 +331,7 @@
         </div>
 
         <!-- Transferee ID Block -->
-        <div class="print-absolute-block" style="top: 970px; left: 40px;">
+        <div class="print-absolute-block" style="top: 938px; left: 40px;">
           <div style="margin-bottom: 1px;">
             <span class="field-label" style="font-size: 10px;">පැවරුම්ලාභියාගේ ජා.හැ.අංකය / Identity Card No.:</span>
           </div>
@@ -335,22 +339,75 @@
         </div>
 
         <!-- NEW: One Day Transfer Consent Text & Vehicle Number -->
-        <div class="print-absolute-block" style="top: 1073px; left: 40px; right: 20px;">
+        <div class="print-absolute-block" style="top: 1000px; left: 40px; right: 20px;">
           <div style="font-size: 12px; font-family: Arial, sans-serif; font-weight: bold; color: #000;">
             I hereby acknowledge my consent for transfer of Vehicle no. 
             <span id="p1_consent_vehNo" style="font-family: 'Courier New', Courier, monospace; font-size: 14px; display: inline-block; min-width: 150px; text-align: center; border-bottom: 2px dotted #000;"></span> 
             to above named transferee by one
           </div>
         </div>
-
       </div>
 
-      <!-- PAGE 2: MTA 8 OVERLAY -->
-      <div class="a4-page">
-        <div class="print-absolute-block" style="top: 190px; left: 40px; right: 40px;">
+      <!-- PAGE 2: FULL MTA 8 PAGE (NEW - Printed on Blank A4) -->
+      <div class="a4-page" style="padding: 12mm 15mm; font-family: Arial, sans-serif; position: relative;">
+        
+        <!-- Header Row -->
+        <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: bold; line-height: 1.4;">
+          <div>
+            <div>මෝටර් රථ ප්‍රවාහන කොමසාරිස් ජනරාල්ගේ පිටපත</div>
+            <div>மோட்டார் வாகனப் போக்குவரத்து ஆணையாளரின் பிரதி</div>
+            <div>Copy of the Commissioner of Motor Traffic</div>
+            <div style="margin-top: 15px; display: flex; align-items: center;">
+              <span style="font-size: 18px; margin-right: 10px;">C</span>
+              <div>
+                <div>ශ්‍රී ලංකා රජයේ මුද්‍රණ දෙපාර්තමේන්තුව</div>
+                <div>இலங்கை அரசாங்க அச்சுத் திணைக்களம்</div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 14px; margin-bottom: 5px;">8</div>
+            <div>එම්.ටී.ඒ.8</div>
+            <div>எம்.ரீ.ஏ.8</div>
+            <div>Μ.Τ.Α. 8</div>
+            <div>(F2*S.,T.&Ε.) 6/76</div>
+          </div>
+        </div>
+
+        <!-- Center Titles -->
+        <div style="text-align: center; margin-top: 10px; line-height: 1.4;">
+          <div class="mta8-text-bold">13 (1) වැනි වගන්තිය</div>
+          <div class="mta8-text-bold">பிரிவு 13 (1)</div>
+          <div class="mta8-text-bold">Section 13 (1)</div>
           
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <div class="field-label">I hereby apply to be registered as the new owner of the Vehicle Number</div>
+          <div class="mta8-text-bold" style="font-size: 13px; margin-top: 10px;">පැවරීමක දී වාහනයක් ලියාපදිංචි කිරීම සඳහා අයදුම්පත</div>
+          <div class="mta8-text-bold" style="font-size: 13px;">உரிமை மாற்றத்தின்போதான மோட்டார் வாகனப் பதிவுக்கான விண்ணப்பம்</div>
+          <div class="mta8-text-bold" style="font-size: 13px;">APPLICATION FOR REGISTARTION OF A MOTOR VEHICLE ON TRANSFER</div>
+          
+          <div class="mta8-red-text" style="margin-top: 8px;">
+            <div>මෙම අයදුම්පත ඉංග්‍රීසි කැපිටල් අකුරෙන් පමණක් පිරවිය යුතුය.</div>
+            <div>இந்த விண்ணப்பத்தை ஆங்கில பெரிய எழுத்துக்களில் மட்டுமே நிரப்புதல் வேண்டும்.</div>
+            <div>This form should be filled In English block letters.</div>
+          </div>
+        </div>
+
+        <!-- Photo Box & To: Commissioner -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px;">
+          <div class="mta8-text-bold" style="font-size: 11px;">To: THE COMMISSIONER GENERAL OF MOTOR TRAFFIC</div>
+          <div style="width: 3.5cm; height: 4.5cm; border: 1px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; text-align: center; line-height: 1.4;">
+            <div>ඡායාරූපය</div>
+            <div>புகைப்படம்</div>
+            <div>Photo</div>
+            <div style="margin-top: 5px; font-size: 9px; font-weight: normal;">3.5 cm x 4.5 cm</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Form Fields Container -->
+        <div style="margin-top: 10px;">
+          
+          <!-- Vehicle No -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="mta8-text-small" style="font-weight: bold;">I hereby apply to be registered as the new owner of the Vehicle Number</div>
             <div style="display: flex; gap: 10px;">
               <div id="p2_box_vehProv" class="box-container"></div>
               <div id="p2_box_vehLetters" class="box-container"></div>
@@ -359,112 +416,145 @@
           </div>
 
           <!-- Old Name -->
-          <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 155px;">Previously registered</div>
+          <div style="display: flex; align-items: center; margin-bottom: 3px;">
+            <div class="mta8-text-small" style="width: 155px; font-weight: bold;">Previously registered</div>
             <div id="p2_box_oldName_line1" class="box-container"></div>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_oldName_line2" class="box-container"></div>
           </div>
-          <div id="p2_box_oldName_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+          <div id="p2_box_oldName_line3_container" style="display: none; align-items: center; margin-top: 2px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_oldName_line3" class="text-line-3"></div>
           </div>
-          <div class="sub-label" style="margin-left: 155px; margin-bottom: 25px;">පැවරුම්කරුගේ නම...</div>
+          <div class="sub-label" style="text-align: left; margin-left: 155px; margin-bottom: 12px;">
+            පැවරුම්කරුගේ නම/ மாற்றிக் கொடுப்பவரின் பெயர் /Name of Transferor
+          </div>
 
           <!-- Old Address -->
-          <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 155px;">to</div>
+          <div style="display: flex; align-items: center; margin-bottom: 3px;">
+            <div class="mta8-text-small" style="width: 155px; font-weight: bold;">to</div>
             <div id="p2_box_oldAddress_line1" class="box-container"></div>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_oldAddress_line2" class="box-container"></div>
           </div>
-          <div id="p2_box_oldAddress_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+          <div id="p2_box_oldAddress_line3_container" style="display: none; align-items: center; margin-top: 2px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_oldAddress_line3" class="text-line-3"></div>
           </div>
-          <div style="margin-bottom: 25px;"></div>
+          <div style="margin-bottom: 12px;"></div>
 
           <!-- New Name -->
-          <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 155px;">residing at</div>
+          <div style="display: flex; align-items: center; margin-bottom: 3px;">
+            <div class="mta8-text-small" style="width: 155px; font-weight: bold;">residing at</div>
             <div id="p2_box_newName_line1" class="box-container"></div>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_newName_line2" class="box-container"></div>
           </div>
-          <div id="p2_box_newName_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+          <div id="p2_box_newName_line3_container" style="display: none; align-items: center; margin-top: 2px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_newName_line3" class="text-line-3"></div>
           </div>
-          <div class="sub-label" style="margin-left: 155px; margin-bottom: 25px;">පැවරුම්ලාභියාගේ නම...</div>
+          <div class="sub-label" style="text-align: left; margin-left: 155px; margin-bottom: 12px;">
+            පැවරුම්ලාභියාගේ නම/ மாற்றிப் பெறுபவரின் பெயர்/ Name of Transferee
+          </div>
 
           <!-- New Address -->
-          <div style="display: flex; align-items: center; margin-bottom: 5px;">
-            <div class="field-label" style="width: 155px;">of</div>
+          <div style="display: flex; align-items: center; margin-bottom: 3px;">
+            <div class="mta8-text-small" style="width: 155px; font-weight: bold;">of</div>
             <div id="p2_box_newAddress_line1" class="box-container"></div>
           </div>
           <div style="display: flex; align-items: center; margin-bottom: 0px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_newAddress_line2" class="box-container"></div>
           </div>
-          <div id="p2_box_newAddress_line3_container" style="display: none; align-items: center; margin-top: 5px; margin-bottom: 0px;">
+          <div id="p2_box_newAddress_line3_container" style="display: none; align-items: center; margin-top: 2px;">
             <div style="width: 155px;"></div>
             <div id="p2_box_newAddress_line3" class="text-line-3"></div>
           </div>
-          <div class="sub-label" style="margin-left: 155px; margin-bottom: 35px;">පැවරුම්ලාභියාගේ ලිපිනය...</div>
-
-          <!-- Rest of MTA 8 -->
-          <div style="display: flex; justify-content: space-between; margin-bottom: 25px;">
-            <div class="flex-row">
-              <span class="field-label" style="margin-right: 15px; width: 230px;">Identity Card Number of transferee</span>
-              <div id="p2_box_newId" class="box-container"></div>
-            </div>
+          <div class="sub-label" style="text-align: left; margin-left: 155px; margin-bottom: 15px;">
+            පැවරුම්ලාභියාගේ ලිපිනය/ மாற்றிப் பெறுபவரின் முகவரி / Address of Transferee
           </div>
-          <div style="display: flex; align-items: center; margin-bottom: 35px; gap: 50px;">
-            <div class="flex-row">
-              <span class="field-label" style="margin-right: 15px;">Postal Code</span>
+
+          <!-- Transferee ID -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <div class="mta8-text-small" style="font-weight: bold; width: 350px;">
+              පැවරුම්ලාභියාගේ ජා.හැ.අංකය/ மாற்றிப் பெறுபவரின் அடையாள அட்டை இலக்கம்/Identity Card Number of transferee
+            </div>
+            <div id="p2_box_newId" class="box-container"></div>
+          </div>
+
+          <!-- Postal Code & Mobile -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center;">
+              <div class="mta8-text-small" style="font-weight: bold; margin-right: 10px;">තැපැල් අංකය/தபால் இல/Postal Code</div>
               <div id="p2_box_postal" class="box-container"></div>
             </div>
-            <div class="flex-row">
-              <span class="field-label" style="margin-right: 15px;">Mobile Number</span>
+            <div style="display: flex; align-items: center;">
+              <div class="mta8-text-small" style="font-weight: bold; margin-right: 10px;">දුරකථන අංකය/ கையடக்க தொலைபேசி இல/Mobile Number</div>
               <div id="p2_box_mobile" class="box-container"></div>
             </div>
           </div>
 
-          <div style="margin-bottom: 25px;">
-            <div class="field-label" style="margin-bottom: 15px;">(i) Licensing Authority ............................................................................................</div>
-            <div style="display: flex; align-items: center; margin-bottom: 15px; gap: 30px; padding-left: 20px;">
-              <div class="flex-row">
-                <span class="field-label" style="margin-right: 15px;">Divisional Secretariat/</span>
-                <div id="p2_box_divSec" class="box-container"></div>
-              </div>
-              <div class="flex-row">
-                <span class="field-label" style="margin-right: 15px;">District</span>
-                <div id="p2_box_district" class="box-container"></div>
-              </div>
-            </div>
-            <div class="flex-row" style="padding-left: 20px;">
-              <span class="field-label" style="margin-right: 15px;">Province</span>
-              <div id="p2_box_province" class="box-container"></div>
+          <!-- Licensing -->
+          <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 10px;">
+            (i) බලපත්‍ර අධිකාරිය/அனுமதிப்பத்திர அதிகார சபை/Licensing Authority
+          </div>
+          
+          <div style="display: flex; align-items: center; margin-bottom: 10px; padding-left: 20px;">
+            <div class="mta8-text-small" style="font-weight: bold; margin-right: 10px; width: 170px;">ප්‍රාදේශීය ලේකම් කොට්ඨාශය / பிரதேச செயலகம் /Divisional Secretariat/</div>
+            <div id="p2_box_divSec" class="box-container" style="margin-right: 20px;"></div>
+            
+            <div class="mta8-text-small" style="font-weight: bold; margin-right: 10px;">දිස්ත්‍රික්කය/மாவட்டம்/District</div>
+            <div id="p2_box_district" class="box-container"></div>
+          </div>
+          
+          <div style="display: flex; align-items: center; margin-bottom: 15px; padding-left: 20px;">
+            <div class="mta8-text-small" style="font-weight: bold; margin-right: 10px; width: 170px;">පළාත/மாகாணம்/Province</div>
+            <div id="p2_box_province" class="box-container"></div>
+          </div>
+
+          <!-- Date -->
+          <div style="display: flex; align-items: center; margin-bottom: 15px;">
+            <div class="mta8-text-small" style="font-weight: bold; width: 230px;">(ii) පැවරුම් දිනය/ உரிமை மாறும் திகதி/ Date of transfer:</div>
+            <div style="display: flex; gap: 15px;">
+              <div style="text-align: center;"><div id="p2_box_dd" class="box-container"></div><div style="font-size: 10px; margin-top:2px;">D</div></div>
+              <div style="text-align: center;"><div id="p2_box_mm" class="box-container"></div><div style="font-size: 10px; margin-top:2px;">M</div></div>
+              <div style="text-align: center;"><div id="p2_box_yyyy" class="box-container"></div><div style="font-size: 10px; margin-top:2px;">Y</div></div>
             </div>
           </div>
 
-          <div class="flex-row" style="margin-bottom: 25px;">
-            <span class="field-label" style="margin-right: 30px;">(ii) Date of transfer:</span>
-            <div id="p2_box_dd" class="box-container" style="margin-right: 20px;"></div>
-            <div id="p2_box_mm" class="box-container" style="margin-right: 20px;"></div>
-            <div id="p2_box_yyyy" class="box-container"></div>
+          <!-- Receive number plates -->
+          <div style="margin-bottom: 15px;">
+            <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 3px;">(iii) අංක තහඩුව ලබා ගන්නා දිස්ත්‍රික් කාර්යාලය:</div>
+            <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 3px; margin-left: 20px;">இலக்கத் தகடு பெற்றுக் கொள்ள விரும்பும் மாவட்ட அலுவலகம்:</div>
+            <div style="display: flex; align-items: center; margin-left: 20px;">
+              <div class="mta8-text-small" style="font-weight: bold; width: 250px;">Preferred District Secretarial to receive number plates.</div>
+              <div id="p2_box_collect" class="box-container"></div>
+            </div>
           </div>
-          <div class="flex-row">
-            <span class="field-label" style="margin-right: 30px;">(iii) Preferred District Secretarial to receive number plates.</span>
-            <div id="p2_box_collect" class="box-container"></div>
+
+          <!-- Attachments -->
+          <div style="margin-bottom: 10px;">
+            <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 3px;">(iv) පහත සඳහන් ලියකියවිලි මේ සමඟ ඉදිරිපත් කරමි.</div>
+            <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 3px; margin-left: 25px;">கீழே காட்டப்பட்டுள்ள ஆவணங்களை இத்துடன் இணைத்து அனுப்புகிறேன்.</div>
+            <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 8px; margin-left: 25px;">The following documents are attached herewith.</div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-left: 45px; margin-right: 45px;">
+              <div class="mta8-text-small">
+                <div style="margin-bottom: 3px;">(a) වාහනයේ ලියාපදිංචි සහතිකය.</div>
+                <div style="margin-bottom: 3px;">வாகனப் பதிவுச் சான்றிதழ்.</div>
+                <div>Certificate of Registration of vehicle.</div>
+              </div>
+              <div style="width: 25px; height: 25px; border: 2px solid #000;"></div>
+            </div>
           </div>
-          
+
         </div>
       </div>
 
@@ -595,19 +685,19 @@
       document.getElementById('p1_box_oldId').innerHTML = generateBoxesHtml(oldId, 12); 
       document.getElementById('p1_box_newId').innerHTML = generateBoxesHtml(newId, 12); 
 
-      // Format Vehicle Number for the Consent Sentence
       let fullVehNo = vProv;
       if(vLetters) fullVehNo += " " + vLetters;
       if(vNums) fullVehNo += " " + vNums;
       document.getElementById('p1_consent_vehNo').innerText = fullVehNo.trim();
 
       // ==========================================
-      // PAGE 2: MTA 8
+      // PAGE 2: FULL MTA 8 PAGE
       // ==========================================
       document.getElementById('p2_box_vehProv').innerHTML = generateBoxesHtml(vProv, 2);
       document.getElementById('p2_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
       document.getElementById('p2_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
 
+      // Kept line lengths to 32 to prevent overflow in the layout
       fill3Lines('p2_box_oldName', oldName, 32);
       fill3Lines('p2_box_oldAddress', oldAddress, 32);
       fill3Lines('p2_box_newName', newName, 32);
