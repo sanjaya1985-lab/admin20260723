@@ -80,7 +80,7 @@
       color: #000;
     }
     
-    /* Specific styles for the Full MTA 8 Page to prevent box overflow */
+    /* Specific styles for the Full MTA 8 Page */
     .mta8-page .char-box {
       width: 14px; 
       height: 20px;
@@ -238,7 +238,7 @@
           </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
-            <div class="sub-label" style="flex-grow: 1; margin-bottom: 3px;">පැවරුම්කරුගේ නම/ ஫ாம்றிக்பகாடுப்பல஭ின் பப஬஭்/Name of Transferor</div>
+            <div class="sub-label" style="flex-grow: 1; margin-bottom: 3px;">පැවරුම්කරුගේ නම/ ஫ாம்றிக்பகாடுப்பල஭ின் பப஬஭්/Name of Transferor</div>
           </div>
 
           <div style="display: flex; align-items: flex-end; justify-content: flex-end; margin-bottom: 3px;">
@@ -256,7 +256,7 @@
           </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
-            <div class="sub-label" style="flex-grow: 1; margin-bottom: -3px;">පැවරුම්කරුගේ ලිපිනය /஫ாம்றிக்பகாடுப்பல஭ின் முகல஭ி / Address of Transferor</div>
+            <div class="sub-label" style="flex-grow: 1; margin-bottom: -3px;">පැවරුම්කරුගේ ලිපිනය /஫ாம்றிக்பகாடுப்பල஭ின் முகල஭ි / Address of Transferor</div>
           </div>
 
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; margin-bottom: 4px;">
@@ -301,7 +301,7 @@
           </div>
           <div style="display: flex;">
             <div style="width: 30px;"></div>
-            <div class="sub-label" style="flex-grow: 1; margin-bottom: 0px;">පැවරුම්භියාගේ ලිපිනය/ ஫ாம்றிப்பபறுபல஭ின் முகல஭ி / Address of Transferee</div>
+            <div class="sub-label" style="flex-grow: 1; margin-bottom: 0px;">පැවරුම්භියාගේ ලිපිනය/ ஫ாம்றிப்பபறுபல஭ின் முகල஭ි / Address of Transferee</div>
           </div>
         </div>
 
@@ -454,7 +454,7 @@
           <!-- Transferee ID -->
           <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 15px;">
             <div class="mta8-text-small" style="font-weight: bold; line-height: 1.4;">
-              <div>පැවරුම්ලාභියාගේ හැඳුනුම්පත් අංකය /மாற்றிப் பெறுபவரின் பெயர்அடையாள அட்டை இலக்கம்/Identity</div>
+              <div>පැවරුම්ලාභියාගේ හැඳුනුම්පත් අංකය /மாற்றிப் பெறுபவரின் பெயர்அடையாள අட்டை இலக்கம்/Identity</div>
               <div>Card Number of transferee</div>
             </div>
             <div id="pf_box_newId" class="box-container"></div>
@@ -475,30 +475,33 @@
             </div>
           </div>
 
-          <!-- Licensing -->
-          <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 12px; font-size: 12px;">
-            (i) <span style="font-size: 11px;">බලපත්‍ර අධිකාරිය/அனுமதிப்பத்திர அதிகார சபை/Licensing Authority</span>
+          <!-- (i) Licensing Authority Section Matching 2nd Image -->
+          <div class="mta8-text-small" style="font-weight: bold; margin-bottom: 8px; font-size: 11px;">
+            (i) බලපත්‍ර අධිකාරිය/அனுமதிப்பத்திர அதிகார සபை/Licensing Authority
           </div>
           
-          <div style="display: flex; align-items: flex-end; margin-bottom: 12px; padding-left: 25px;">
-            <div class="mta8-text-small" style="font-weight: bold; line-height: 1.4; width: 180px;">
-               <div>ප්‍රාදේශීය ලේකම් කොට්ඨාශය /பிரதேச</div>
-               <div>செயலகம்/Divisional Secretariat/</div>
+          <div style="padding-left: 10px; margin-bottom: 15px;">
+            <!-- Div Secretariat Full Horizontal Title -->
+            <div class="mta8-text-small" style="font-weight: bold; white-space: nowrap; margin-bottom: 4px;">
+              ප්‍රාදේශීය ලේකම් කොට්ඨාශය /பிரதேசசெயலகம்/Divisional Secretariat/
             </div>
-            <div id="pf_box_divSec" class="box-container" style="margin-right: 20px;"></div>
             
-            <div class="mta8-text-small" style="font-weight: bold; line-height: 1.4; margin-right: 10px;">
-               <div>දිස්ත්‍රික්කය/மாவட்</div>
-               <div>டம்/District</div>
+            <!-- DivSec Boxes on Left + District Label & Boxes on Right -->
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+              <div id="pf_box_divSec" class="box-container"></div>
+              
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="mta8-text-small" style="font-weight: bold; white-space: nowrap;">දිස්ත්‍රික්කය/மாவட்டம்/District</span>
+                <div id="pf_box_district" class="box-container"></div>
+              </div>
             </div>
-            <div id="pf_box_district" class="box-container"></div>
-          </div>
-          
-          <div style="display: flex; align-items: flex-end; margin-bottom: 25px; padding-left: 25px;">
-            <div class="mta8-text-small" style="font-weight: bold; line-height: 1.4; width: 180px;">
-               <div>පළාත/மாகாணம்/</div>
-               <div>Province</div>
+            
+            <!-- Province Title -->
+            <div class="mta8-text-small" style="font-weight: bold; white-space: nowrap; margin-bottom: 4px;">
+              පළාත/மாகாணம்/Province
             </div>
+            
+            <!-- Province Boxes -->
             <div id="pf_box_province" class="box-container"></div>
           </div>
 
@@ -612,7 +615,6 @@
       return html;
     }
 
-    // Line generator for MTA 6 (Where 3rd line is pure text)
     function fill3LinesText(baseId, text, lineLength) {
       document.getElementById(baseId + '_line1').innerHTML = generateBoxesHtml(text.substring(0, lineLength), lineLength);
       document.getElementById(baseId + '_line2').innerHTML = generateBoxesHtml(text.substring(lineLength, lineLength * 2), lineLength);
@@ -629,7 +631,6 @@
       }
     }
 
-    // Line generator for Full MTA 8 (Where 3rd line is BOXES)
     function fillDynamicBoxLines(baseId, text, line1Count, line2Count, line3Count) {
       document.getElementById(baseId + '_line1').innerHTML = generateBoxesHtml(text.substring(0, line1Count), line1Count);
       document.getElementById(baseId + '_line2').innerHTML = generateBoxesHtml(text.substring(line1Count, line1Count + line2Count), line2Count);
@@ -664,9 +665,7 @@
       const financeName = document.getElementById('i_financeName').value;
       const financeAddress = document.getElementById('i_financeAddress').value;
 
-      // ==========================================
       // PAGE 1: MTA 6 OVERLAY
-      // ==========================================
       document.getElementById('p1_box_dd').innerHTML = generateBoxesHtml(dDD, 2);
       document.getElementById('p1_box_mm').innerHTML = generateBoxesHtml(dMM, 2);
       document.getElementById('p1_box_yyyy').innerHTML = generateBoxesHtml(dYYYY, 4);
@@ -688,16 +687,14 @@
       if(vNums) fullVehNo += " " + vNums;
       document.getElementById('p1_consent_vehNo').innerText = fullVehNo.trim();
 
-      // ==========================================
       // PAGE 2: FULL MTA 8 PAGE
-      // ==========================================
       document.getElementById('pf_box_vehProv').innerHTML = generateBoxesHtml(vProv, 2);
       document.getElementById('pf_box_vehLetters').innerHTML = generateBoxesHtml(vLetters, 3);
       document.getElementById('pf_box_vehNums').innerHTML = generateBoxesHtml(vNums, 4);
 
-      fillDynamicBoxLines('pf_box_oldName', oldName, 27, 37, 0);       // 2 Lines
-      fillDynamicBoxLines('pf_box_newName', newName, 34, 37, 37);      // 3 Lines
-      fillDynamicBoxLines('pf_box_newAddress', newAddress, 31, 37, 37);// 3 Lines
+      fillDynamicBoxLines('pf_box_oldName', oldName, 27, 37, 0);       
+      fillDynamicBoxLines('pf_box_newName', newName, 34, 37, 37);      
+      fillDynamicBoxLines('pf_box_newAddress', newAddress, 31, 37, 37);
 
       document.getElementById('pf_box_newId').innerHTML = generateBoxesHtml(newId, 12);
       document.getElementById('pf_box_postal').innerHTML = generateBoxesHtml(postalCode, 5);
@@ -713,9 +710,7 @@
       
       document.getElementById('pf_box_collect').innerHTML = generateBoxesHtml(collectOffice, 15);
 
-      // ==========================================
       // PAGE 3 & 4: MTA 3
-      // ==========================================
       document.getElementById('p3f_newName').innerText = newName;
       document.getElementById('p3f_newName_bottom').innerText = newName;
       document.getElementById('p3f_newAddress1').innerText = newAddress.substring(0, 60);
