@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <script>
-    // Security check: Redirect to login if n ot authenticated via Admin Portal
+    // Security check: Redirect to login if not authenticated via Admin Portal
     if (sessionStorage.getItem("isLoggedIntoAdmin") !== "true") {
       window.location.href = "login.html"; 
     }
@@ -17,10 +17,14 @@
     body { font-family: 'Inter', sans-serif; background: #525659; margin: 0; padding: 0; color: #333; }
     
     .sticky-wrapper { position: sticky; top: 0; z-index: 1000; background: #525659; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    .header { background: #121212; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #c62828; }
+    
+    /* Header & Tabs height and font size reduced */
+    .header { background: #121212; color: #fff; padding: 8px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #c62828; }
+    .header h2 { margin: 0; font-size: 16px; } 
     .tabs { display: flex; background: #fff; border-bottom: 1px solid #ddd; padding: 0 20px; }
-    .tab { padding: 15px 20px; cursor: pointer; font-weight: bold; color: #666; border-bottom: 3px solid transparent; }
+    .tab { padding: 10px 20px; cursor: pointer; font-weight: bold; font-size: 13px; color: #666; border-bottom: 3px solid transparent; }
     .tab.active { color: #c62828; border-bottom-color: #c62828; }
+    
     .content-section { padding: 30px; display: none; }
     .content-section.active { display: block; }
     
@@ -346,7 +350,7 @@
         </div>
       </div>
 
-      <!-- PAGE 2: FULL MTA 8 PAGE (NEW - Printed on Blank A4) -->
+      <!-- PAGE 2: FULL MTA 8 PAGE -->
       <div class="a4-page" style="padding: 5mm 8mm; font-family: Arial, sans-serif; position: relative;">
         
         <!-- Top Row (Header matching the provided image) -->
