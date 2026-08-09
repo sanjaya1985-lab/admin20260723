@@ -1321,7 +1321,6 @@
     // NEW: USER PERMISSIONS & ACCESS MANAGEMENT LOGIC
     // ========================================================
     
-    // Toggle sub-checkboxes when main checkbox is clicked
     function toggleSub(mainId, subClass) {
         let isChecked = document.getElementById(mainId).checked;
         document.querySelectorAll('.' + subClass).forEach(chk => {
@@ -1352,21 +1351,66 @@
       document.getElementById('perm-status-badge').innerText = "Loading...";
       document.getElementById('perm-status-badge').style.background = "#6c757d";
       
-      // Reset all checkboxes initially
-      document.querySelectorAll('.perm-label input[type="checkbox"]').forEach(chk => chk.checked = false);
-      document.querySelector('input[name="data_scope"][value="OWN"]').checked = true;
-      toggleBranchSelect();
-      
-      // Default give Dashboard access visually for mockup
-      document.getElementById('chk_dash').checked = true;
+      try {
+        const res = await apiCall('getUserPermDetails', { username: user }, 'GET');
+        
+        document.querySelectorAll('.perm-label input[type="checkbox"]').forEach(chk => chk.checked = false);
+        document.querySelector('input[name="data_scope"][value="OWN"]').checked = true;
+        
+        if (res.success && res.data) {
+           var m = res.data.modules;
+           if (m.includes("Dashboard")) document.getElementById('chk_dash').checked = true;
+           
+           if (m.includes("Courier-Send")) document.getElementById('chk_courier_send').checked = true;
+           if (m.includes("Courier-Action")) document.getElementById('chk_courier_action').checked = true;
+           if (m.includes("Courier-Send") && m.includes("Courier-Action")) document.getElementById('chk_courier_main').checked = true;
+           
+           if (m.includes("RMV-Request")) document.getElementById('chk_rmv_req').checked = true;
+           if (m.includes("RMV-Action")) document.getElementById('chk_rmv_action').checked = true;
+           if (m.includes("RMV-Request") && m.includes("RMV-Action")) document.getElementById('chk_rmv_main').checked = true;
+           
+           if (m.includes("Valuation-New")) document.getElementById('chk_val_new').checked = true;
+           if (m.includes("Valuation-Pending")) document.getElementById('chk_val_pend').checked = true;
+           if (m.includes("Valuation-History")) document.getElementById('chk_val_hist').checked = true;
+           if (m.includes("Valuation-New") && m.includes("Valuation-Pending") && m.includes("Valuation-History")) document.getElementById('chk_val_main').checked = true;
+           
+           if (m.includes("CR-New")) document.getElementById('chk_cr_new').checked = true;
+           if (m.includes("CR-Pending")) document.getElementById('chk_cr_pend').checked = true;
+           if (m.includes("CR-History")) document.getElementById('chk_cr_hist').checked = true;
+           if (m.includes("CR-New") && m.includes("CR-Pending") && m.includes("CR-History")) document.getElementById('chk_cr_main').checked = true;
+           
+           if (m.includes("Print-Add")) document.getElementById('chk_print_add').checked = true;
+           if (m.includes("Print-Paper")) document.getElementById('chk_print_paper').checked = true;
+           if (m.includes("Print-Box")) document.getElementById('chk_print_box').checked = true;
+           if (m.includes("Print-Add") && m.includes("Print-Paper") && m.includes("Print-Box")) document.getElementById('chk_print_main').checked = true;
+           
+           if (m.includes("Admin-UserMgt")) document.getElementById('chk_admin_user').checked = true;
+           if (m.includes("Admin-Map")) document.getElementById('chk_admin_map').checked = true;
+           if (m.includes("Admin-UserMgt") && m.includes("Admin-Map")) document.getElementById('chk_admin_main').checked = true;
+           
+           if (res.data.scope) {
+              document.querySelector(`input[name="data_scope"][value="${res.data.scope}"]`).checked = true;
+           }
+           
+           if (res.data.scope === 'SELECTED' && res.data.branches) {
+              var allowedBranches = res.data.branches.split(",");
+              var selectObj = document.getElementById('perm-branch-select');
+              for (var i = 0; i < selectObj.options.length; i++) {
+                 selectObj.options[i].selected = allowedBranches.includes(selectObj.options[i].value);
+              }
+           }
 
-      // Mock Data Load (Replace with API Call)
-      setTimeout(() => {
-         document.getElementById('perm-status-badge').innerText = "Active";
-         document.getElementById('perm-status-badge').style.background = "#28a745";
-         document.getElementById('btn-revoke-grant').innerText = "Revoke Complete Access";
-         document.getElementById('btn-revoke-grant').style.background = "#dc3545";
-      }, 500);
+           document.getElementById('perm-status-badge').innerText = res.data.status;
+           document.getElementById('perm-status-badge').style.background = res.data.status === "Active" ? "#28a745" : "#dc3545";
+           
+           var btn = document.getElementById('btn-revoke-grant');
+           btn.innerText = res.data.status === "Active" ? "Revoke Complete Access" : "Grant Access";
+           btn.style.background = res.data.status === "Active" ? "#dc3545" : "#28a745";
+        }
+        toggleBranchSelect();
+      } catch (e) {
+         document.getElementById('perm-status-badge').innerText = "Error Loading Data";
+      }
     }
 
     function saveUserPermissions() {
@@ -1374,34 +1418,18 @@
        if(!user) return Swal.fire("Required", "Please select a user to update.", "warning");
        
        var modules = [];
-       // Helper to check sub-items
        const checkSub = (id, name) => { if(document.getElementById(id).checked) modules.push(name); };
        
        if(document.getElementById('chk_dash').checked) modules.push("Dashboard");
        
-       checkSub('chk_courier_send', "Courier-Send");
-       checkSub('chk_courier_action', "Courier-Action");
-       
-       checkSub('chk_rmv_req', "RMV-Request");
-       checkSub('chk_rmv_action', "RMV-Action");
-       
-       checkSub('chk_val_new', "Valuation-New");
-       checkSub('chk_val_pend', "Valuation-Pending");
-       checkSub('chk_val_hist', "Valuation-History");
-       
-       checkSub('chk_cr_new', "CR-New");
-       checkSub('chk_cr_pend', "CR-Pending");
-       checkSub('chk_cr_hist', "CR-History");
-
-       checkSub('chk_print_add', "Print-Add");
-       checkSub('chk_print_paper', "Print-Paper");
-       checkSub('chk_print_box', "Print-Box");
-
-       checkSub('chk_admin_user', "Admin-UserMgt");
-       checkSub('chk_admin_map', "Admin-Map");
+       checkSub('chk_courier_send', "Courier-Send"); checkSub('chk_courier_action', "Courier-Action");
+       checkSub('chk_rmv_req', "RMV-Request"); checkSub('chk_rmv_action', "RMV-Action");
+       checkSub('chk_val_new', "Valuation-New"); checkSub('chk_val_pend', "Valuation-Pending"); checkSub('chk_val_hist', "Valuation-History");
+       checkSub('chk_cr_new', "CR-New"); checkSub('chk_cr_pend', "CR-Pending"); checkSub('chk_cr_hist', "CR-History");
+       checkSub('chk_print_add', "Print-Add"); checkSub('chk_print_paper', "Print-Paper"); checkSub('chk_print_box', "Print-Box");
+       checkSub('chk_admin_user', "Admin-UserMgt"); checkSub('chk_admin_map', "Admin-Map");
        
        var scope = document.querySelector('input[name="data_scope"]:checked').value;
-       
        var branches = [];
        if(scope === 'SELECTED') {
           var selectObj = document.getElementById('perm-branch-select');
@@ -1410,58 +1438,43 @@
           }
        }
        
-       var summary = `User: ${user}<br>Scope: ${scope}<br>Features: ${modules.length > 0 ? modules.join(', ') : 'None'}`;
-       if(scope === 'SELECTED') summary += `<br>Branches: ${branches.join(', ')}`;
+       Swal.fire({ title: "Updating Permissions...", allowOutsideClick: false, didOpen: () => Swal.showLoading() });
        
-       Swal.fire({
-          title: "Update Permissions?",
-          html: `<div style="text-align:left; font-size:12px; margin-top:10px;">${summary}</div>`,
-          icon: "info",
-          showCancelButton: true,
-          confirmButtonText: "Yes, Update",
-          confirmButtonColor: "#17a2b8"
-       }).then((result) => {
-          if(result.isConfirmed) {
-             Swal.fire("Saved!", "User permissions updated successfully. (UI Mockup)", "success");
-          }
-       });
+       apiCall('saveUserPermissions', {
+          username: user,
+          modules: modules.join(","),
+          scope: scope,
+          branches: branches.join(",")
+       }).then(res => {
+          if(res.success) { Swal.fire("Saved!", res.msg, "success"); } 
+          else { Swal.fire("Error", res.error || "Failed", "error"); }
+       }).catch(e => Swal.fire("Error", "Network Error", "error"));
     }
 
     function toggleAccountStatus() {
        var user = document.getElementById('perm-user-search').value;
        if(!user) return;
-       
        var badge = document.getElementById('perm-status-badge');
-       var btn = document.getElementById('btn-revoke-grant');
-       
        var isCurrentlyActive = badge.innerText === "Active";
-       
        var actionName = isCurrentlyActive ? "Revoke" : "Grant";
-       var icon = isCurrentlyActive ? "warning" : "info";
-       var btnColor = isCurrentlyActive ? "#dc3545" : "#28a745";
+       var newStatus = isCurrentlyActive ? "Revoked" : "Active";
        
        Swal.fire({
           title: `${actionName} Access?`,
           text: `Are you sure you want to ${actionName.toLowerCase()} login access for ${user}?`,
-          icon: icon,
+          icon: isCurrentlyActive ? "warning" : "info",
           showCancelButton: true,
-          confirmButtonColor: btnColor,
+          confirmButtonColor: isCurrentlyActive ? "#dc3545" : "#28a745",
           confirmButtonText: `Yes, ${actionName}`
        }).then((result) => {
           if(result.isConfirmed) {
-             if(isCurrentlyActive) {
-                badge.innerText = "Revoked";
-                badge.style.background = "#dc3545";
-                btn.innerText = "Grant Access";
-                btn.style.background = "#28a745";
-                Swal.fire("Revoked!", "Account has been locked.", "success");
-             } else {
-                badge.innerText = "Active";
-                badge.style.background = "#28a745";
-                btn.innerText = "Revoke Complete Access";
-                btn.style.background = "#dc3545";
-                Swal.fire("Granted!", "Account has been reactivated.", "success");
-             }
+             Swal.fire({ title: "Updating...", allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+             apiCall('toggleUserAccess', { username: user, status: newStatus }).then(res => {
+                if (res.success) {
+                   Swal.fire("Success!", res.msg, "success");
+                   loadUserPermDetails(); 
+                } else { Swal.fire("Error", res.error, "error"); }
+             }).catch(e => Swal.fire("Error", "Network Error", "error"));
           }
        });
     }
@@ -1950,132 +1963,7 @@
         tbody.innerHTML = "<tr><td colspan='5' style='text-align:center; color:red;'>Error Loading Pending List</td></tr>";
       }
     }
-async function loadUserPermDetails() {
-      var user = document.getElementById('perm-user-search').value;
-      var section = document.getElementById('perm-details-section');
-      
-      if(!user || !systemUsersList.includes(user)) {
-         section.style.display = 'none';
-         return;
-      }
-      
-      section.style.display = 'block';
-      document.getElementById('perm-status-badge').innerText = "Loading...";
-      document.getElementById('perm-status-badge').style.background = "#6c757d";
-      
-      try {
-        const res = await apiCall('getUserPermDetails', { username: user }, 'GET');
-        
-        document.querySelectorAll('.perm-label input[type="checkbox"]').forEach(chk => chk.checked = false);
-        document.querySelector('input[name="data_scope"][value="OWN"]').checked = true;
-        
-        if (res.success && res.data) {
-           var m = res.data.modules;
-           if (m.includes("Dashboard")) document.getElementById('chk_dash').checked = true;
-           if (m.includes("Courier-Send")) document.getElementById('chk_courier_send').checked = true;
-           if (m.includes("Courier-Action")) document.getElementById('chk_courier_action').checked = true;
-           if (m.includes("RMV-Request")) document.getElementById('chk_rmv_req').checked = true;
-           if (m.includes("RMV-Action")) document.getElementById('chk_rmv_action').checked = true;
-           if (m.includes("Valuation-New")) document.getElementById('chk_val_new').checked = true;
-           if (m.includes("Valuation-Pending")) document.getElementById('chk_val_pend').checked = true;
-           if (m.includes("Valuation-History")) document.getElementById('chk_val_hist').checked = true;
-           if (m.includes("CR-New")) document.getElementById('chk_cr_new').checked = true;
-           if (m.includes("CR-Pending")) document.getElementById('chk_cr_pend').checked = true;
-           if (m.includes("CR-History")) document.getElementById('chk_cr_hist').checked = true;
-           if (m.includes("Print-Add")) document.getElementById('chk_print_add').checked = true;
-           if (m.includes("Print-Paper")) document.getElementById('chk_print_paper').checked = true;
-           if (m.includes("Print-Box")) document.getElementById('chk_print_box').checked = true;
-           if (m.includes("Admin-UserMgt")) document.getElementById('chk_admin_user').checked = true;
-           if (m.includes("Admin-Map")) document.getElementById('chk_admin_map').checked = true;
-           
-           if (res.data.scope) {
-              document.querySelector(`input[name="data_scope"][value="${res.data.scope}"]`).checked = true;
-           }
-           
-           if (res.data.scope === 'SELECTED' && res.data.branches) {
-              var allowedBranches = res.data.branches.split(",");
-              var selectObj = document.getElementById('perm-branch-select');
-              for (var i = 0; i < selectObj.options.length; i++) {
-                 selectObj.options[i].selected = allowedBranches.includes(selectObj.options[i].value);
-              }
-           }
 
-           document.getElementById('perm-status-badge').innerText = res.data.status;
-           document.getElementById('perm-status-badge').style.background = res.data.status === "Active" ? "#28a745" : "#dc3545";
-           
-           var btn = document.getElementById('btn-revoke-grant');
-           btn.innerText = res.data.status === "Active" ? "Revoke Complete Access" : "Grant Access";
-           btn.style.background = res.data.status === "Active" ? "#dc3545" : "#28a745";
-        }
-        toggleBranchSelect();
-      } catch (e) {
-         document.getElementById('perm-status-badge').innerText = "Error Loading Data";
-      }
-    }
-
-    function saveUserPermissions() {
-       var user = document.getElementById('perm-user-search').value;
-       if(!user) return Swal.fire("Required", "Please select a user to update.", "warning");
-       
-       var modules = [];
-       const checkSub = (id, name) => { if(document.getElementById(id).checked) modules.push(name); };
-       if(document.getElementById('chk_dash').checked) modules.push("Dashboard");
-       checkSub('chk_courier_send', "Courier-Send"); checkSub('chk_courier_action', "Courier-Action");
-       checkSub('chk_rmv_req', "RMV-Request"); checkSub('chk_rmv_action', "RMV-Action");
-       checkSub('chk_val_new', "Valuation-New"); checkSub('chk_val_pend', "Valuation-Pending"); checkSub('chk_val_hist', "Valuation-History");
-       checkSub('chk_cr_new', "CR-New"); checkSub('chk_cr_pend', "CR-Pending"); checkSub('chk_cr_hist', "CR-History");
-       checkSub('chk_print_add', "Print-Add"); checkSub('chk_print_paper', "Print-Paper"); checkSub('chk_print_box', "Print-Box");
-       checkSub('chk_admin_user', "Admin-UserMgt"); checkSub('chk_admin_map', "Admin-Map");
-       
-       var scope = document.querySelector('input[name="data_scope"]:checked').value;
-       var branches = [];
-       if(scope === 'SELECTED') {
-          var selectObj = document.getElementById('perm-branch-select');
-          for (var i = 0; i < selectObj.options.length; i++) {
-             if (selectObj.options[i].selected) branches.push(selectObj.options[i].value);
-          }
-       }
-       
-       Swal.fire({ title: "Updating Permissions...", allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-       
-       apiCall('saveUserPermissions', {
-          username: user,
-          modules: modules.join(","),
-          scope: scope,
-          branches: branches.join(",")
-       }).then(res => {
-          if(res.success) { Swal.fire("Saved!", res.msg, "success"); } 
-          else { Swal.fire("Error", res.error || "Failed", "error"); }
-       }).catch(e => Swal.fire("Error", "Network Error", "error"));
-    }
-
-    function toggleAccountStatus() {
-       var user = document.getElementById('perm-user-search').value;
-       if(!user) return;
-       var badge = document.getElementById('perm-status-badge');
-       var isCurrentlyActive = badge.innerText === "Active";
-       var actionName = isCurrentlyActive ? "Revoke" : "Grant";
-       var newStatus = isCurrentlyActive ? "Revoked" : "Active";
-       
-       Swal.fire({
-          title: `${actionName} Access?`,
-          text: `Are you sure you want to ${actionName.toLowerCase()} login access for ${user}?`,
-          icon: isCurrentlyActive ? "warning" : "info",
-          showCancelButton: true,
-          confirmButtonColor: isCurrentlyActive ? "#dc3545" : "#28a745",
-          confirmButtonText: `Yes, ${actionName}`
-       }).then((result) => {
-          if(result.isConfirmed) {
-             Swal.fire({ title: "Updating...", allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-             apiCall('toggleUserAccess', { username: user, status: newStatus }).then(res => {
-                if (res.success) {
-                   Swal.fire("Success!", res.msg, "success");
-                   loadUserPermDetails(); 
-                } else { Swal.fire("Error", res.error, "error"); }
-             }).catch(e => Swal.fire("Error", "Network Error", "error"));
-          }
-       });
-    }
   </script>
 </body>
 </html>
