@@ -922,59 +922,71 @@
             } 
         });
 
-        var adminMenu = document.querySelector('[onclick="toggleSubMenu(\'admin-submenu\', this)"]');
-        var valMenu = document.querySelector('[onclick="toggleSubMenu(\'val-submenu\', this)"]');
-        var rmvMenu = document.querySelector('[onclick="toggleSubMenu(\'rmv-submenu\', this)"]');
-        var courierMenu = document.querySelector('[onclick="toggleSubMenu(\'courier-submenu\', this)"]');
-
-        var rmvAdminBtn = document.querySelector('[onclick="switchView(\'rmv-admin\', this)"]');
-        var valAdminBtn = document.querySelector('[onclick="switchView(\'val-admin\', this)"]');
-        var courierAdminBtn = document.querySelector('[onclick="switchView(\'courier-admin\', this)"]');
-
-        var dashCourier = document.getElementById('dash-courier-section');
-        var dashRmv = document.getElementById('dash-rmv-section');
-        var dashVal = document.getElementById('dash-val-section');
-
-        if(adminMenu) adminMenu.style.display = 'none'; if(rmvAdminBtn) rmvAdminBtn.style.display = 'none'; if(valAdminBtn) valAdminBtn.style.display = 'none';
-
-        if(uRole === 'super admin' || uRole === 'admin' || uRole === 'super user') {
-            if(adminMenu) adminMenu.style.display = 'flex'; if(rmvAdminBtn) rmvAdminBtn.style.display = 'flex'; if(valAdminBtn) valAdminBtn.style.display = 'flex'; if(courierAdminBtn) courierAdminBtn.style.display = 'flex';
-        } 
-        else if (uRole === 'valuation approval user' || uRole === 'valuation admin') {
-            if(rmvMenu) rmvMenu.style.display = 'none'; if(courierMenu) courierMenu.style.display = 'none';
-            if(valAdminBtn) valAdminBtn.style.display = 'flex';
-            if(dashCourier) dashCourier.style.display = 'none'; if(dashRmv) dashRmv.style.display = 'none';
-        } 
-        else if (uRole === 'rmv request approval user' || uRole === 'rmv branch' || uRole === 'rmv approval') {
-            if(valMenu) valMenu.style.display = 'none';
-            if(rmvAdminBtn) rmvAdminBtn.style.display = 'flex'; if(courierAdminBtn) courierAdminBtn.style.display = 'flex';
-            if(dashVal) dashVal.style.display = 'none';
-        }
-
-        var crMenuCategory = document.getElementById('cr-menu-category');
-        var crNewBtn = document.getElementById('menu-cr-new');
+        // ========================================================
+        // DYNAMIC PERMISSION CONTROL LOGIC (NEW)
+        // ========================================================
+        var modules = res.allowedModules || "";
         
-        var roleLower = uRole.toLowerCase();
-        var branchLower = uBranch.toLowerCase();
-
-        if (roleLower.includes('rmv') || roleLower.includes('valuation admin') || roleLower.includes('valuation approval')) {
-             if(crMenuCategory) crMenuCategory.style.display = 'none';
-        }
-        else if (roleLower === 'super admin' || roleLower === 'admin' || roleLower === 'head office' || branchLower === 'head office') {
-             if(crMenuCategory) crMenuCategory.style.display = 'flex';
-             if(crNewBtn) crNewBtn.style.display = 'flex'; 
-        }
-        else {
-             if(crMenuCategory) crMenuCategory.style.display = 'flex';
-             if(crNewBtn) crNewBtn.style.display = 'none'; 
-        }
-        var rmvPrintCat = document.getElementById('rmv-print-category');
-        if (rmvPrintCat) rmvPrintCat.style.display = 'none';
-
-        if (roleLower === 'super admin' || roleLower === 'admin' || roleLower.includes('rmv') || roleLower === 'head office' || branchLower === 'head office') {
-             if (rmvPrintCat) rmvPrintCat.style.display = 'flex';
+        // Backward compatibility: If no permissions are set yet, give Super Admins full access.
+        if (!modules && (uRole === 'super admin' || uRole === 'admin')) {
+            modules = "Dashboard,Courier-Send,Courier-Action,RMV-Request,RMV-Action,Valuation-New,Valuation-Pending,Valuation-History,CR-New,CR-Pending,CR-History,Print-Add,Print-Paper,Print-Box,Admin-UserMgt,Admin-Map";
+        } else if (!modules) {
+            modules = "Dashboard"; // Fallback for normal users until updated
         }
 
+        // Helper function to safely show/hide elements
+        const setVisibility = (selector, isVisible, displayType = 'flex') => {
+           let el = document.querySelector(selector);
+           if (el) el.style.display = isVisible ? displayType : 'none';
+        };
+
+        // 1. Dashboard
+        setVisibility('[onclick="switchView(\'dashboard\', this)"]', modules.includes("Dashboard"));
+
+        // 2. Courier Portal
+        let hasCourier = modules.includes("Courier-Send") || modules.includes("Courier-Action");
+        setVisibility('[onclick="toggleSubMenu(\'courier-submenu\', this)"]', hasCourier);
+        setVisibility('[onclick="switchView(\'courier-new\', this)"]', modules.includes("Courier-Send"));
+        setVisibility('[onclick="switchView(\'courier-admin\', this)"]', modules.includes("Courier-Action"));
+        setVisibility('#dash-courier-section', hasCourier, 'block');
+
+        // 3. RMV Confirmation
+        let hasRmv = modules.includes("RMV-Request") || modules.includes("RMV-Action");
+        setVisibility('[onclick="toggleSubMenu(\'rmv-submenu\', this)"]', hasRmv);
+        setVisibility('[onclick="switchView(\'rmv-new\', this)"]', modules.includes("RMV-Request"));
+        setVisibility('[onclick="switchView(\'rmv-admin\', this)"]', modules.includes("RMV-Action"));
+        setVisibility('#dash-rmv-section', hasRmv, 'block');
+
+        // 4. Valuation Portal
+        let hasVal = modules.includes("Valuation-New") || modules.includes("Valuation-Pending") || modules.includes("Valuation-History");
+        setVisibility('[onclick="toggleSubMenu(\'val-submenu\', this)"]', hasVal);
+        setVisibility('[onclick="switchView(\'val-new\', this)"]', modules.includes("Valuation-New"));
+        setVisibility('[onclick="switchView(\'val-admin\', this)"]', modules.includes("Valuation-Pending"));
+        setVisibility('[onclick="switchView(\'val-history\', this)"]', modules.includes("Valuation-History"));
+        setVisibility('#dash-val-section', hasVal, 'block');
+
+        // 5. System Admin
+        let hasAdmin = modules.includes("Admin-UserMgt") || modules.includes("Admin-Map");
+        setVisibility('[onclick="toggleSubMenu(\'admin-submenu\', this)"]', hasAdmin);
+        setVisibility('[onclick="switchView(\'user-mgt\', this)"]', modules.includes("Admin-UserMgt"));
+        setVisibility('[onclick="switchView(\'live-map\', this)"]', modules.includes("Admin-Map"));
+
+        // 6. CR Upload Option
+        let hasCR = modules.includes("CR-New") || modules.includes("CR-Pending") || modules.includes("CR-History");
+        setVisibility('#cr-menu-category', hasCR);
+        setVisibility('#menu-cr-new', modules.includes("CR-New"));
+        setVisibility('#menu-cr-pending', modules.includes("CR-Pending"));
+        setVisibility('#menu-cr-history', modules.includes("CR-History"));
+        setVisibility('#dash-cr-section', hasCR, 'block');
+
+        // 7. RMV Print
+        let hasPrint = modules.includes("Print-Add") || modules.includes("Print-Paper") || modules.includes("Print-Box");
+        setVisibility('#rmv-print-category', hasPrint);
+        setVisibility('[onclick="window.open(\'rmv_print.html?tab=add\', \'_blank\')"]', modules.includes("Print-Add"));
+        setVisibility('[onclick="window.open(\'rmv_print.html?tab=print\', \'_blank\')"]', modules.includes("Print-Paper"));
+        setVisibility('[onclick="window.open(\'RMV_PRE_PRINT.html\', \'_blank\')"]', modules.includes("Print-Box"));
+
+        // Initialize Valuation Form Handler
         var valForm = document.getElementById('vForm');
         if(valForm) {
           valForm.onsubmit = async function(e) {
@@ -1010,6 +1022,7 @@
           };
         }
 
+        // Initialize RMV Form Handler
         var rmvForm = document.getElementById('rmvForm');
         if(rmvForm) {
           rmvForm.onsubmit = async function(e) {
@@ -1044,7 +1057,6 @@
         }
       } catch(e) { console.log(e); }
     }
-
     async function initVehicleData() {
       try {
         const res = await apiCall('getVehicleDropdownData', {}, 'GET'); vehicleDB = res.data;
