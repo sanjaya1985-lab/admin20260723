@@ -318,7 +318,7 @@
         </div> 
         
         <!-- ============================================== -->
-        <!-- USER MAINTENANCE SECTION (UPDATED) -->
+        <!-- USER MAINTENANCE SECTION (UPDATED WITH SUB-LISTS) -->
         <!-- ============================================== -->
         <div id="view-user-mgt" class="view-section" style="display: none;">
           <h2 style="color: var(--accent-red); border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom:20px;">System Admin Overview (User Maintenance)</h2>
@@ -336,7 +336,6 @@
             <div class="reset-form-card">
               <h3><i class="fas fa-sync"></i> Reset User Password</h3>
               <p style="font-size:13px; color:#666; margin-bottom:15px;">Select a user to generate and email a new temporary password.</p>
-              <!-- Dropdown List with Search (datalist) -->
               <input type="text" id="reset-uname-input" list="reset-uname" class="admin-input" placeholder="Type or Select Username...">
               <datalist id="reset-uname"></datalist>
               <button class="btn-submit" style="background:#dc3545;" onclick="resetPasswordAdmin()">Reset Password & Email</button>
@@ -347,12 +346,10 @@
               <h3><i class="fas fa-user-shield"></i> User Access & Permissions Management</h3>
               <p style="font-size:13px; color:#666; margin-bottom:15px;">Select a user to control their system access, viewable data, and allowed features.</p>
               
-              <!-- Searchable Dropdown for Permissions -->
               <label style="font-size: 13px; font-weight: bold; color: #333;">Select User to Edit:</label>
               <input type="text" id="perm-user-search" list="perm-user-list" class="admin-input" placeholder="Type username to search..." onchange="loadUserPermDetails()" style="margin-bottom: 5px;">
               <datalist id="perm-user-list"></datalist>
 
-              <!-- Hidden Details Section (Shows after selecting user) -->
               <div id="perm-details-section" style="display:none; margin-top:20px;">
                  <div style="margin-bottom: 20px; font-size: 14px;">
                     <strong>Account Status: </strong> 
@@ -360,15 +357,72 @@
                  </div>
                  
                  <div class="perm-grid">
-                    <!-- Category A: Module Access -->
-                    <div class="perm-box">
-                       <h4>Module & Feature Access</h4>
-                       <label class="perm-label"><input type="checkbox" id="chk_courier"> Courier Portal (Send/Action)</label>
-                       <label class="perm-label"><input type="checkbox" id="chk_rmv_conf"> RMV Confirmation</label>
-                       <label class="perm-label"><input type="checkbox" id="chk_val"> Valuation Portal</label>
-                       <label class="perm-label"><input type="checkbox" id="chk_cr"> CR Upload Option</label>
-                       <label class="perm-label"><input type="checkbox" id="chk_rmv_print"> RMV Print (Original/Box Formats)</label>
-                       <label class="perm-label"><input type="checkbox" id="chk_admin"> System Admin (User Mgt/Map)</label>
+                    <!-- Category A: Module Access (WITH SUB-LISTS) -->
+                    <div class="perm-box" style="max-height: 480px; overflow-y: auto;">
+                       <h4 style="position: sticky; top: 0; background: #f8f9fa; z-index: 10; margin-top:-5px; padding-top:5px;">Module & Feature Access</h4>
+                       
+                       <!-- Dashboard -->
+                       <div style="margin-bottom: 12px;">
+                           <label class="perm-label" style="font-weight:bold; color:#000;"><input type="checkbox" id="chk_dash" checked> <i class="fas fa-home" style="width:20px; color:#c62828;"></i> Home Dashboard</label>
+                       </div>
+
+                       <!-- Courier Portal -->
+                       <div style="margin-bottom: 12px;">
+                           <label class="perm-label" style="font-weight:bold; color:#0d6efd;"><input type="checkbox" id="chk_courier_main" onchange="toggleSub('chk_courier_main', 'sub_courier')"> <i class="fas fa-shipping-fast" style="width:20px;"></i> Courier Portal</label>
+                           <div style="margin-left: 30px; border-left: 2px solid #ddd; padding-left: 10px; display:flex; flex-direction:column; gap:4px;">
+                               <label class="perm-label"><input type="checkbox" class="sub_courier" id="chk_courier_send"> Send New Request</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_courier" id="chk_courier_action"> Action Portal</label>
+                           </div>
+                       </div>
+
+                       <!-- RMV Confirmation -->
+                       <div style="margin-bottom: 12px;">
+                           <label class="perm-label" style="font-weight:bold; color:#0d6efd;"><input type="checkbox" id="chk_rmv_main" onchange="toggleSub('chk_rmv_main', 'sub_rmv')"> <i class="fas fa-car" style="width:20px;"></i> RMV Confirmation</label>
+                           <div style="margin-left: 30px; border-left: 2px solid #ddd; padding-left: 10px; display:flex; flex-direction:column; gap:4px;">
+                               <label class="perm-label"><input type="checkbox" class="sub_rmv" id="chk_rmv_req"> Confirmation Request</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_rmv" id="chk_rmv_action"> Action Portal</label>
+                           </div>
+                       </div>
+
+                       <!-- Valuation Portal -->
+                       <div style="margin-bottom: 12px;">
+                           <label class="perm-label" style="font-weight:bold; color:#0d6efd;"><input type="checkbox" id="chk_val_main" onchange="toggleSub('chk_val_main', 'sub_val')"> <i class="fas fa-file-invoice-dollar" style="width:20px;"></i> Valuation Portal</label>
+                           <div style="margin-left: 30px; border-left: 2px solid #ddd; padding-left: 10px; display:flex; flex-direction:column; gap:4px;">
+                               <label class="perm-label"><input type="checkbox" class="sub_val" id="chk_val_new"> New Valuation</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_val" id="chk_val_pend"> Pending Approvals</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_val" id="chk_val_hist"> Valuation History</label>
+                           </div>
+                       </div>
+                       
+                       <!-- System Admin -->
+                       <div style="margin-bottom: 12px;">
+                           <label class="perm-label" style="font-weight:bold; color:#0d6efd;"><input type="checkbox" id="chk_admin_main" onchange="toggleSub('chk_admin_main', 'sub_admin')"> <i class="fas fa-shield-alt" style="width:20px;"></i> System Admin</label>
+                           <div style="margin-left: 30px; border-left: 2px solid #ddd; padding-left: 10px; display:flex; flex-direction:column; gap:4px;">
+                               <label class="perm-label"><input type="checkbox" class="sub_admin" id="chk_admin_user"> User Maintenance</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_admin" id="chk_admin_map"> Live Request Map</label>
+                           </div>
+                       </div>
+
+                       <!-- CR Upload Option -->
+                       <div style="margin-bottom: 12px;">
+                           <label class="perm-label" style="font-weight:bold; color:#0d6efd;"><input type="checkbox" id="chk_cr_main" onchange="toggleSub('chk_cr_main', 'sub_cr')"> <i class="fas fa-file-upload" style="width:20px;"></i> CR Upload Option</label>
+                           <div style="margin-left: 30px; border-left: 2px solid #ddd; padding-left: 10px; display:flex; flex-direction:column; gap:4px;">
+                               <label class="perm-label"><input type="checkbox" class="sub_cr" id="chk_cr_new"> New CR Upload</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_cr" id="chk_cr_pend"> Pending Uploads</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_cr" id="chk_cr_hist"> Upload History</label>
+                           </div>
+                       </div>
+
+                       <!-- RMV Print -->
+                       <div style="margin-bottom: 12px;">
+                           <label class="perm-label" style="font-weight:bold; color:#0d6efd;"><input type="checkbox" id="chk_print_main" onchange="toggleSub('chk_print_main', 'sub_print')"> <i class="fas fa-file-invoice" style="width:20px;"></i> RMV_Print</label>
+                           <div style="margin-left: 30px; border-left: 2px solid #ddd; padding-left: 10px; display:flex; flex-direction:column; gap:4px;">
+                               <label class="perm-label"><input type="checkbox" class="sub_print" id="chk_print_add"> Add Data</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_print" id="chk_print_paper"> Print Papers</label>
+                               <label class="perm-label"><input type="checkbox" class="sub_print" id="chk_print_box"> Pre-Print (Box Format)</label>
+                           </div>
+                       </div>
+
                     </div>
                     
                     <!-- Category B: Data Visibility Scope -->
@@ -378,12 +432,9 @@
                        <label class="perm-label"><input type="radio" name="data_scope" value="SELECTED" onchange="toggleBranchSelect()"> Selected Branches</label>
                        <label class="perm-label"><input type="radio" name="data_scope" value="ALL" onchange="toggleBranchSelect()"> All Branches (Global View)</label>
                        
-                       <!-- Multi-select for branches -->
                        <div id="selected-branches-div" style="display:none; margin-top:10px; background:#fff; padding:10px; border:1px solid #ccc; border-radius:4px;">
                           <label style="font-size:12px; font-weight:bold; margin-bottom:5px; display:block;">Select Allowed Branches:</label>
-                          <select id="perm-branch-select" multiple class="admin-input" style="height:100px; margin-bottom:5px;">
-                             <!-- Loaded dynamically -->
-                          </select>
+                          <select id="perm-branch-select" multiple class="admin-input" style="height:100px; margin-bottom:5px;"></select>
                           <small style="color:#777; font-size:11px;">Hold <b>Ctrl</b> (Windows) or <b>Cmd</b> (Mac) to select multiple.</small>
                        </div>
                     </div>
@@ -647,18 +698,15 @@
     <div class="modal-content-container" id="modalContainer"><img class="modal-content" id="fullImage"></div>
   </div>
 
-  <!-- VALUATION DETAILS MODAL (NEW) -->
+  <!-- VALUATION DETAILS MODAL -->
   <div id="val-view-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9000; overflow-y:auto;">
     <div style="width:90%; max-width:800px; margin:5vh auto; background:#fff; border-radius:8px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <!-- Header -->
       <div style="padding:15px 20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
         <h2 style="margin:0; font-size:20px; color:#2c3e50;"><i class="fas fa-clipboard-list" style="color:#e74c3c; margin-right:8px;"></i> Valuation Details</h2>
         <span onclick="document.getElementById('val-view-modal').style.display='none'" style="font-size:28px; cursor:pointer; color:#95a5a6; line-height:20px;">&times;</span>
       </div>
-      <!-- Body -->
       <div style="padding:20px;">
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
-          <!-- Left Info Box -->
           <div style="background:#f8f9fa; padding:15px; border-radius:8px; border:1px solid #eee;">
             <p style="margin-bottom:10px; font-size:15px;"><strong>Vehicle No:</strong> <span id="v_mod_veh" style="color:#e74c3c; font-weight:bold;"></span></p>
             <p style="margin-bottom:10px; font-size:15px;"><strong>Make & Model:</strong> <span id="v_mod_make"></span></p>
@@ -666,7 +714,6 @@
             <p style="margin-bottom:10px; font-size:15px;"><strong>Chassis:</strong> <span id="v_mod_chassis"></span></p>
             <p style="margin-bottom:0; font-size:15px;"><strong>Engine:</strong> <span id="v_mod_engine"></span></p>
           </div>
-          <!-- Right Info Box -->
           <div style="background:#f8f9fa; padding:15px; border-radius:8px; border:1px solid #eee;">
             <p style="margin-bottom:10px; font-size:15px;"><strong>Req. Amount:</strong> <span id="v_mod_req"></span></p>
             <p style="margin-bottom:10px; font-size:15px;"><strong>Market Value:</strong> <span id="v_mod_mval" style="color:#27ae60; font-weight:bold;"></span></p>
@@ -675,11 +722,9 @@
             <p style="margin-bottom:0; font-size:15px;"><strong>Remarks:</strong> <span id="v_mod_rem"></span></p>
           </div>
         </div>
-        <!-- Photos Section -->
         <h3 style="margin-bottom:5px; color:#2c3e50; font-size:16px;"><i class="fas fa-camera"></i> Attached Photos</h3>
         <p style="font-size:12px; color:#7f8c8d; margin-bottom:15px;">(Click on any image to zoom and rotate)</p>
         <div id="v_mod_photos" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:15px;">
-          <!-- Photos will be injected here via JS -->
         </div>
       </div>
     </div>
@@ -742,14 +787,10 @@
     var globalRmvData = []; var currentRmvIndex = -1;
     var vehicleDB = []; var tempUserData = null;
     
-    // Arrays to hold valuation data globally for the modal
     var globalDashValData = []; 
     var globalHistoryValData = [];
-
-    // Temporary array to hold User list for Permissions Tab
     var systemUsersList = [];
 
-    // URL fixer function
     function getImgUrl(url) {
        if (!url || url === 'No Image') return '';
        var m = url.match(/[-\w]{25,}/);
@@ -861,7 +902,6 @@
             } 
         });
 
-        // Load users to both Reset Datalist and Permissions Datalist
         apiCall('getUsernamesList', {}, 'GET').then(res => { 
             var resetList = document.getElementById('reset-uname'); 
             var permList = document.getElementById('perm-user-list');
@@ -1281,6 +1321,14 @@
     // NEW: USER PERMISSIONS & ACCESS MANAGEMENT LOGIC
     // ========================================================
     
+    // Toggle sub-checkboxes when main checkbox is clicked
+    function toggleSub(mainId, subClass) {
+        let isChecked = document.getElementById(mainId).checked;
+        document.querySelectorAll('.' + subClass).forEach(chk => {
+            chk.checked = isChecked;
+        });
+    }
+
     function toggleBranchSelect() {
       var scope = document.querySelector('input[name="data_scope"]:checked').value;
       var branchDiv = document.getElementById('selected-branches-div');
@@ -1300,24 +1348,19 @@
          return;
       }
       
-      // Show section with loading state
       section.style.display = 'block';
       document.getElementById('perm-status-badge').innerText = "Loading...";
       document.getElementById('perm-status-badge').style.background = "#6c757d";
       
-      // Simulate API call to fetch existing permissions (Will need actual Apps Script logic later)
-      // For now, reset everything to default when a user is selected
-      document.getElementById('chk_courier').checked = false;
-      document.getElementById('chk_rmv_conf').checked = false;
-      document.getElementById('chk_val').checked = false;
-      document.getElementById('chk_cr').checked = false;
-      document.getElementById('chk_rmv_print').checked = false;
-      document.getElementById('chk_admin').checked = false;
-      
+      // Reset all checkboxes initially
+      document.querySelectorAll('.perm-label input[type="checkbox"]').forEach(chk => chk.checked = false);
       document.querySelector('input[name="data_scope"][value="OWN"]').checked = true;
       toggleBranchSelect();
       
-      // Mock Data (Replace with API Call)
+      // Default give Dashboard access visually for mockup
+      document.getElementById('chk_dash').checked = true;
+
+      // Mock Data Load (Replace with API Call)
       setTimeout(() => {
          document.getElementById('perm-status-badge').innerText = "Active";
          document.getElementById('perm-status-badge').style.background = "#28a745";
@@ -1330,19 +1373,35 @@
        var user = document.getElementById('perm-user-search').value;
        if(!user) return Swal.fire("Required", "Please select a user to update.", "warning");
        
-       // Gather selected modules
        var modules = [];
-       if(document.getElementById('chk_courier').checked) modules.push("Courier");
-       if(document.getElementById('chk_rmv_conf').checked) modules.push("RMV Conf");
-       if(document.getElementById('chk_val').checked) modules.push("Valuation");
-       if(document.getElementById('chk_cr').checked) modules.push("CR Upload");
-       if(document.getElementById('chk_rmv_print').checked) modules.push("RMV Print");
-       if(document.getElementById('chk_admin').checked) modules.push("Admin");
+       // Helper to check sub-items
+       const checkSub = (id, name) => { if(document.getElementById(id).checked) modules.push(name); };
        
-       // Gather data scope
+       if(document.getElementById('chk_dash').checked) modules.push("Dashboard");
+       
+       checkSub('chk_courier_send', "Courier-Send");
+       checkSub('chk_courier_action', "Courier-Action");
+       
+       checkSub('chk_rmv_req', "RMV-Request");
+       checkSub('chk_rmv_action', "RMV-Action");
+       
+       checkSub('chk_val_new', "Valuation-New");
+       checkSub('chk_val_pend', "Valuation-Pending");
+       checkSub('chk_val_hist', "Valuation-History");
+       
+       checkSub('chk_cr_new', "CR-New");
+       checkSub('chk_cr_pend', "CR-Pending");
+       checkSub('chk_cr_hist', "CR-History");
+
+       checkSub('chk_print_add', "Print-Add");
+       checkSub('chk_print_paper', "Print-Paper");
+       checkSub('chk_print_box', "Print-Box");
+
+       checkSub('chk_admin_user', "Admin-UserMgt");
+       checkSub('chk_admin_map', "Admin-Map");
+       
        var scope = document.querySelector('input[name="data_scope"]:checked').value;
        
-       // Gather selected branches if applicable
        var branches = [];
        if(scope === 'SELECTED') {
           var selectObj = document.getElementById('perm-branch-select');
@@ -1351,19 +1410,18 @@
           }
        }
        
-       var summary = `User: ${user}<br>Scope: ${scope}<br>Modules: ${modules.length > 0 ? modules.join(', ') : 'None'}`;
+       var summary = `User: ${user}<br>Scope: ${scope}<br>Features: ${modules.length > 0 ? modules.join(', ') : 'None'}`;
        if(scope === 'SELECTED') summary += `<br>Branches: ${branches.join(', ')}`;
        
        Swal.fire({
           title: "Update Permissions?",
-          html: `<div style="text-align:left; font-size:14px; margin-top:10px;">${summary}</div>`,
+          html: `<div style="text-align:left; font-size:12px; margin-top:10px;">${summary}</div>`,
           icon: "info",
           showCancelButton: true,
           confirmButtonText: "Yes, Update",
           confirmButtonColor: "#17a2b8"
        }).then((result) => {
           if(result.isConfirmed) {
-             // Mock API Call (Replace with actual backend call)
              Swal.fire("Saved!", "User permissions updated successfully. (UI Mockup)", "success");
           }
        });
